@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #8e44ad, #e74c3c);
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+.logo {
+    height: 60px;
+    width: 60px;
+    margin-right: 15px;
+}
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+.nav-container h1 {
+    display: flex;
+    align-items: center;
+    font-size: 1.8em;
+}
+.nav-container nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+.nav-container nav ul li {
+    display: inline;
+}
+.nav-container nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+.nav-container nav ul li a:hover {
+    color: #f1c40f;
+}
+.about-intro, .features, .team {
+    text-align: center;
+    padding: 50px 20px;
+}
+.feature-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+.feature-item {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+.team-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.team-member {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+}

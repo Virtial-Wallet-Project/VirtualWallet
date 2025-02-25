@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+    <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
+</head>
+
+
+<body>
+
+<header>
+    <div class="nav-container">
+        <h1>
+            <img src="../static/logo.png" alt="Virtual Wallet Logo" class="logo">
+            Virtual Wallet
+        </h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <span> | </span>
+                <li><a th:href="@{/about}" class="active">About</a></li>
+                <span> | </span>
+                <li><a th:href="@{/login}">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+
+<footer>
+    <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
