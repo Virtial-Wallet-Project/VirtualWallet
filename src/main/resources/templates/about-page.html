@@ -29,6 +29,7 @@
 <main>
     <section class="about-intro">
         <div class="banner">
+            <img src="#" th:src="@{/banner.png}" alt="Virtual Wallet Banner" id="banner">
             <div class="overlay">
                 <h2>What is Virtual Wallet?</h2>
                 <p>Virtual Wallet is an innovative, secure, and user-friendly financial management system designed to simplify your transactions.</p>
@@ -45,17 +46,17 @@
                 <p>State-of-the-art encryption ensures your transactions are always safe.</p>
             </div>
             <div class="feature-item">
-                <img src="/images/transfer.svg" alt="Easy Transfers">
+                <img src="../static/money-transfer.png" th:src="@{/money-transfer.png}" alt="Easy Transfers">
                 <h3>Instant Money Transfers</h3>
                 <p>Send money instantly to other users with just a few clicks.</p>
             </div>
             <div class="feature-item">
-                <img src="/images/history.svg" alt="History">
+                <img src="../static/transaction-history.png" th:src="@{/transaction-history.png}" alt="History">
                 <h3>Comprehensive Transaction History</h3>
                 <p>Track your spending with detailed transaction history and filtering options.</p>
             </div>
             <div class="feature-item">
-                <img src="/images/integration.svg" alt="Integration">
+                <img src="../static/bank-integration.png" th:src="@{/bank-integration.png}" alt="Integration">
                 <h3>Bank Integration</h3>
                 <p>Connect your credit or debit card to top up your wallet effortlessly.</p>
             </div>

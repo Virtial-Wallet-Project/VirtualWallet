@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+    <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
+
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <h1>
+                <img src="../static/logo.png" alt="Virtual Wallet Logo" class="logo">
+                Virtual Wallet
+            </h1>
+            <nav>
+                <ul>
+                    <li><a th:href="@{/}">Home</a></li>
+                    <span> | </span>
+                    <li><a th:href="@{/about}" class="active">About</a></li>
+                    <span> | </span>
+                    <li><a th:href="@{/login}">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="log-register2">
+
+        <h2>Register</h2>
+
+        <form action="#" th:action="@{/auth/register}" th:object="${register}" method="post">
+
+            <div class="form-container">
+
+                <!-- Column 1: Username, Password, Confirm Password -->
+                <div>
+                    <label class="form-label">Username</label>
+                    <input class="form-input" type="text" th:field="*{username}" placeholder="Enter username:">
+                    <label class="form-error" th:errors="*{username}">Username error placeholder</label>
+
+                    <label class="form-label">Password</label>
+                    <input class="form-input" type="password" th:field="*{password}" placeholder="Enter password:">
+                    <label class="form-error" th:errors="*{password}">Password error placeholder</label>
+
+                    <label class="form-label">Confirm Password</label>
+                    <input class="form-input" type="password" th:field="*{passwordConfirm}" placeholder="Confirm password:">
+                    <label class="form-error" th:errors="*{passwordConfirm}">Password confirm error placeholder</label>
+                </div>
+
+                <!-- Column 2: Email, Phone Number, Register Button -->
+                <div>
+                    <label class="form-label">Email</label>
+                    <input class="form-input" type="email" th:field="*{email}" placeholder="Enter email:">
+                    <label class="form-error" th:errors="*{email}">Email error placeholder</label>
+
+                    <label class="form-label">Phone Number</label>
+                    <input class="form-input" type="tel" th:field="*{phoneNumber}" placeholder="Enter phone number:">
+                    <label class="form-error" th:errors="*{phoneNumber}">Phone number error placeholder</label>
+
+                    <input class="btn-primary2" type="submit" value="Register">
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+<footer>
+    <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
