@@ -44,19 +44,60 @@ body {
     text-align: center;
     padding: 50px 20px;
 }
+
+.features {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.features h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
 .feature-list {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 30px;
 }
+
 .feature-item {
     background: rgba(0, 0, 0, 0.3);
     padding: 20px;
     border-radius: 10px;
     width: 250px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+}
+
+.feature-item img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.feature-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.feature-item p {
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .feature-list {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 .team-container {
     display: flex;
@@ -66,14 +107,71 @@ body {
 }
 .team-member {
     background: rgba(0, 0, 0, 0.3);
+    text-align: center;
     padding: 20px;
     border-radius: 10px;
-    width: 200px;
-    text-align: center;
+    width: 300px;
 }
 footer {
     text-align: center;
     padding: 20px;
     background: rgba(0, 0, 0, 0.3);
     margin-top: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.about-intro {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner {
+    width: 100%;
+    height: 100%;
+    background: url('../static/banner.png') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.banner::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(255, 0, 0, 0.6));
+    z-index: 1;
+}
+
+
+.overlay {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    padding: 20px;
+}
+
+.overlay h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.overlay p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    line-height: 1.5;
 }

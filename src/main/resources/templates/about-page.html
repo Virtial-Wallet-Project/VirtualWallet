@@ -28,16 +28,19 @@
 
 <main>
     <section class="about-intro">
-        <h2>What is Virtual Wallet?</h2>
-        <p>Virtual Wallet is an innovative, secure, and user-friendly financial management system designed to simplify your transactions.</p>
-        <img src="/images/virtual-wallet-banner.jpg" alt="Virtual Wallet Overview">
+        <div class="banner">
+            <div class="overlay">
+                <h2>What is Virtual Wallet?</h2>
+                <p>Virtual Wallet is an innovative, secure, and user-friendly financial management system designed to simplify your transactions.</p>
+            </div>
+        </div>
     </section>
 
     <section class="features">
-        <h2>Key Features</h2>
+        <h2 style="margin-bottom: 10px">Key Features</h2>
         <div class="feature-list">
             <div class="feature-item">
-                <img src="" alt="Secure">
+                <img src="../static/secure-transactions.png" th:src="@{/secure-transactions.png}" alt="Secure">
                 <h3>Secure Transactions</h3>
                 <p>State-of-the-art encryption ensures your transactions are always safe.</p>
             </div>
@@ -60,12 +63,18 @@
     </section>
 
     <section class="team">
-        <h2>Meet Our Team</h2>
+        <h2 style="margin-bottom: 10px">Meet Our Team</h2>
         <div class="team-container">
-            <div th:each="member : ${teamMembers}" class="team-member">
-                <img th:src="${member.photo}" alt="Team Member" class="team-photo"/>
-                <h3 th:text="${member.name}"></h3>
-                <p th:text="${member.role}"></p>
+            <div class="team-member">
+                <h3> Chavdar Tsvetkov</h3>
+                <p>Creator</p>
+                <p>chavdartsvetkov.2000@gmail.com</p>
+            </div>
+
+            <div class="team-member">
+                <h3>Viktor Angelov</h3>
+                <p>Creator</p>
+                <p>vikotor05@gmail.com</p>
             </div>
         </div>
     </section>
