@@ -197,6 +197,7 @@ footer {
     max-width: 900px;
     height: auto;
     margin: 50px auto;
+    margin-bottom: 152px;
     padding: 30px;
     background: linear-gradient(135deg, #8e44ad, #3498db);
     color: #fff;
@@ -301,4 +302,150 @@ footer {
     margin-bottom: 10px;
     text-align: left;
 }
+
+.main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.currency-converter {
+    background: linear-gradient(135deg, #3498db, #2ecc71);
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+}
+
+.currency-converter h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.converter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.converter input,
+.converter select {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+}
+
+.converter input {
+    width: 150px;
+    text-align: center;
+}
+
+.converter select {
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+
+#convert-btn {
+    background: #f1c40f;
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#convert-btn:hover {
+    background: #e1b500;
+}
+
+#result {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.currency-graphics {
+    background: linear-gradient(135deg, #8e44ad, #3498db);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.currency-graphics h2 {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+#currencyChart {
+    width: 100%;
+    max-width: 700px;
+    height: 350px;
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.register-section {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2));
+    width: 80%;
+    max-width: 900px;
+    border-radius: 10px;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.register-section p {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.register-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff8c00, #ff0080);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.register-btn:hover {
+    background: linear-gradient(135deg, #ff0080, #ff8c00);
+    transform: scale(1.05);
+}
+
+#welcome-section {
+    text-align: center;
+    background: linear-gradient(90deg, #ff8c00, #ff0080);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 900px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#welcome-text {
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    margin: 0;
+}
+
 
