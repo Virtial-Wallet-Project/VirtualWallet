@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+    <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
+
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <h1>
+            <img src="../static/logo.png" alt="Virtual Wallet Logo" class="logo">
+            Virtual Wallet
+        </h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <span> | </span>
+                <li><a th:href="@{/about}" class="active">About</a></li>
+                <span> | </span>
+                <li><a th:href="@{/login}">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="log-register">
+
+    <h2>Login</h2>
+
+    <form action="#" th:action="@{/auth/login}" th:object="${login}" method="post">
+
+        <label class="form-label"> Username </label>
+        <br>
+        <input class="form-input" type="text" th:field="*{username}" placeholder="Enter username:">
+        <label class="form-error" th:errors="*{username}"> Username error placeholder </label>
+        <br><br>
+
+        <label class="form-label"> Password </label>
+        <br>
+        <input class="form-input" type="password" th:field="*{password}" placeholder="Enter password:">
+        <label class="form-error" th:errors="*{password}"> Password error placeholder </label>
+        <br> <br>
+
+        <input class="btn-primary" type="submit" value="Login">
+
+    </form>
+
+    <p class="register-text">Not registered yet? <a href="#" th:href="@{/auth/register}" class="register-link">Register now</a></p>
+
+</div>
+
+<footer>
+    <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

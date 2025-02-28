@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+    <script src="../static/script.js" th:src="@{/script.js}" defer></script>
     <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
 </head>
 
@@ -16,7 +17,7 @@
 <header>
     <div class="nav-container">
         <h1>
-            <img src="../static/logo.png" alt="Virtual Wallet Logo" class="logo">
+            <img src="../static/logo.png" th:src="@{/logo.png}" alt="Virtual Wallet Logo" class="logo">
             Virtual Wallet
         </h1>
         <nav>
@@ -31,7 +32,42 @@
     </div>
 </header>
 
+<section id="welcome-section">
+    <p id="welcome-text">Welcome to our brand new innovative and secure Virtual Wallet!</p>
+</section>
 
+<main class="main">
+
+    <section class="currency-converter">
+        <h2>Currency Converter</h2>
+        <div class="converter">
+            <input type="number" id="amount" placeholder="Enter amount">
+            <select id="from-currency">
+                <option value="BGN">BGN</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </select>
+            <span>➡</span>
+            <select id="to-currency">
+                <option value="USD">USD</option>
+                <option value="BGN">BGN</option>
+                <option value="EUR">EUR</option>
+            </select>
+            <button id="convert-btn">Convert</button>
+        </div>
+        <p id="result"></p>
+    </section>
+
+    <section class="currency-graphics">
+        <h2>Currency Trends</h2>
+        <img src="../static/currency-chart.jpg" th:src="@{/currency-chart.jpg}" alt="Currency Trends Graph" id="currencyChart">
+    </section>
+</main>
+
+<section th:unless="${isAuthenticated}" class="register-section">
+    <p>Don't have an account yet? Register now to access all features!</p>
+    <a href="#" th:href="@{/auth/register}" class="register-btn">Register Now</a>
+</section>
 
 <footer>
     <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
