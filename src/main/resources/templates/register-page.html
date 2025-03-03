@@ -12,7 +12,7 @@
     <header>
         <div class="nav-container">
             <h1>
-                <img src="../static/logo.png" alt="Virtual Wallet Logo" class="logo">
+                <img src="../static/logo.png" th:src="@{/logo.png}" alt="Virtual Wallet Logo" class="logo">
                 Virtual Wallet
             </h1>
             <nav>
@@ -21,7 +21,8 @@
                     <span> | </span>
                     <li><a th:href="@{/about}" class="active">About</a></li>
                     <span> | </span>
-                    <li><a th:href="@{/login}">Login</a></li>
+                    <li><a th:unless="${isAuthenticated}" th:href="@{/auth/login}" href="#">Login</a></li>
+                    <li><a th:if="${isAuthenticated}" href="#" th:href="@{/auth/logout}">Logout</a></li>
                 </ul>
             </nav>
         </div>

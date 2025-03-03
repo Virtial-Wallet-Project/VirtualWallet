@@ -1,12 +1,13 @@
 package com.example.virtualwallet.service;
 
+import com.example.virtualwallet.models.FilterUserOptions;
 import com.example.virtualwallet.models.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> getAll();
+    List<User> getAll(FilterUserOptions filterUserOptions);
 
     User getById(User modifier, int id);
 
@@ -17,8 +18,6 @@ public interface UserService {
     User getByUsername(String username);
 
     User getByEmail(User admin, String email);
-
-    User getByFirstName(User admin, String firstName);
 
     void createUser(User user);
 

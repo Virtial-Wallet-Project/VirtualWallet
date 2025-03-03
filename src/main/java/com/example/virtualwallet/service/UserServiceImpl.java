@@ -2,6 +2,9 @@ package com.example.virtualwallet.service;
 
 import com.example.virtualwallet.exception.DuplicateEntityException;
 import com.example.virtualwallet.exception.EntityNotFoundException;
+import com.example.virtualwallet.exception.InvalidOperationException;
+import com.example.virtualwallet.helpers.PermissionHelpers;
+import com.example.virtualwallet.models.FilterUserOptions;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +23,27 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> getAll() {
-        return List.of();
+    public List<User> getAll(FilterUserOptions filterUserOptions) {
+        return userRepository.getAll(filterUserOptions);
     }
 
     @Override
-    public User getById(User modifier, int id) {
-        return null;
+    public User getById(User admin, int id) {
+        PermissionHelpers.checkIfBlocked(admin);
+        PermissionHelpers.checkIfAdmin(admin);
+        return userRepository.getById(id);
     }
 
     @Override
     public User getUserById(int id) {
-        return null;
+        return userRepository.getById(id);
     }
 
     @Override
     public User getByUsernameForAdmin(User admin, String username) {
-        return null;
+        PermissionHelpers.checkIfBlocked(admin);
+        PermissionHelpers.checkIfAdmin(admin);
+        return userRepository.getByUsername(username);
     }
 
     @Override
@@ -46,12 +53,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getByEmail(User admin, String email) {
-        return null;
-    }
-
-    @Override
-    public User getByFirstName(User admin, String firstName) {
-        return null;
+        PermissionHelpers.checkIfBlocked(admin);
+        PermissionHelpers.checkIfAdmin(admin);
+        return userRepository.getByEmail(email);
     }
 
     @Override
@@ -85,31 +89,87 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUser(User user, User modifier) {
+        PermissionHelpers.checkIfBlocked(modifier);
+        PermissionHelpers.checkIfCreatorOrAdmin(user.getId(), modifier);
 
+        boolean duplicateExists = true;
+        try {
+            User existingUser = userRepository.getByUsername(user.getUsername());
+            if (user.getUsername().equals(existingUser.getUsername()) &&
+                    user.getPassword().equals(existingUser.getPassword()) &&
+                    user.getEmail().equals(existingUser.getEmail()) &&
+                    user.getPhoneNumber().equals(existingUser.getPhoneNumber())) {
+
+                throw new InvalidOperationException("Invalid operation! Nothing was changed!");
+            }
+
+            if (existingUser.getId() == user.getId()){
+                duplicateExists = false;
+            }
+
+        } catch (EntityNotFoundException e) {
+            duplicateExists = false;
+
+        }
+
+        if (duplicateExists) {
+            throw new DuplicateEntityException("User", "email", user.getEmail());
+        }
+        userRepository.updateUser(user);
     }
 
     @Override
-    public void deleteUser(User modifier, int id) {
-
+    public void deleteUser(User admin, int id) {
+        PermissionHelpers.checkIfBlocked(admin);
+        PermissionHelpers.checkIfAdmin(admin);
+        userRepository.deleteUser(id);
     }
 
     @Override
     public void makeAdmin(User admin, int id) {
-
+        PermissionHelpers.checkIfBlocked(admin);
+        PermissionHelpers.checkIfAdmin(admin);
+        User user = userRepository.getById(id);
+        if (user.isAdmin()){
+            throw new InvalidOperationException("User is already admin!");
+        }
+        user.setAdmin(true);
+        userRepository.updateUser(user);
     }
 
     @Override
     public void removeAdmin(User admin, int id) {
-
+        PermissionHelpers.checkIfBlocked(admin);
+        PermissionHelpers.checkIfAdmin(admin);
+        User user = userRepository.getById(id);
+        if (!user.isAdmin()){
+            throw new InvalidOperationException("User is already an ordinary user!");
+        }
+        user.setAdmin(false);
+        userRepository.updateUser(user);
     }
 
     @Override
     public void blockUser(User admin, int id) {
-
+        PermissionHelpers.checkIfBlocked(admin);
+        PermissionHelpers.checkIfAdmin(admin);
+        User user = userRepository.getById(id);
+        if (user.isBlocked()){
+            throw new InvalidOperationException("User is already blocked!");
+        }
+        user.setBlocked(true);
+        userRepository.updateUser(user);
     }
 
     @Override
     public void unblockUser(User admin, int id) {
-
+        PermissionHelpers.checkIfBlocked(admin);
+        PermissionHelpers.checkIfAdmin(admin);
+        User user = userRepository.getById(id);
+        if (!user.isBlocked()){
+            throw new InvalidOperationException("User is already not blocked!");
+        }
+        user.setBlocked(false);
+        userRepository.updateUser(user);
     }
 }

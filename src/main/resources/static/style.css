@@ -197,7 +197,7 @@ footer {
     max-width: 900px;
     height: auto;
     margin: 50px auto;
-    margin-bottom: 152px;
+    margin-bottom: 208px;
     padding: 30px;
     background: linear-gradient(135deg, #8e44ad, #3498db);
     color: #fff;
@@ -230,7 +230,7 @@ footer {
 }
 
 .form-error {
-    color: #f81616;
+    color: #e31010;
     font-size: 14px;
     display: block;
     margin-top: -8px;
@@ -397,7 +397,7 @@ footer {
 
 .register-section {
     background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2));
-    width: 80%;
+    width: 50%;
     max-width: 900px;
     border-radius: 10px;
     text-align: center;
