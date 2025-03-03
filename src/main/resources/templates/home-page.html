@@ -26,7 +26,8 @@
                 <span> | </span>
                 <li><a th:href="@{/about}" class="active">About</a></li>
                 <span> | </span>
-                <li><a th:href="@{/login}">Login</a></li>
+                <li><a th:unless="${isAuthenticated}" th:href="@{/auth/login}" href="#">Login</a></li>
+                <li><a th:if="${isAuthenticated}" href="#" th:href="@{/auth/logout}">Logout</a></li>
             </ul>
         </nav>
     </div>
@@ -35,7 +36,10 @@
 <section id="welcome-section">
     <p id="welcome-text">Welcome to our brand new innovative and secure Virtual Wallet!</p>
 </section>
-
+<section th:unless="${isAuthenticated}" class="register-section">
+    <p>Don't have an account yet? Register now to access all features!</p>
+    <a href="#" th:href="@{/auth/register}" class="register-btn">Register Now</a>
+</section>
 <main class="main">
 
     <section class="currency-converter">
@@ -63,11 +67,6 @@
         <img src="../static/currency-chart.jpg" th:src="@{/currency-chart.jpg}" alt="Currency Trends Graph" id="currencyChart">
     </section>
 </main>
-
-<section th:unless="${isAuthenticated}" class="register-section">
-    <p>Don't have an account yet? Register now to access all features!</p>
-    <a href="#" th:href="@{/auth/register}" class="register-btn">Register Now</a>
-</section>
 
 <footer>
     <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
