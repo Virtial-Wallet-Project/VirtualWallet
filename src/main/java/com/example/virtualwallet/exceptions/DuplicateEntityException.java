@@ -1,4 +1,4 @@
-package com.example.virtualwallet.exception;
+package com.example.virtualwallet.exceptions;
 
 public class DuplicateEntityException extends RuntimeException{
     public DuplicateEntityException(String type, String attribute, String value){

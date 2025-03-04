@@ -1,7 +1,7 @@
 package com.example.virtualwallet.controllers.mvc;
 
-import com.example.virtualwallet.exception.AuthenticationFailureException;
-import com.example.virtualwallet.exception.DuplicateEntityException;
+import com.example.virtualwallet.exceptions.AuthenticationFailureException;
+import com.example.virtualwallet.exceptions.DuplicateEntityException;
 import com.example.virtualwallet.helpers.AuthenticationHelper;
 import com.example.virtualwallet.helpers.RegisterMapper;
 import com.example.virtualwallet.models.LoginDto;

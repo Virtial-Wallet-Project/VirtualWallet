@@ -1,19 +1,19 @@
 package com.example.virtualwallet.service;
 
-import com.example.virtualwallet.exception.DuplicateEntityException;
-import com.example.virtualwallet.exception.EntityNotFoundException;
-import com.example.virtualwallet.exception.InvalidOperationException;
+import com.example.virtualwallet.exceptions.DuplicateEntityException;
+import com.example.virtualwallet.exceptions.EntityNotFoundException;
+import com.example.virtualwallet.exceptions.InvalidOperationException;
 import com.example.virtualwallet.helpers.PermissionHelpers;
 import com.example.virtualwallet.models.FilterUserOptions;
 import com.example.virtualwallet.models.User;
-import com.example.virtualwallet.repository.UserRepository;
+import com.example.virtualwallet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
@@ -40,28 +40,25 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User getByUsernameForAdmin(User admin, String username) {
-        PermissionHelpers.checkIfBlocked(admin);
-        PermissionHelpers.checkIfAdmin(admin);
-        return userRepository.getByUsername(username);
-    }
-
-    @Override
     public User getByUsername(String username) {
         return userRepository.getByUsername(username);
     }
 
     @Override
-    public User getByEmail(User admin, String email) {
-        PermissionHelpers.checkIfBlocked(admin);
-        PermissionHelpers.checkIfAdmin(admin);
+    public User getByEmail(String email) {
         return userRepository.getByEmail(email);
+    }
+
+    @Override
+    public User getByPhoneNumber(String phoneNumber) {
+        return userRepository.getByPhoneNumber(phoneNumber);
     }
 
     @Override
     public void createUser(User user) {
         boolean usernameExists = true;
         boolean emailExists = true;
+        boolean phoneNumberExists = true;
         try {
             userRepository.getByUsername(user.getUsername());
 
@@ -77,11 +74,22 @@ public class UserServiceImpl implements UserService{
         }
 
 
+        try {
+            userRepository.getByPhoneNumber(user.getPhoneNumber());
+
+        } catch (EntityNotFoundException e) {
+            phoneNumberExists = false;
+        }
+
+
         if (usernameExists) {
             throw new DuplicateEntityException("User", "username", user.getUsername());
 
-        } else if (emailExists){
+        } else if (emailExists) {
             throw new DuplicateEntityException("User", "email", user.getEmail());
+
+        } else if (phoneNumberExists) {
+            throw new DuplicateEntityException("User", "phone number", user.getPhoneNumber());
         }
 
         userRepository.createUser(user);
@@ -89,38 +97,54 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUser(User user, User modifier) {
-        PermissionHelpers.checkIfBlocked(modifier);
-        PermissionHelpers.checkIfCreatorOrAdmin(user.getId(), modifier);
+        PermissionHelpers.checkIfCreatorOrAdmin(user.getUserId(), modifier);
 
-        boolean duplicateExists = true;
+        boolean duplicateExistsForEmail = true;
+        boolean duplicateExistsForPhone = true;
+
         try {
-            User existingUser = userRepository.getByUsername(user.getUsername());
-            if (user.getUsername().equals(existingUser.getUsername()) &&
-                    user.getPassword().equals(existingUser.getPassword()) &&
-                    user.getEmail().equals(existingUser.getEmail()) &&
-                    user.getPhoneNumber().equals(existingUser.getPhoneNumber())) {
+            User existingUser = userRepository.getByEmail(user.getEmail());
 
-                throw new InvalidOperationException("Invalid operation! Nothing was changed!");
-            }
-
-            if (existingUser.getId() == user.getId()){
-                duplicateExists = false;
+            if (existingUser.getUserId() == user.getUserId()) {
+                duplicateExistsForEmail = false;
             }
 
         } catch (EntityNotFoundException e) {
-            duplicateExists = false;
+            duplicateExistsForEmail = false;
 
         }
 
-        if (duplicateExists) {
+        try {
+            User existingUser = userRepository.getByPhoneNumber(user.getPhoneNumber());
+
+            if (existingUser.getUserId() == user.getUserId()) {
+                duplicateExistsForPhone = false;
+            }
+
+        } catch (EntityNotFoundException e) {
+            duplicateExistsForPhone = false;
+        }
+
+        if (duplicateExistsForEmail) {
             throw new DuplicateEntityException("User", "email", user.getEmail());
+        } else if (duplicateExistsForPhone) {
+            throw new DuplicateEntityException("User", "phone number", user.getPhoneNumber());
+        }
+
+        User existingUser = userRepository.getByEmail(user.getEmail());
+
+        if (user.getPassword().equals(existingUser.getPassword()) &&
+                user.getEmail().equals(existingUser.getEmail()) &&
+                user.getPhoneNumber().equals(existingUser.getPhoneNumber())) {
+
+            throw new InvalidOperationException("Invalid operation! Nothing was changed!");
         }
         userRepository.updateUser(user);
     }
 
     @Override
     public void deleteUser(User admin, int id) {
-        PermissionHelpers.checkIfBlocked(admin);
+        //To check if a user can also delete his own profile
         PermissionHelpers.checkIfAdmin(admin);
         userRepository.deleteUser(id);
     }

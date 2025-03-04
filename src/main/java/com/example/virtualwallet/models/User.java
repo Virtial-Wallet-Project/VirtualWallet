@@ -26,6 +26,9 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "balance")
+    private double balance;
+
     @Column(name = "is_admin")
     private boolean isAdmin;
 
@@ -41,12 +44,14 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String username, String password, String email, String phoneNumber, boolean isAdmin, boolean isBlocked) {
+    public User(int userId, String username, String password, String email, String phoneNumber,
+                double balance, boolean isAdmin, boolean isBlocked) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.balance = balance;
         this.isAdmin = isAdmin;
         this.isBlocked = isBlocked;
     }
@@ -89,6 +94,14 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public boolean isAdmin() {

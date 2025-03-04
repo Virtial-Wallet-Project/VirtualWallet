@@ -1,4 +1,4 @@
-package com.example.virtualwallet.exception;
+package com.example.virtualwallet.exceptions;
 
 public class InvalidOperationException  extends RuntimeException {
 

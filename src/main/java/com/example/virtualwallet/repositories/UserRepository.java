@@ -1,4 +1,4 @@
-package com.example.virtualwallet.repository;
+package com.example.virtualwallet.repositories;
 
 import com.example.virtualwallet.models.FilterUserOptions;
 import com.example.virtualwallet.models.User;
@@ -14,6 +14,8 @@ public interface UserRepository {
     User getByUsername(String username);
 
     User getByEmail(String email);
+
+    User getByPhoneNumber (String phoneNumber);
 
     void createUser(User user);
 

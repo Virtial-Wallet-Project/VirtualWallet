@@ -1,9 +1,9 @@
-INSERT INTO users (username, password, email, phone_number, is_admin, is_blocked) VALUES
-('user1', 'hashed_password1', 'user1@example.com', '1234567890', FALSE, FALSE),
-('user2', 'hashed_password2', 'user2@example.com', '0987654321', FALSE, FALSE),
-('admin1', 'hashed_admin1', 'admin@example.com', '1112223333', TRUE, FALSE),
-('blocked1', 'hashed_password3', 'blocked@example.com', '2223334444', FALSE, TRUE),
-('user3', 'hashed_password4', 'user3@example.com', '3334445555', FALSE, FALSE);
+INSERT INTO users (username, password, email, phone_number, balance, is_admin, is_blocked) VALUES
+('user1', 'hashed_password1', 'user1@example.com', '1234567890', 100.00, FALSE, FALSE),
+('user2', 'hashed_password2', 'user2@example.com', '0987654321', 25.00, FALSE, FALSE),
+('admin1', 'hashed_admin1', 'admin@example.com', '1112223333', 1000.00, TRUE, FALSE),
+('blocked1', 'hashed_password3', 'blocked@example.com', '2223334444', 2000.00, FALSE, TRUE),
+('user3', 'hashed_password4', 'user3@example.com', '3334445555', 700.00, FALSE, FALSE);
 
 INSERT INTO credit_cards (user_id, card_number, expiration_date, card_holder, check_number) VALUES
 
