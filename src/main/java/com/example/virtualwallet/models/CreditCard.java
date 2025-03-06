@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "credit_cards")
@@ -79,5 +80,18 @@ public class CreditCard {
 
     public void setCheckNumber(String checkNumber) {
         this.checkNumber = checkNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CreditCard card = (CreditCard) o;
+        return cardId == card.cardId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cardId);
     }
 }

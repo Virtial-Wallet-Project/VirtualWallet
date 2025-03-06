@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll(FilterUserOptions filterUserOptions) {
-        return userRepository.getAll(filterUserOptions);
+    public List<User> getAll(FilterUserOptions filterUserOptions, int page, int size) {
+        return userRepository.getAll(filterUserOptions, page, size);
     }
 
     @Override
@@ -105,6 +105,13 @@ public class UserServiceImpl implements UserService {
         try {
             User existingUser = userRepository.getByEmail(user.getEmail());
 
+            if (user.getPassword().equals(existingUser.getPassword()) &&
+                    user.getEmail().equals(existingUser.getEmail()) &&
+                    user.getPhoneNumber().equals(existingUser.getPhoneNumber())) {
+
+                throw new InvalidOperationException("Invalid operation! Nothing was changed!");
+            }
+
             if (existingUser.getUserId() == user.getUserId()) {
                 duplicateExistsForEmail = false;
             }
@@ -131,21 +138,12 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateEntityException("User", "phone number", user.getPhoneNumber());
         }
 
-        User existingUser = userRepository.getByEmail(user.getEmail());
-
-        if (user.getPassword().equals(existingUser.getPassword()) &&
-                user.getEmail().equals(existingUser.getEmail()) &&
-                user.getPhoneNumber().equals(existingUser.getPhoneNumber())) {
-
-            throw new InvalidOperationException("Invalid operation! Nothing was changed!");
-        }
         userRepository.updateUser(user);
     }
 
     @Override
-    public void deleteUser(User admin, int id) {
-        //To check if a user can also delete his own profile
-        PermissionHelpers.checkIfAdmin(admin);
+    public void deleteUser(User modifier, int id) {
+        PermissionHelpers.checkIfCreatorOrAdmin(id, modifier);
         userRepository.deleteUser(id);
     }
 

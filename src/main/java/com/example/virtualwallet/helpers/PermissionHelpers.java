@@ -1,6 +1,7 @@
 package com.example.virtualwallet.helpers;
 
 import com.example.virtualwallet.exceptions.UnauthorizedOperationException;
+import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
 
 public class PermissionHelpers {
@@ -18,6 +19,12 @@ public class PermissionHelpers {
     public static void checkIfBlocked(User user) {
         if (user.isBlocked()) {
             throw new UnauthorizedOperationException(BLOCKED_USER_ERROR);
+        }
+    }
+
+    public static void checkIfCreatorOrAdminForCreditCard(User user, CreditCard card) {
+        if (!user.equals(card.getCreatedBy()) && !user.isAdmin()) {
+            throw new UnauthorizedOperationException(AUTHORIZATION_PERMISSION_ERROR);
         }
     }
 

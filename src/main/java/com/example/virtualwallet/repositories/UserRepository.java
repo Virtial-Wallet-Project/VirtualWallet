@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserRepository {
 
-    List<User> getAll(FilterUserOptions filterOptions);
+    List<User> getAll(FilterUserOptions filterOptions, int page, int size);
 
     User getById(int id);
 

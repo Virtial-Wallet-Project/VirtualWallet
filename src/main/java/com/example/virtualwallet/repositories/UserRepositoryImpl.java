@@ -27,7 +27,7 @@ public class UserRepositoryImpl implements UserRepository {
 
 
     @Override
-    public List<User> getAll(FilterUserOptions filterOptions) {
+    public List<User> getAll(FilterUserOptions filterOptions, int page, int size) {
         try (Session session = sessionFactory.openSession()) {
             StringBuilder sb = new StringBuilder("FROM User");
             List<String> filters = new ArrayList<>();
@@ -53,6 +53,11 @@ public class UserRepositoryImpl implements UserRepository {
             }
 
             sb.append(createOrderBy(filterOptions));
+            sb.append("LIMIT ");
+            sb.append(size);
+            sb.append("OFFSET ");
+            sb.append(page * size);
+
             Query<User> query = session.createQuery(sb.toString(), User.class);
             query.setProperties(params);
             return query.list();

@@ -2,8 +2,8 @@ package com.example.virtualwallet.models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "transactions")
@@ -69,5 +69,18 @@ public class Transaction {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction transaction = (Transaction) o;
+        return transactionId == transaction.transactionId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(transactionId);
     }
 }
