@@ -1,6 +1,6 @@
 package com.example.virtualwallet.service;
 
-import com.example.virtualwallet.models.Card;
+import com.example.virtualwallet.models.CardForDummyAPI;
 import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.repositories.UserRepository;
@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 @Service
-public class WithdrawServiceImpl implements WithdrawService {
+public class DepositServiceImpl implements DepositService {
 
     private final UserRepository userRepository;
     private final RestTemplate restTemplate;
@@ -22,18 +22,17 @@ public class WithdrawServiceImpl implements WithdrawService {
     private final String MONEY_TRANSFER_API_URL = "http://localhost:8081/api/transfer/withdraw";
 
     @Autowired
-    public WithdrawServiceImpl(UserRepository userRepository, RestTemplate restTemplate, SessionFactory sessionFactory) {
+    public DepositServiceImpl(UserRepository userRepository, RestTemplate restTemplate, SessionFactory sessionFactory) {
         this.userRepository = userRepository;
         this.restTemplate = restTemplate;
         this.sessionFactory = sessionFactory;
     }
 
-    //Might need some changes, non-final version
     @Override
     @Transactional
     public String depositMoney(User user, CreditCard userCard, double amount) {
 
-        Card card = new Card();
+        CardForDummyAPI card = new CardForDummyAPI();
         card.setCardNumber(userCard.getCardNumber());
         card.setCheckNumber(userCard.getCheckNumber());
 
@@ -45,7 +44,7 @@ public class WithdrawServiceImpl implements WithdrawService {
                 return "Deposit Successful! New Balance: " + user.getBalance();
 
         } else {
-            return "Deposit Failed: " + response.getBody();
+            return "Deposit Failed! Insufficient funds!";
         }
     }
 }

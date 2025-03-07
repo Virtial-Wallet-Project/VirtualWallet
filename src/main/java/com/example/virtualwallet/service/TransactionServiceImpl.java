@@ -1,5 +1,6 @@
 package com.example.virtualwallet.service;
 
+import com.example.virtualwallet.exceptions.InvalidOperationException;
 import com.example.virtualwallet.helpers.PermissionHelpers;
 import com.example.virtualwallet.models.FilterTransactionOptions;
 import com.example.virtualwallet.models.Transaction;
@@ -25,13 +26,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> getAll(FilterTransactionOptions filterOptions, int page, int size, User user) {
-        PermissionHelpers.checkIfAdmin(user);
+        // Hardcode the logged user as the filterOptions userId in the Rest Controller!!
         return transactionRepository.getAll(filterOptions, page, size);
-    }
-
-    @Override
-    public List<Transaction> getAllTransactionsForLoggedUser(FilterTransactionOptions filterOptions, int page, int size, User user) {
-        return transactionRepository.getAllTransactionsForLoggedUser(filterOptions, page, size, user);
     }
 
     @Override
@@ -43,16 +39,24 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction createTransaction(User sender, int recipientId, double amount, Transaction transaction) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Amount must be greater than zero!");
+            throw new InvalidOperationException("Amount must be greater than zero!");
         }
 
         User recipient = userRepository.getById(recipientId);
 
         if (sender.equals(recipient)) {
-            throw new IllegalArgumentException("You cannot send money to yourself!");
+            throw new InvalidOperationException("You cannot send money to yourself!");
+        }
+
+        if (sender.getBalance() <= amount) {
+            throw new IllegalArgumentException("Invalid operation! Insufficient funds!");
         }
 
         transactionRepository.createTransaction(transaction);
+        sender.setBalance(sender.getBalance() - amount);
+        recipient.setBalance(recipient.getBalance() + amount);
+        userRepository.updateUser(sender);
+        userRepository.updateUser(recipient);
         return transaction;
     }
 

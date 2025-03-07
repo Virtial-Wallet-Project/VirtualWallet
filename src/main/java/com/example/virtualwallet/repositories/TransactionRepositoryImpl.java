@@ -3,7 +3,6 @@ package com.example.virtualwallet.repositories;
 import com.example.virtualwallet.exceptions.EntityNotFoundException;
 import com.example.virtualwallet.models.FilterTransactionOptions;
 import com.example.virtualwallet.models.Transaction;
-import com.example.virtualwallet.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -60,49 +59,6 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             if (!filters.isEmpty()) {
                 sb.append(" WHERE ").append(String.join(" AND ", filters));
             }
-
-            sb.append(createOrderBy(filterOptions));
-            sb.append("LIMIT ");
-            sb.append(size);
-            sb.append("OFFSET ");
-            sb.append(page * size);
-
-            Query<Transaction> query = session.createQuery(sb.toString(), Transaction.class);
-            query.setProperties(params);
-            return query.list();
-        }
-    }
-
-
-    public List<Transaction> getAllTransactionsForLoggedUser (FilterTransactionOptions filterOptions, int page, int size, User user) {
-        try (Session session = sessionFactory.openSession()) {
-            StringBuilder sb = new StringBuilder("FROM Transaction t");
-            List<String> filters = new ArrayList<>();
-            Map<String, Object> params = new HashMap<>();
-            sb.append(" WHERE ").append(String.join(" AND ", filters));
-
-            filters.add("(t.sender.userId = :userId OR t.recipient.userId = :userId)");
-            params.put("userId", user.getUserId());
-
-            filterOptions.getSenderId().ifPresent(senderId -> {
-                filters.add("t.sender.userId = :senderId");
-                params.put("senderId", senderId);
-            });
-
-            filterOptions.getRecipientId().ifPresent(recipientId -> {
-                filters.add("t.recipient.userId = :recipientId");
-                params.put("recipientId", recipientId);
-            });
-
-            filterOptions.getStartDate().ifPresent(startDate -> {
-                filters.add("t.transactionDate >= :startDate");
-                params.put("startDate", startDate);
-            });
-
-            filterOptions.getEndDate().ifPresent(endDate -> {
-                filters.add("t.transactionDate <= :endDate");
-                params.put("endDate", endDate);
-            });
 
             sb.append(createOrderBy(filterOptions));
             sb.append("LIMIT ");

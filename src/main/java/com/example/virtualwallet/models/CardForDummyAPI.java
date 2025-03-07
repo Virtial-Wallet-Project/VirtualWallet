@@ -4,7 +4,7 @@ package com.example.virtualwallet.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Card {
+public class CardForDummyAPI {
 
     @JsonProperty("cardNumber")
     private String cardNumber;
@@ -12,7 +12,7 @@ public class Card {
     @JsonProperty("checkNumber")
     private String checkNumber;
 
-    public Card() {
+    public CardForDummyAPI() {
     }
 
     public String getCardNumber() {

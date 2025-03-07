@@ -10,8 +10,6 @@ public interface TransactionRepository {
 
     List<Transaction> getAll(FilterTransactionOptions filterOptions, int page, int size);
 
-    List<Transaction> getAllTransactionsForLoggedUser (FilterTransactionOptions filterOptions, int page, int size, User user);
-
     Transaction getById(int id);
 
     List<Transaction> getBySenderId(int senderId);
