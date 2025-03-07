@@ -32,29 +32,41 @@
     </div>
 </header>
 
-
 <div class="account-container">
-    <h2>Update Your Account</h2>
+    <h2 id="h2">Update Your Account</h2>
 
-    <!-- Display error messages -->
-    <p th:if="${error}" th:text="${error}" style="color: red;"></p>
-    <p th:if="${param.success}" style="color: green;">Account updated successfully!</p>
+    <form method="post" th:action="@{/account/update}" th:object="${user}" class="form-update">
+        <div class="mb-3">
+            <label class="update-label">Username:</label>
+            <input type="text" class="form-control" th:field="*{username}" readonly>
+        </div>
 
-    <form th:action="@{/account/update}" th:object="${user}" method="post">
-        <label>Username:</label>
-        <input type="text" th:field="*{username}" readonly>
+        <div class="mb-3">
+            <label class="update-label">Email:</label>
+            <input type="email" class="form-control" th:field="*{email}" required>
+        </div>
 
-        <label>Email:</label>
-        <input type="email" th:field="*{email}">
+        <div class="mb-3">
+            <label class="update-label">Phone Number:</label>
+            <input type="text" class="form-control" th:field="*{phoneNumber}" required>
+        </div>
 
-        <label>Phone Number:</label>
-        <input type="text" th:field="*{phoneNumber}">
+        <div class="mb-3">
+            <label class="update-label" >New Password:</label>
+            <input type="password" class="form-control" th:field="*{password}" placeholder="Enter new password">
+        </div>
 
-        <label>New Password:</label>
-        <input type="password" th:field="*{password}">
+        <button type="submit" class="btn btn-update">UPDATE</button>
 
-        <button type="submit">Update</button>
     </form>
+
+    <div th:if="${success}" class="alert alert-success">
+        <p th:text="${success}"></p>
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
 </div>
 
 <footer>

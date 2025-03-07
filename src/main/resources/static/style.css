@@ -448,4 +448,60 @@ footer {
     margin: 0;
 }
 
+.account-container {
+    max-width: 500px;
+    margin: 50px auto;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#h2 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.update-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.form-control::placeholder {
+    color: #ddd;
+}
+
+.mb-3{
+    margin-top: 20px;
+}
+
+.btn-update {
+    width: 100%;
+    padding: 12px;
+    margin-top: 50px;
+    border-radius: 8px;
+    background: #f84949;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.btn-update:hover {
+    background: #fa3244;
+}
+
 

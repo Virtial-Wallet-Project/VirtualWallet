@@ -27,7 +27,7 @@
                 <li><a th:href="@{/about}" class="active">About</a></li>
                 <span> | </span>
                 <li><a th:if="${isAuthenticated}" th:href="@{/account}" class="active">Account</a></li>
-                <span> | </span>
+                <span th:if="${isAuthenticated}"> | </span>
                 <li><a th:unless="${isAuthenticated}" th:href="@{/auth/login}" href="#">Login</a></li>
                 <li><a th:if="${isAuthenticated}" href="#" th:href="@{/auth/logout}">Logout</a></li>
             </ul>

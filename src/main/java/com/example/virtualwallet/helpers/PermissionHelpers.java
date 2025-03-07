@@ -28,9 +28,9 @@ public class PermissionHelpers {
         }
     }
 
-    public static void checkIfCreatorOrAdmin(int userId, User user) {
-        if (userId != user.getUserId() && !user.isAdmin()) {
-            throw new UnauthorizedOperationException(AUTHORIZATION_PERMISSION_ERROR);
+    public static void checkIfCreatorOrAdmin(int entityOwnerId, User modifier) {
+        if (modifier.getUserId() != (entityOwnerId) && !modifier.isAdmin()) {
+            throw new UnauthorizedOperationException("Invalid operation. Only an Admin or Creator can modify this entity!");
         }
     }
 }
