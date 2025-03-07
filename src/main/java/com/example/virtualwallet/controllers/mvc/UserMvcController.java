@@ -2,6 +2,7 @@ package com.example.virtualwallet.controllers.mvc;
 
 import com.example.virtualwallet.exceptions.DuplicateEntityException;
 import com.example.virtualwallet.exceptions.InvalidOperationException;
+import com.example.virtualwallet.helpers.AuthenticationHelper;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -20,10 +22,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserMvcController {
 
     private final UserService userService;
+    private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public UserMvcController(UserService userService) {
+    public UserMvcController(UserService userService, AuthenticationHelper authenticationHelper) {
         this.userService = userService;
+        this.authenticationHelper = authenticationHelper;
     }
 
     @GetMapping("/account")
@@ -68,6 +72,19 @@ public class UserMvcController {
                 return "redirect:/account";
             }
         }
+
+    @PostMapping("/account/delete")
+    public String deleteUser(@RequestParam("userId") int userId, HttpSession session, RedirectAttributes redirectAttributes) {
+        try {
+            User loggedUser = authenticationHelper.tryGetUser(session);
+            userService.deleteUser(loggedUser, userId);
+            redirectAttributes.addFlashAttribute("success", "Your account has been deleted successfully.");
+            return "redirect:/auth/logout";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/account";
+        }
+    }
 
 
     @ModelAttribute("isAuthenticated")

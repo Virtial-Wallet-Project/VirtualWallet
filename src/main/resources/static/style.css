@@ -492,7 +492,7 @@ footer {
     padding: 12px;
     margin-top: 50px;
     border-radius: 8px;
-    background: #f84949;
+    background: linear-gradient(135deg, #ff8c00, #ff0080);
     color: white;
     font-weight: bold;
     border: none;
@@ -501,7 +501,26 @@ footer {
 }
 
 .btn-update:hover {
-    background: #fa3244;
+    background: linear-gradient(135deg, #ff0080, #ff8c00);
+    transform: scale(1.05);
+}
+
+.btn-delete {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border-radius: 8px;
+    background: darkred;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.btn-delete:hover {
+    background-color: #650000;
+    transform: scale(1.05);
 }
 
 

@@ -56,7 +56,7 @@
             <input type="password" class="form-control" th:field="*{password}" placeholder="Enter new password">
         </div>
 
-        <button type="submit" class="btn btn-update">UPDATE</button>
+        <button type="submit" class="btn btn-update">UPDATE ACCOUNT</button>
 
     </form>
 
@@ -67,7 +67,16 @@
     <div th:if="${error}" class="alert alert-danger">
         <p th:text="${error}"></p>
     </div>
+
+    <form method="post" th:action="@{/account/delete}" class="form-delete">
+    <input type="hidden" name="userId" th:value="${user.userId}">
+    <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.')">
+        DELETE ACCOUNT
+    </button>
+</form>
 </div>
+
+
 
 <footer>
     <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
