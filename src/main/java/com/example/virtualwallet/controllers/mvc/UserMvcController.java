@@ -56,6 +56,7 @@ public class UserMvcController {
                 return "redirect:/auth/login";
             }
 
+            //Izpolzvay sessionFactory, za da vzemesh user-a zashtoto, ima razminavaniq v id-tata, ako ne razbirash, pishi, shte ti obqsnq.
             User currentUser = userService.getByUsername(currentUsername);
 
             if (currentUser.getUserId() != (user.getUserId())) {

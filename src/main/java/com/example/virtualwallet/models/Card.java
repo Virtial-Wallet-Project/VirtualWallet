@@ -2,10 +2,14 @@ package com.example.virtualwallet.models;
 
 //This class is used to make a card model for the dummy restAPI in order to withdraw money
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Card {
 
+    @JsonProperty("cardNumber")
     private String cardNumber;
 
+    @JsonProperty("checkNumber")
     private String checkNumber;
 
     public Card() {

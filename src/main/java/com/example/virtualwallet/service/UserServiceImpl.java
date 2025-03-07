@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
         boolean usernameExists = true;
         boolean emailExists = true;
         boolean phoneNumberExists = true;
+
         try {
             userRepository.getByUsername(user.getUsername());
 

@@ -29,7 +29,7 @@ public class PermissionHelpers {
     }
 
     public static void checkIfCreatorOrAdmin(int entityOwnerId, User modifier) {
-        if (modifier.getUserId() != (entityOwnerId) && !modifier.isAdmin()) {
+        if (entityOwnerId != modifier.getUserId() && !modifier.isAdmin()) {
             throw new UnauthorizedOperationException("Invalid operation. Only an Admin or Creator can modify this entity!");
         }
     }
