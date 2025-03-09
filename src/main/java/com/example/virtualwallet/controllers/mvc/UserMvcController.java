@@ -7,7 +7,6 @@ import com.example.virtualwallet.helpers.AuthenticationHelper;
 import com.example.virtualwallet.helpers.UserMapper;
 import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
-import com.example.virtualwallet.models.UserUpdateDto;
 import com.example.virtualwallet.service.CreditCardService;
 import com.example.virtualwallet.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -45,12 +44,17 @@ public class UserMvcController {
         }
 
         User user = userService.getByUsername(currentUsername);
+
+        CreditCard creditCard = creditCardService.getByUserId(user.getUserId());
+
         model.addAttribute("user", user);
+        model.addAttribute("creditCard", creditCard);
+
         return "profile-page";
     }
 
     @PostMapping("/account/update")
-    public String updateAccount(@Valid @ModelAttribute("user") UserUpdateDto userUpdateDto,
+    public String updateAccount(@Valid @ModelAttribute("user") User user,
                                 BindingResult errors,
                                 HttpSession session,
                                 Model model,
@@ -63,7 +67,7 @@ public class UserMvcController {
                 throw new UnauthorizedOperationException("You can only update your own account.");
             }
 
-            User updatedUser = userMapper.createUpdatedUserFromDto(userUpdateDto, userId);
+            User updatedUser = userMapper.createUpdatedUserFromDto(user, userId);
             userService.updateUser(updatedUser, loggedInUser);
 
             redirectAttributes.addFlashAttribute("success", "Your account has been successfully updated!");

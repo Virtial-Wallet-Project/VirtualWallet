@@ -1,7 +1,6 @@
 package com.example.virtualwallet.helpers;
 
 import com.example.virtualwallet.models.User;
-import com.example.virtualwallet.models.UserUpdateDto;
 import com.example.virtualwallet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,12 +15,12 @@ public class UserMapper {
         this.userRepository = userRepository;
     }
 
-    public User createUpdatedUserFromDto(UserUpdateDto userUpdateDto, int id) {
+    public User createUpdatedUserFromDto(User user, int id) {
         User existingUser = userRepository.getById(id);
-        existingUser.setUsername(userUpdateDto.getUsername());
-        existingUser.setPassword(userUpdateDto.getPassword());
-        existingUser.setEmail(userUpdateDto.getEmail());
-        existingUser.setPhoneNumber(userUpdateDto.getPhoneNumber());
+        existingUser.setUsername(user.getUsername());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setPhoneNumber(user.getPhoneNumber());
         return existingUser;
     }
 }

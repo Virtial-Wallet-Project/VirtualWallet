@@ -545,3 +545,97 @@ footer {
     }
 }
 
+.table-user {
+    width: 97%;
+    margin-left: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.header-user, .row-user {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.header-user {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.cell-user {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+}
+
+.row-user:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.row-user:hover {
+    background: #e9ecef;
+}
+
+.cell-user a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.cell-user a:hover {
+    text-decoration: underline;
+}
+
+.block-user-btn, .unblock-user-btn, .make-admin-btn, .remove-admin-btn {
+    padding: 6px 12px;
+    margin: 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.block-user-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.block-user-btn:hover {
+    background: #c82333;
+}
+
+.unblock-user-btn {
+    background: #28a745;
+    color: white;
+}
+
+.unblock-user-btn:hover {
+    background: #218838;
+}
+
+.make-admin-btn {
+    background-color: #3498db;
+    color: white;
+}
+
+.make-admin-btn:hover {
+    background-color: #2980b9;
+}
+
+.remove-admin-btn {
+    background-color: #f39c12;
+    color: white;
+}
+
+.remove-admin-btn:hover {
+    background-color: #e67e22;
+}
+

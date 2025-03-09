@@ -26,6 +26,8 @@
                 <span> | </span>
                 <li><a th:href="@{/about}" class="active">About</a></li>
                 <span> | </span>
+                <li><a th:href="@{/admin/login}" class="active">Admin</a></li>
+                <span> | </span>
                 <li><a th:if="${isAuthenticated}" th:href="@{/account}" class="active">Account</a></li>
                 <span th:if="${isAuthenticated}"> | </span>
                 <li><a th:unless="${isAuthenticated}" th:href="@{/auth/login}" href="#">Login</a></li>

@@ -78,9 +78,10 @@
 
 <div th:if="${creditCard != null}" class="credit-card-details">
     <h3>Your Credit Card</h3>
-    <p><strong>Card Number:</strong> **** **** **** <span th:text="${creditCard.lastFourDigits}"></span></p>
+    <p><strong>Card Number:</strong><span th:text="${creditCard.cardNumber}"></span></p>
     <p><strong>Expiration Date:</strong> <span th:text="${creditCard.expirationDate}"></span></p>
-    <p><strong>Cardholder:</strong> <span th:text="${creditCard.cardholderName}"></span></p>
+    <p><strong>Cardholder:</strong> <span th:text="${creditCard.cardHolder}"></span></p>
+    <p><strong>Cardholder:</strong> <span th:text="${creditCard.checkNumber}"></span></p>
 </div>
 
 <footer>
