@@ -32,6 +32,9 @@
     </div>
 </header>
 
+<h1 id="info">Information about your account</h1>
+<hr>
+
 <div class="account-container">
     <h2 id="h2">Update Your Account</h2>
 
@@ -52,12 +55,12 @@
 
         <div class="mb-3">
             <label class="update-label">Phone Number:</label>
-            <input type="text" class="form-control" th:field="*{phoneNumber}" required>
+            <input type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" class="form-control" th:field="*{phoneNumber}" required>
         </div>
 
         <div class="mb-3">
             <label class="update-label" >New Password:</label>
-            <input type="password" class="form-control" th:field="*{password}" placeholder="Enter new password">
+            <input type="password" class="form-control" th:field="*{password}" required>
         </div>
 
         <button type="submit" class="btn btn-update">UPDATE ACCOUNT</button>
@@ -72,17 +75,39 @@
 </form>
 </div>
 
-<form th:if="${creditCard == null}" method="get" th:action="@{/add-credit-card}">
-    <button type="submit" class="btn btn-add-card">ADD CREDIT CARD</button>
-</form>
+<th:block th:if="${creditCard == null}">
+    <div class="card-container">
+        <p class="card-text">You don't have a credit card yet.</p>
+        <a href="/add-credit-card" class="card-add">Add one here</a>
+    </div>
+</th:block>
 
-<div th:if="${creditCard != null}" class="credit-card-details">
-    <h3>Your Credit Card</h3>
-    <p><strong>Card Number:</strong><span th:text="${creditCard.cardNumber}"></span></p>
-    <p><strong>Expiration Date:</strong> <span th:text="${creditCard.expirationDate}"></span></p>
-    <p><strong>Cardholder:</strong> <span th:text="${creditCard.cardHolder}"></span></p>
-    <p><strong>Cardholder:</strong> <span th:text="${creditCard.checkNumber}"></span></p>
+
+<div class="credit-card-container">
+    <div th:if="${creditCard != null}" class="credit-card">
+        <div class="card-header">
+            <h3>Virtual Wallet</h3>
+        </div>
+        <div class="card-number">
+            <span th:text="${creditCard.cardNumber}"></span>
+        </div>
+        <div class="card-info">
+            <div>
+                <p><strong>Cardholder:</strong></p>
+                <span th:text="${creditCard.cardHolder}"></span>
+            </div>
+            <div>
+                <p><strong>Exp. Date:</strong></p>
+                <span th:text="${creditCard.expirationDate}"></span>
+            </div>
+        </div>
+        <div class="card-footer">
+            <p><strong>CVV:</strong> <span th:text="${creditCard.checkNumber}"></span></p>
+        </div>
+    </div>
 </div>
+
+
 
 <footer>
     <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>

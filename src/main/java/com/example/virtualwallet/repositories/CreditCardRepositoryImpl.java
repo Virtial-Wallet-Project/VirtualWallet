@@ -48,8 +48,7 @@ public class CreditCardRepositoryImpl implements CreditCardRepository {
             return card
                     .stream()
                     .findFirst()
-                    .orElseThrow(() -> new EntityNotFoundException("Card", "user ID",
-                            String.valueOf(userId)));
+                    .orElse(null);
         }
     }
 
