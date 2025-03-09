@@ -1,20 +1,23 @@
 package com.example.virtualwallet.controllers.mvc;
 
+import com.example.virtualwallet.exceptions.AuthenticationFailureException;
 import com.example.virtualwallet.exceptions.DuplicateEntityException;
-import com.example.virtualwallet.exceptions.InvalidOperationException;
+import com.example.virtualwallet.exceptions.UnauthorizedOperationException;
 import com.example.virtualwallet.helpers.AuthenticationHelper;
+import com.example.virtualwallet.helpers.UserMapper;
+import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
+import com.example.virtualwallet.models.UserUpdateDto;
+import com.example.virtualwallet.service.CreditCardService;
 import com.example.virtualwallet.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -22,12 +25,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserMvcController {
 
     private final UserService userService;
+    private final CreditCardService creditCardService;
     private final AuthenticationHelper authenticationHelper;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserMvcController(UserService userService, AuthenticationHelper authenticationHelper) {
+    public UserMvcController(UserService userService, CreditCardService creditCardService, AuthenticationHelper authenticationHelper, UserMapper userMapper) {
         this.userService = userService;
+        this.creditCardService = creditCardService;
         this.authenticationHelper = authenticationHelper;
+        this.userMapper = userMapper;
     }
 
     @GetMapping("/account")
@@ -42,37 +49,41 @@ public class UserMvcController {
         return "profile-page";
     }
 
-        @PostMapping("/account/update")
-        public String updateAccount(@Valid @ModelAttribute("user") User user,
-                                    BindingResult bindingResult,
-                                    HttpSession session,
-                                    RedirectAttributes redirectAttributes) {
-            if (bindingResult.hasErrors()) {
-                return "profile-page";
+    @PostMapping("/account/update")
+    public String updateAccount(@Valid @ModelAttribute("user") UserUpdateDto userUpdateDto,
+                                BindingResult errors,
+                                HttpSession session,
+                                Model model,
+                                RedirectAttributes redirectAttributes) {
+        try {
+            User loggedInUser = authenticationHelper.tryGetUser(session);
+            int userId = loggedInUser.getUserId();
+
+            if (!loggedInUser.isAdmin() && userId != loggedInUser.getUserId()) {
+                throw new UnauthorizedOperationException("You can only update your own account.");
             }
 
-            String currentUsername = (String) session.getAttribute("currentUser");
-            if (currentUsername == null) {
-                return "redirect:/auth/login";
-            }
+            User updatedUser = userMapper.createUpdatedUserFromDto(userUpdateDto, userId);
+            userService.updateUser(updatedUser, loggedInUser);
 
-            //Izpolzvay sessionFactory, za da vzemesh user-a zashtoto, ima razminavaniq v id-tata, ako ne razbirash, pishi, shte ti obqsnq.
-            User currentUser = userService.getByUsername(currentUsername);
+            redirectAttributes.addFlashAttribute("success", "Your account has been successfully updated!");
 
-            if (currentUser.getUserId() != (user.getUserId())) {
-                redirectAttributes.addFlashAttribute("error", "You can only update your own account.");
-                return "redirect:/account";
-            }
-
-            try {
-                userService.updateUser(user, currentUser);
-                redirectAttributes.addFlashAttribute("success", "Your account has been successfully updated.");
-                return "redirect:/account";
-            } catch (DuplicateEntityException | InvalidOperationException e) {
-                redirectAttributes.addFlashAttribute("error", e.getMessage());
-                return "redirect:/account";
-            }
+            return "redirect:/account";
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        } catch (DuplicateEntityException e) {
+            errors.rejectValue("email", "user.exists", e.getMessage());
+            return "profile-page";  // Re-render the profile page with errors
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "page-not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "access-denied";
         }
+    }
+
+
 
     @PostMapping("/account/delete")
     public String deleteUser(@RequestParam("userId") int userId, HttpSession session, RedirectAttributes redirectAttributes) {
@@ -85,6 +96,22 @@ public class UserMvcController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/account";
         }
+    }
+
+    @GetMapping("/add-credit-card")
+    public String showCreditCardForm(Model model) {
+
+        model.addAttribute("creditCard", new CreditCard());
+        return "add-credit-card-page";
+    }
+
+    @PostMapping("/add-credit-card")
+    public String addCreditCard(@ModelAttribute CreditCard creditCard, HttpSession session, RedirectAttributes redirectAttributes) {
+        User user = authenticationHelper.tryGetUser(session);
+
+        creditCardService.createCard(user, creditCard);
+        redirectAttributes.addFlashAttribute("success", "Credit card added successfully.");
+        return "redirect:/account";
     }
 
 
