@@ -9,7 +9,6 @@ import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.service.CreditCardService;
 import com.example.virtualwallet.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.YearMonth;
-import java.time.format.DateTimeParseException;
 
 
 @Controller
@@ -60,7 +57,6 @@ public class UserMvcController {
     public String updateAccount(@Valid @ModelAttribute("user") User user,
                                 BindingResult errors,
                                 HttpSession session,
-                                Model model,
                                 RedirectAttributes redirectAttributes) {
         try {
             User loggedInUser = authenticationHelper.tryGetUser(session);
@@ -80,13 +76,7 @@ public class UserMvcController {
             return "redirect:/auth/login";
         } catch (DuplicateEntityException e) {
             errors.rejectValue("email", "user.exists", e.getMessage());
-            return "profile-page";  // Re-render the profile page with errors
-        } catch (EntityNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
-            return "page-not-found";
-        } catch (UnauthorizedOperationException e) {
-            model.addAttribute("error", e.getMessage());
-            return "access-denied";
+            return "profile-page";
         }
     }
 
@@ -104,35 +94,6 @@ public class UserMvcController {
             return "redirect:/account";
         }
     }
-
-    @GetMapping("/add-credit-card")
-    public String showCreditCardForm(Model model) {
-
-        model.addAttribute("creditCard", new CreditCard());
-        return "add-credit-card-page";
-    }
-
-    @PostMapping("/add-credit-card")
-    public String addCreditCard(@Valid @ModelAttribute CreditCard creditCard,
-                                HttpSession session, RedirectAttributes redirectAttributes) {
-        User user = authenticationHelper.tryGetUser(session);
-        try {
-            if (creditCard.getExpirationDate() == null) {
-                throw new IllegalArgumentException("Expiration date is required.");
-            }
-
-            creditCardService.createCard(user, creditCard);
-
-            return "redirect:/account";
-        } catch (DateTimeParseException e) {
-            redirectAttributes.addFlashAttribute("error", "Invalid expiration date format. Use YYYY-MM.");
-        } catch (IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
-        }
-
-        return "redirect:/add-credit-card";
-    }
-
 
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {

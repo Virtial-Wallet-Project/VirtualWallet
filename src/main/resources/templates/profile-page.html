@@ -107,7 +107,16 @@
     </div>
 </div>
 
-
+<div class="delete-card-container">
+    <form th:if="${creditCard != null}" th:action="@{/delete-card/{cardId}(cardId=${creditCard.cardId})}"
+          method="post" class="delete-card-form">
+        <input type="hidden" name="_method" value="post">
+        <button type="submit" class="btn btn-delete-card"
+                onclick="return confirm('Are you sure you want to delete this card?');">
+            DELETE CARD
+        </button>
+    </form>
+</div>
 
 <footer>
     <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
