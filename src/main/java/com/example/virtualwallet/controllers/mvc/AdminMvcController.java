@@ -2,10 +2,8 @@ package com.example.virtualwallet.controllers.mvc;
 
 import com.example.virtualwallet.exceptions.AuthenticationFailureException;
 import com.example.virtualwallet.helpers.AuthenticationHelper;
-import com.example.virtualwallet.models.FilterUserDto;
-import com.example.virtualwallet.models.FilterUserOptions;
-import com.example.virtualwallet.models.LoginDto;
-import com.example.virtualwallet.models.User;
+import com.example.virtualwallet.models.*;
+import com.example.virtualwallet.service.TransactionService;
 import com.example.virtualwallet.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -14,16 +12,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminMvcController {
 
     private final UserService userService;
+    private final TransactionService transactionService;
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public AdminMvcController(UserService userService, AuthenticationHelper authenticationHelper) {
+    public AdminMvcController(UserService userService, TransactionService transactionService, AuthenticationHelper authenticationHelper) {
         this.userService = userService;
+        this.transactionService = transactionService;
         this.authenticationHelper = authenticationHelper;
     }
 
@@ -43,7 +45,7 @@ public class AdminMvcController {
 
             if (user == null || !user.isAdmin()) {
                 model.addAttribute("error", "Access Denied! Only administrators can log in.");
-                model.addAttribute("login", new LoginDto()); // Ensure login object is added back
+                model.addAttribute("login", new LoginDto());
                 return "admin-login-page";
             }
 
@@ -56,30 +58,80 @@ public class AdminMvcController {
         }
     }
 
-    @GetMapping("/logout")
-    public String handleLogout(HttpSession session){
-        session.removeAttribute("currentUser");
-        return "redirect:/";
-    }
-
     @GetMapping("/dashboard")
-    public String showAdminDashboard(@ModelAttribute("filterUserDto") FilterUserDto filterUserDto, HttpSession session, Model model) {
+    public String showAdminDashboard(HttpSession session, Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null || !admin.isAdmin()) {
             return "redirect:/admin/login";
         }
 
-        model.addAttribute("users", userService.getAll(new FilterUserOptions(
-                filterUserDto.getUsername(),
-                filterUserDto.getEmail(),
-                filterUserDto.getPhoneNumber(),
-                filterUserDto.getSortBy(),
-                filterUserDto.getSortOrder()), 5, 4));
-
-        model.addAttribute("filterUserDto", new FilterUserDto());
         model.addAttribute("admin", admin);
         return "admin-page";
     }
+
+    @GetMapping("/logout")
+    public String handleLogout(HttpSession session) {
+        session.removeAttribute("currentUser");
+        session.removeAttribute("admin");
+        return "redirect:/";
+    }
+
+    @GetMapping("/users")
+    public String showAllUsers(
+            @ModelAttribute("filterDto") FilterUserDto filterUserDto,
+            HttpSession session,
+            Model model,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        User admin = (User) session.getAttribute("admin");
+        if (admin == null || !admin.isAdmin()) {
+            return "redirect:/admin/login";
+        }
+
+        List<User> users = userService.getAll(new FilterUserOptions(
+                        filterUserDto.getUsername(),
+                        filterUserDto.getEmail(),
+                        filterUserDto.getPhoneNumber(),
+                        filterUserDto.getSortBy(),
+                        filterUserDto.getSortOrder()),
+                page, size);
+
+        model.addAttribute("users", users);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageSize", size);
+        model.addAttribute("filterDto", filterUserDto);
+
+        return "admin-users";
+    }
+
+//
+//    @GetMapping("/transactions")
+//    public String showAllTransactions(@ModelAttribute("filterTransactionDto") FilterTransactionDto filterTransactionDto,
+//                                      HttpSession session, Model model,
+//                                      @RequestParam(defaultValue = "0") int page,
+//                                      @RequestParam(defaultValue = "10") int size) {
+//        User admin = (User) session.getAttribute("admin");
+//        if (admin == null || !admin.isAdmin()) {
+//            return "redirect:/admin/login";
+//        }
+//
+//        Page<Transaction> transactions = transactionService.getAll(
+//                new FilterTransactionOptions(
+//                        filterTransactionDto.getUserId(),
+//                        filterTransactionDto.getSenderId(),
+//                        filterTransactionDto.getRecipientId(),
+//                        filterTransactionDto.getStartDate(),
+//                        filterTransactionDto.getEndDate(),
+//                        filterTransactionDto.getSortBy(),
+//                        filterTransactionDto.getSortOrder()
+//                ),
+//        );
+//
+//        model.addAttribute("transactions", transactions);
+//        model.addAttribute("filterTransactionDto", new FilterTransactionDto()); // For filtering form
+//        return "admin-transactions";
+//    }
 
     @PostMapping("/users/{id}/block")
     public String blockUser(@PathVariable int id, HttpSession session) {

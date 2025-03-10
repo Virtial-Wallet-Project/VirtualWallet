@@ -7,71 +7,17 @@
     <script src="../static/script.js" th:src="@{/script.js}" defer></script>
     <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
 </head>
-<body>
+<body id="body">
 
-<header>
-    <div class="nav-container">
-        <h1>
-            <img src="../static/logo.png" th:src="@{/logo.png}" alt="Virtual Wallet Logo" class="logo">
-            Virtual Wallet
-        </h1>
-        <nav>
-            <ul>
-                <li><a th:href="@{/}">Home</a></li>
-                <span> | </span>
-                <li><a th:href="@{/about}" class="active">About</a></li>
-                <span> | </span>
-                <li><a th:href="@{/admin/login}" class="active">About</a></li>
-                <span> | </span>
-                <li><a th:if="${isAuthenticated}" th:href="@{/account}" class="active">Account</a></li>
-                <span th:if="${isAuthenticated}"> | </span>
-                <li><a th:unless="${isAuthenticated}" th:href="@{/auth/login}" href="#">Login</a></li>
-                <li><a th:if="${isAuthenticated}" href="#" th:href="@{/auth/logout}">Logout</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<div class="container-admin">
+    <h2 class="welcome-admin">Welcome Admin</h2>
 
-<div class="table-user">
-
-    <div class="header-user">
-
-        <div class="cell-user"> Username </div>
-        <div class="cell-user"> Email </div>
-        <div class="cell-user"> Phone number </div>
-
-    </div>
-
-    <div class="row-user" th:each="user : ${users}">
-
-        <div class="cell-user" th:text="${user.username}"> User </div>
-        <div class="cell-user" th:text="${user.email}"> test@test.com </div>
-        <div class="cell-user" th:text="${user.phoneNumber}"> 0887626688 </div>
-
-
-        <form th:if="${!user.isBlocked()}" method="post" th:action="@{/admin/users/{id}/block(id=${user.userId})}">
-            <button type="submit" class="block-user-btn">Block</button>
-        </form>
-
-        <form th:if="${user.isBlocked()}" method="post" th:action="@{/admin/users/{id}/unblock(id=${user.userId})}">
-            <button type="submit" class="unblock-user-btn">Unblock</button>
-        </form>
-
-        <form th:if="${!user.isAdmin()}" method="post" th:action="@{/admin/users/{id}/make-admin(id=${user.userId})}">
-            <button type="submit" class="make-admin-btn">Make Admin</button>
-        </form>
-
-        <form th:if="${user.isAdmin()}" method="post" th:action="@{/admin/users/{id}/remove-admin(id=${user.userId})}">
-            <button type="submit" class="remove-admin-btn">Remove Admin</button>
-        </form>
-
-    </div>
-
+    <button class="button users-btn" onclick="location.href='/admin/users'">Show All Users</button>
+    <button class="button transactions-btn" onclick="location.href='/admin/transactions'">Show All Transactions</button>
+    <button class="button logout-btn" onclick="location.href='/admin/logout'">Logout</button>
 </div>
 
-<footer>
-    <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
-</footer>
+
 
 </body>
 </html>
