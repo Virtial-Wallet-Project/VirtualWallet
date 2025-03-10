@@ -699,7 +699,7 @@ footer {
     padding: 15px 20px;
     text-align: center;
     max-width: 400px;
-    margin: 20px auto; /* Centers it */
+    margin: 20px auto;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -727,3 +727,68 @@ footer {
     transform: scale(1.05);
 }
 
+#form-margin{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.add-card-text {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.add-card-form {
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin: auto;
+}
+
+.label-card {
+    padding-top: 10px;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.input-card {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.input-card::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-save-card {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 3px;
+}
+
+.btn-save-card:hover {
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    transform: scale(1.05);
+}

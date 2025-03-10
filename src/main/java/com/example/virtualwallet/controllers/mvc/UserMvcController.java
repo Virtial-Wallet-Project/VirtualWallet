@@ -19,6 +19,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.YearMonth;
+import java.time.format.DateTimeParseException;
+
 
 @Controller
 public class UserMvcController {
@@ -110,12 +113,24 @@ public class UserMvcController {
     }
 
     @PostMapping("/add-credit-card")
-    public String addCreditCard(@ModelAttribute CreditCard creditCard, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String addCreditCard(@Valid @ModelAttribute CreditCard creditCard,
+                                HttpSession session, RedirectAttributes redirectAttributes) {
         User user = authenticationHelper.tryGetUser(session);
+        try {
+            if (creditCard.getExpirationDate() == null) {
+                throw new IllegalArgumentException("Expiration date is required.");
+            }
 
-        creditCardService.createCard(user, creditCard);
-        redirectAttributes.addFlashAttribute("success", "Credit card added successfully.");
-        return "redirect:/account";
+            creditCardService.createCard(user, creditCard);
+
+            return "redirect:/account";
+        } catch (DateTimeParseException e) {
+            redirectAttributes.addFlashAttribute("error", "Invalid expiration date format. Use YYYY-MM.");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
+        return "redirect:/add-credit-card";
     }
 
 
