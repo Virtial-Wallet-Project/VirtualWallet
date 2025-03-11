@@ -23,14 +23,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll(FilterUserOptions filterUserOptions, int page, int size) {
+    public List<User> getAll(FilterUserOptions filterUserOptions, int page, int size, User user) {
+        PermissionHelpers.checkIfBlocked(user);
+        PermissionHelpers.checkIfAdmin(user);
         return userRepository.getAll(filterUserOptions, page, size);
     }
 
     @Override
-    public User getById(User admin, int id) {
-        PermissionHelpers.checkIfBlocked(admin);
-        PermissionHelpers.checkIfAdmin(admin);
+    public User getById(User user, int id) {
+        PermissionHelpers.checkIfBlocked(user);
+        PermissionHelpers.checkIfAdmin(user);
         return userRepository.getById(id);
     }
 

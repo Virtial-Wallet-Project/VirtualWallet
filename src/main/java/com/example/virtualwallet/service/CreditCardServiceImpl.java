@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 public class CreditCardServiceImpl implements CreditCardService {
-//To check if the methods are going to be used. If so, add permission helpers to the corresponding methods.
+
     private final CreditCardRepository creditCardRepository;
 
     @Autowired
@@ -75,7 +75,7 @@ public class CreditCardServiceImpl implements CreditCardService {
     @Override
     public void updateCard(User user, CreditCard card) {
 
-        PermissionHelpers.checkIfCreatorOrAdminForCreditCard(user, card);
+        PermissionHelpers.checkIfCreator(card, user);
 
         boolean cardExists = true;
 
@@ -104,7 +104,8 @@ public class CreditCardServiceImpl implements CreditCardService {
     }
 
     @Override
-    public void deleteCard(User user, CreditCard card) {
+    public void deleteCard(User user) {
+        CreditCard card = creditCardRepository.getByUserId(user.getUserId());
         PermissionHelpers.checkIfCreatorOrAdminForCreditCard(user, card);
         creditCardRepository.deleteCard(card.getCardId());
     }

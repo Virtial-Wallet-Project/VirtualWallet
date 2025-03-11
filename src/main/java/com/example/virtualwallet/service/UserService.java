@@ -6,7 +6,7 @@ import com.example.virtualwallet.models.User;
 import java.util.List;
 
 public interface UserService {
-    List<User> getAll(FilterUserOptions filterUserOptions, int page, int size);
+    List<User> getAll(FilterUserOptions filterUserOptions, int page, int size, User user);
 
     User getById(User admin, int id);
 

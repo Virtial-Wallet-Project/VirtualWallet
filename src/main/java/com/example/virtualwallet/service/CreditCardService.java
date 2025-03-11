@@ -18,5 +18,5 @@ public interface CreditCardService {
 
     void updateCard(User user, CreditCard card);
 
-    void deleteCard(User user, CreditCard card);
+    void deleteCard(User user);
 }

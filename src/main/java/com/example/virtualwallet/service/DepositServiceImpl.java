@@ -1,5 +1,6 @@
 package com.example.virtualwallet.service;
 
+import com.example.virtualwallet.helpers.PermissionHelpers;
 import com.example.virtualwallet.models.CardForDummyAPI;
 import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
@@ -17,20 +18,19 @@ public class DepositServiceImpl implements DepositService {
 
     private final UserRepository userRepository;
     private final RestTemplate restTemplate;
-    private final SessionFactory sessionFactory;
 
     private final String MONEY_TRANSFER_API_URL = "http://localhost:8081/api/transfer/withdraw";
 
     @Autowired
-    public DepositServiceImpl(UserRepository userRepository, RestTemplate restTemplate, SessionFactory sessionFactory) {
+    public DepositServiceImpl(UserRepository userRepository, RestTemplate restTemplate) {
         this.userRepository = userRepository;
         this.restTemplate = restTemplate;
-        this.sessionFactory = sessionFactory;
     }
 
     @Override
     @Transactional
     public String depositMoney(User user, CreditCard userCard, double amount) {
+        PermissionHelpers.checkIfCreator(userCard, user);
 
         CardForDummyAPI card = new CardForDummyAPI();
         card.setCardNumber(userCard.getCardNumber());
