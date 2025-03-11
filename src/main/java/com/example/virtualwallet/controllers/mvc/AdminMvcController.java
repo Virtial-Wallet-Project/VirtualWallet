@@ -95,7 +95,7 @@ public class AdminMvcController {
                         filterUserDto.getPhoneNumber(),
                         filterUserDto.getSortBy(),
                         filterUserDto.getSortOrder()),
-                page, size);
+                page, size, admin);
 
         model.addAttribute("users", users);
         model.addAttribute("currentPage", page);

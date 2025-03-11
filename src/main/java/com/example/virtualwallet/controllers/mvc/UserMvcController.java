@@ -7,6 +7,7 @@ import com.example.virtualwallet.helpers.AuthenticationHelper;
 import com.example.virtualwallet.helpers.UserMapper;
 import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
+import com.example.virtualwallet.models.UserDto;
 import com.example.virtualwallet.service.CreditCardService;
 import com.example.virtualwallet.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -54,7 +55,7 @@ public class UserMvcController {
     }
 
     @PostMapping("/account/update")
-    public String updateAccount(@Valid @ModelAttribute("user") User user,
+    public String updateAccount(@Valid @ModelAttribute("user") UserDto user,
                                 BindingResult errors,
                                 HttpSession session,
                                 RedirectAttributes redirectAttributes) {

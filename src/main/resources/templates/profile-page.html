@@ -108,7 +108,7 @@
 </div>
 
 <div class="delete-card-container">
-    <form th:if="${creditCard != null}" th:action="@{/delete-card/{cardId}(cardId=${creditCard.cardId})}"
+    <form th:if="${creditCard != null}" th:action="@{/delete-card}"
           method="post" class="delete-card-form">
         <input type="hidden" name="_method" value="post">
         <button type="submit" class="btn btn-delete-card"
