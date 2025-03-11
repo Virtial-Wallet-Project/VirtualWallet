@@ -993,6 +993,31 @@ footer {
     background: rgba(255, 255, 255, 0.1);
 }
 
+.transaction-table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.transaction-table th, .transaction-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.transaction-table th {
+    background: rgba(255, 255, 255, 0.2);
+    font-weight: bold;
+}
+
+.transaction-table tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+
 /* Pagination */
 .pagination {
     text-align: center;

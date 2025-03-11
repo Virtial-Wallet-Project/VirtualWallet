@@ -105,33 +105,41 @@ public class AdminMvcController {
         return "admin-users";
     }
 
-//
-//    @GetMapping("/transactions")
-//    public String showAllTransactions(@ModelAttribute("filterTransactionDto") FilterTransactionDto filterTransactionDto,
-//                                      HttpSession session, Model model,
-//                                      @RequestParam(defaultValue = "0") int page,
-//                                      @RequestParam(defaultValue = "10") int size) {
-//        User admin = (User) session.getAttribute("admin");
-//        if (admin == null || !admin.isAdmin()) {
-//            return "redirect:/admin/login";
-//        }
-//
-//        Page<Transaction> transactions = transactionService.getAll(
-//                new FilterTransactionOptions(
-//                        filterTransactionDto.getUserId(),
-//                        filterTransactionDto.getSenderId(),
-//                        filterTransactionDto.getRecipientId(),
-//                        filterTransactionDto.getStartDate(),
-//                        filterTransactionDto.getEndDate(),
-//                        filterTransactionDto.getSortBy(),
-//                        filterTransactionDto.getSortOrder()
-//                ),
-//        );
-//
-//        model.addAttribute("transactions", transactions);
-//        model.addAttribute("filterTransactionDto", new FilterTransactionDto()); // For filtering form
-//        return "admin-transactions";
-//    }
+    @GetMapping("/transactions")
+    public String showAllTransactions(
+            @ModelAttribute("filterTransactionsDto") FilterTransactionDto filterTransactionDto,
+            HttpSession session,
+            Model model,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        User admin = (User) session.getAttribute("admin");
+        if (admin == null || !admin.isAdmin()) {
+            return "redirect:/admin/login";
+        }
+
+        List<Transaction> transactions = transactionService.getAll(
+                new FilterTransactionOptions(
+                        filterTransactionDto.getUserId(),
+                        filterTransactionDto.getSenderId(),
+                        filterTransactionDto.getRecipientId(),
+                        filterTransactionDto.getStartDate(),
+                        filterTransactionDto.getEndDate(),
+                        filterTransactionDto.getSortBy(),
+                        filterTransactionDto.getSortOrder()
+                ),
+                page, size, admin
+        );
+
+
+
+        model.addAttribute("transactions", transactions);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageSize", size);
+        model.addAttribute("filterTransactionsDto", filterTransactionDto);
+
+        return "admin-transactions";
+    }
 
     @PostMapping("/users/{id}/block")
     public String blockUser(@PathVariable int id, HttpSession session) {

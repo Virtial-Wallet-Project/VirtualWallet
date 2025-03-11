@@ -3,6 +3,7 @@ package com.example.virtualwallet.repositories;
 import com.example.virtualwallet.exceptions.EntityNotFoundException;
 import com.example.virtualwallet.models.FilterTransactionOptions;
 import com.example.virtualwallet.models.Transaction;
+import com.example.virtualwallet.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -61,16 +62,18 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             }
 
             sb.append(createOrderBy(filterOptions));
-            sb.append("LIMIT ");
-            sb.append(size);
-            sb.append("OFFSET ");
-            sb.append(page * size);
 
             Query<Transaction> query = session.createQuery(sb.toString(), Transaction.class);
-            query.setProperties(params);
+
+            params.forEach(query::setParameter);
+
+            query.setFirstResult(page * size);
+            query.setMaxResults(size);
+
             return query.list();
         }
     }
+
 
     @Override
     public Transaction getById(int id) {
