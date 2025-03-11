@@ -11,7 +11,8 @@
 
 <h1 class="title">User Management</h1>
 
-<form action="/admin/users" method="get" class="filter-form">
+<form th:action="@{/admin/users}" method="get" class="filter-form">
+    <p id="search">Search by:</p>
     <input type="text" name="username" placeholder="Username" th:value="${filterDto.username}">
     <input type="email" name="email" placeholder="Email" th:value="${filterDto.email}">
     <input type="text" name="phoneNumber" placeholder="Phone Number" th:value="${filterDto.phoneNumber}">
@@ -37,6 +38,7 @@
         <th>Username</th>
         <th>Email</th>
         <th>Phone Number</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -44,18 +46,43 @@
         <td th:text="${user.username}"></td>
         <td th:text="${user.email}"></td>
         <td th:text="${user.phoneNumber}"></td>
+        <td>
+            <form th:action="@{/admin/users/{id}/block(id=${user.userId})}" method="post" th:if="${!user.blocked}">
+                <button type="submit" class="block-user-btn">Block</button>
+            </form>
+            <form th:action="@{/admin/users/{id}/unblock(id=${user.userId})}" method="post" th:if="${user.blocked}">
+                <button type="submit" class="unblock-user-btn">Unblock</button>
+            </form>
+
+            <form th:action="@{/admin/users/{id}/make-admin(id=${user.userId})}" method="post" th:if="${!user.admin}">
+                <button type="submit" class="make-admin-btn">Make Admin</button>
+            </form>
+            <form th:action="@{/admin/users/{id}/remove-admin(id=${user.userId})}" method="post" th:if="${user.admin}">
+                <button type="submit" class="remove-admin-btn">Remove Admin</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
 
 <div class="pagination">
-    <a th:if="${currentPage > 0}" th:href="@{/admin/users(page=${currentPage - 1}, size=${pageSize})}">Previous</a>
+    <a th:if="${currentPage > 0}"
+       th:href="@{/admin/users(page=${currentPage - 1}, size=${pageSize}, username=${filterDto.username}, email=${filterDto.email}, phoneNumber=${filterDto.phoneNumber})}">
+        Previous
+    </a>
     <span>Page <span th:text="${currentPage + 1}"></span></span>
-    <a th:href="@{/admin/users(page=${currentPage + 1}, size=${pageSize})}">Next</a>
+    <a th:href="@{/admin/users(page=${currentPage + 1}, size=${pageSize}, username=${filterDto.username}, email=${filterDto.email}, phoneNumber=${filterDto.phoneNumber})}">
+        Next
+    </a>
 </div>
 
 <br>
 <a href="/admin/dashboard" class="back-btn">Back to Dashboard</a>
+
+
+<footer>
+    <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
+</footer>
 
 </body>
 </html>

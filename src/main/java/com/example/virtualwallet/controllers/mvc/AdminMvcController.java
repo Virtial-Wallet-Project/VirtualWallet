@@ -82,7 +82,7 @@ public class AdminMvcController {
             HttpSession session,
             Model model,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "5") int size) {
 
         User admin = (User) session.getAttribute("admin");
         if (admin == null || !admin.isAdmin()) {
@@ -141,7 +141,7 @@ public class AdminMvcController {
         }
 
         userService.blockUser(admin, id);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/users";
     }
 
     @PostMapping("/users/{id}/unblock")
@@ -152,7 +152,7 @@ public class AdminMvcController {
         }
 
         userService.unblockUser(admin, id);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/users";
     }
 
     @PostMapping("/users/{id}/make-admin")
@@ -164,7 +164,7 @@ public class AdminMvcController {
         }
 
         userService.makeAdmin(admin, id);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/users";
     }
 
     @PostMapping("/users/{id}/remove-admin")
@@ -176,7 +176,7 @@ public class AdminMvcController {
         }
 
         userService.removeAdmin(admin, id);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/users";
     }
 
     @ModelAttribute("requestURI")
