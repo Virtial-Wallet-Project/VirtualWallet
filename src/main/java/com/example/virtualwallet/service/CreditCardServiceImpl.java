@@ -64,8 +64,6 @@ public class CreditCardServiceImpl implements CreditCardService {
 
         if (cardExists) {
             throw new DuplicateEntityException("Card", "number", card.getCardNumber());
-        } else if (userHasCard) {
-            throw new InvalidOperationException("User already has a registered card in his profile!");
         }
 
         card.setCreatedBy(user);

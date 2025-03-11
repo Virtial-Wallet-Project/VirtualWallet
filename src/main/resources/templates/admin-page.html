@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+    <script src="../static/script.js" th:src="@{/script.js}" defer></script>
+    <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
+</head>
+<body id="body">
+
+<div class="container-admin">
+    <h2 class="welcome-admin">Welcome Admin</h2>
+
+    <button class="button users-btn" onclick="location.href='/admin/users'">Show All Users</button>
+    <button class="button transactions-btn" onclick="location.href='/admin/transactions'">Show All Transactions</button>
+    <button class="button logout-btn" onclick="location.href='/admin/logout'">Logout</button>
+</div>
+
+
+
+</body>
+</html>

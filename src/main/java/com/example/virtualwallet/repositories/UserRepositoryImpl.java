@@ -35,34 +35,34 @@ public class UserRepositoryImpl implements UserRepository {
 
             filterOptions.getUsername().ifPresent(value -> {
                 filters.add("username like :username");
-                params.put("username", String.format("%%%s%%", value));
+                params.put("username", "%" + value + "%");
             });
 
             filterOptions.getEmail().ifPresent(value -> {
                 filters.add("email like :email");
-                params.put("email", String.format("%%%s%%", value));
+                params.put("email", "%" + value + "%");
             });
 
             filterOptions.getPhoneNumber().ifPresent(value -> {
                 filters.add("phoneNumber like :phoneNumber");
-                params.put("phoneNumber", String.format("%%%s%%", value));
+                params.put("phoneNumber", "%" + value + "%");
             });
 
-            if(!filters.isEmpty()) {
+            if (!filters.isEmpty()) {
                 sb.append(" WHERE ").append(String.join(" AND ", filters));
             }
 
             sb.append(createOrderBy(filterOptions));
-            sb.append("LIMIT ");
-            sb.append(size);
-            sb.append("OFFSET ");
-            sb.append(page * size);
 
             Query<User> query = session.createQuery(sb.toString(), User.class);
-            query.setProperties(params);
+            params.forEach(query::setParameter);
+            query.setFirstResult(page * size);
+            query.setMaxResults(size);
+
             return query.list();
         }
     }
+
 
     @Override
     public User getById(int id) {

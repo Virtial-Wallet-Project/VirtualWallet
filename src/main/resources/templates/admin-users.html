@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin | Users</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+    <script src="../static/script.js" th:src="@{/script.js}" defer></script>
+    <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
+</head>
+<body>
+
+<h1 class="title">User Management</h1>
+
+<form action="/admin/users" method="get" class="filter-form">
+    <input type="text" name="username" placeholder="Username" th:value="${filterDto.username}">
+    <input type="email" name="email" placeholder="Email" th:value="${filterDto.email}">
+    <input type="text" name="phoneNumber" placeholder="Phone Number" th:value="${filterDto.phoneNumber}">
+
+    <select name="sortBy">
+        <option value="">Sort By</option>
+        <option value="username">Username</option>
+        <option value="email">Email</option>
+        <option value="phoneNumber">Phone Number</option>
+    </select>
+
+    <select name="sortOrder">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+
+    <button type="submit">Apply Filters</button>
+</form>
+
+<table class="user-table">
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.phoneNumber}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="pagination">
+    <a th:if="${currentPage > 0}" th:href="@{/admin/users(page=${currentPage - 1}, size=${pageSize})}">Previous</a>
+    <span>Page <span th:text="${currentPage + 1}"></span></span>
+    <a th:href="@{/admin/users(page=${currentPage + 1}, size=${pageSize})}">Next</a>
+</div>
+
+<br>
+<a href="/admin/dashboard" class="back-btn">Back to Dashboard</a>
+
+</body>
+</html>

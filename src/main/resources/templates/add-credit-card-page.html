@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Credit Card</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+    <script src="../static/script.js" th:src="@{/script.js}" defer></script>
+    <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <h1>
+            <img src="../static/logo.png" th:src="@{/logo.png}" alt="Virtual Wallet Logo" class="logo">
+            Virtual Wallet
+        </h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <span> | </span>
+                <li><a th:href="@{/about}" class="active">About</a></li>
+                <span> | </span>
+                <li><a th:href="@{/admin/login}" class="active">Admin</a></li>
+                <span> | </span>
+                <li><a th:if="${isAuthenticated}" th:href="@{/account}" class="active">Account</a></li>
+                <span th:if="${isAuthenticated}"> | </span>
+                <li><a th:unless="${isAuthenticated}" th:href="@{/auth/login}" href="#">Login</a></li>
+                <li><a th:if="${isAuthenticated}" href="#" th:href="@{/auth/logout}">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<h1 class="add-card-text">Add Credit Card</h1>
+<hr>
+<div id="form-margin">
+    <form method="post" th:action="@{/add-credit-card}" th:object="${creditCard}" class="add-card-form">
+        <div class="form-group">
+            <label class="label-card">Card Number:</label>
+            <input class="input-card" type="text" th:field="*{cardNumber}" required pattern="\d{16}"
+                   placeholder="Enter exactly 16 digits" maxlength="16">
+        </div>
+
+        <div class="form-group">
+            <label class="label-card">Expiration Date:</label>
+            <input class="input-card" type="date" th:field="*{expirationDate}" required>
+        </div>
+
+        <div class="form-group">
+            <label class="label-card">Cardholder Name:</label>
+            <input class="input-card" type="text" th:field="*{cardHolder}" required
+                   pattern="^[A-Za-z]+ [A-Za-z]+$"
+                   placeholder="Enter a valid first and last name">
+        </div>
+
+        <div class="form-group">
+            <label class="label-card">Check Number (CVV):</label>
+            <input class="input-card" type="text" th:field="*{checkNumber}" required pattern="\d{3}"
+                   placeholder="Enter exactly 3 digits" maxlength="3">
+        </div>
+
+        <button type="submit" class="btn-save-card">SAVE CREDIT CARD</button>
+    </form>
+</div>
+
+
+
+<footer>
+    <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
