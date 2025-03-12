@@ -35,6 +35,8 @@
 <hr>
 
 <p class="p-balance">Balance: <span th:text="${balance}"></span> BGN</p>
+<p th:if="${message}" class="success-message" th:text="${message}"></p>
+<p th:if="${error}" class="success-message" th:text="${error}"></p>
 
 <div class="deposit-container">
   <h2 class="h2-deposit">Deposit Money</h2>
@@ -58,10 +60,11 @@
   <tbody>
   <tr th:each="transaction : ${transactions}">
     <td th:text="${transaction.transactionId}"></td>
-    <td th:text="${transaction.sender.username}"></td>
-    <td th:text="${transaction.recipient.username}"></td>
+    <td th:text="${transaction.sender != null ? transaction.sender.username : 'N/A'}"></td>
+    <td th:text="${transaction.recipient != null ? transaction.recipient.username : 'N/A'}"></td>
     <td th:text="${transaction.amount} + ' BGN'"></td>
-    <td th:text="${transaction.transactionDate}"></td>
+    <td th:text="${#dates.format(transaction.transactionDate, 'yyyy-MM-dd HH:mm')}"></td>
+
   </tr>
   <tr th:if="${#lists.isEmpty(transactions)}">
     <td colspan="5">No transactions found.</td>

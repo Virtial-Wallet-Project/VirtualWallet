@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
@@ -46,23 +47,28 @@ public class DepositServiceImpl implements DepositService {
         card.setCardNumber(userCard.getCardNumber());
         card.setCheckNumber(userCard.getCheckNumber());
 
-        ResponseEntity<String> response = restTemplate.postForEntity(MONEY_TRANSFER_API_URL, card, String.class);
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(MONEY_TRANSFER_API_URL, card, String.class);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
+            if (response.getStatusCode().is2xxSuccessful()) {
                 user.setBalance(user.getBalance() + amount);
                 userRepository.updateUser(user);
 
-            Transaction transaction = new Transaction();
-            transaction.setSender(user);
-            transaction.setRecipient(user);
-            transaction.setAmount(amount);
-            transaction.setTransactionDate(LocalDateTime.now());
+                Transaction transaction = new Transaction();
+                transaction.setSender(user);
+                transaction.setRecipient(user);
+                transaction.setAmount(amount);
+                transaction.setTransactionDate(LocalDateTime.now());
 
-            transactionRepository.createTransaction(transaction);
+                transactionRepository.createTransaction(transaction);
                 return "Deposit Successful! New Balance: " + user.getBalance();
-
-        } else {
+            }
+        } catch (HttpClientErrorException.BadRequest ex) {
             return "Deposit Failed! Insufficient funds!";
+        } catch (Exception ex) {
+            return "An unexpected error occurred. Please try again later.";
         }
+
+        return "Deposit Failed! Please check your card details.";
     }
 }

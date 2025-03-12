@@ -1,11 +1,10 @@
 package com.example.virtualwallet.controllers.mvc;
 
-import com.example.virtualwallet.exceptions.InvalidOperationException;
 import com.example.virtualwallet.models.*;
-import com.example.virtualwallet.repositories.UserRepository;
 import com.example.virtualwallet.service.CreditCardService;
 import com.example.virtualwallet.service.DepositService;
 import com.example.virtualwallet.service.TransactionService;
+import com.example.virtualwallet.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,29 +12,30 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 
 @Controller
 @RequestMapping("/wallet")
 public class TransactionMvcController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final CreditCardService creditCardService;
     private final TransactionService transactionService;
     private final DepositService depositService;
 
     @Autowired
-    public TransactionMvcController(UserRepository userRepository, CreditCardService creditCardService, TransactionService transactionService, DepositService depositService) {
-        this.userRepository = userRepository;
+    public TransactionMvcController(UserService userService, CreditCardService creditCardService, TransactionService transactionService, DepositService depositService) {
+        this.userService = userService;
         this.creditCardService = creditCardService;
         this.transactionService = transactionService;
         this.depositService = depositService;
     }
 
     @GetMapping
-    public String showWalletPage(HttpSession session, Model model) {
+    public String showWalletPage(HttpSession session, Model model, @ModelAttribute("message") String message,
+                                 @ModelAttribute("error") String error) {
         Object userObj = session.getAttribute("currentUser");
 
         if (userObj == null) {
@@ -44,13 +44,15 @@ public class TransactionMvcController {
 
         User user;
         if (userObj instanceof String) {
-            user = userRepository.getByUsername((String) userObj);
+            user = userService.getByUsername((String) userObj);
             session.setAttribute("currentUser", user);
         } else {
             user = (User) userObj;
         }
 
         model.addAttribute("balance", user.getBalance());
+        model.addAttribute("message", message);
+        model.addAttribute("error", error);
 
         return "user-wallet";
     }
@@ -81,27 +83,8 @@ public class TransactionMvcController {
         return "redirect:/wallet";
     }
 
-//    @PostMapping("/transfer")
-//    public String transferMoney(@ModelAttribute("transactionDto") TransactionDto transactionDto, HttpSession session) {
-//        User sender = (User) session.getAttribute("user");
-//
-//        if (sender == null) {
-//            return "redirect:/login";
-//        }
-//
-//        try {
-//            transactionService.createTransaction(sender, transactionDto.getRecipientId(), transactionDto.getAmount(), transactionDto.);
-//        } catch (InvalidOperationException | IllegalArgumentException e) {
-//            session.setAttribute("errorMessage", e.getMessage());
-//            return "redirect:/wallet";
-//        }
-//
-//        return "redirect:/wallet";
-//    }
-
-    @GetMapping("/transactions")
-    public String showAllTransactions(
-            @ModelAttribute("filterTransactionsUserDto") FilterTransactionDto filterTransactionDto,
+    @GetMapping("/transactions/")
+    public String showAllTransactions(@ModelAttribute("filterTransactionsUserDto") FilterTransactionDto filterTransactionDto,
             HttpSession session,
             Model model,
             @RequestParam(defaultValue = "0") int page,
@@ -119,8 +102,6 @@ public class TransactionMvcController {
                 page, size, user
         );
 
-
-
         model.addAttribute("transactions", transactions);
         model.addAttribute("currentUserPage", page);
         model.addAttribute("pageUserSize", size);
@@ -130,7 +111,87 @@ public class TransactionMvcController {
         return "user-wallet";
     }
 
+    @GetMapping("/transfer")
+    public String showTransferForm(Model model, HttpSession session) {
+        User sender = (User) session.getAttribute("currentUser");
+        if (sender == null) {
+            return "redirect:/auth/login";
+        }
 
+        model.addAttribute("transferDto", new TransferDto());
+        return "transfer";
+    }
+
+    @PostMapping("/transfer")
+    public String processTransfer(
+            @ModelAttribute("transferDto") TransferDto transferDto,
+            HttpSession session,
+            Model model) {
+
+        User sender = (User) session.getAttribute("currentUser");
+        if (sender == null) {
+            return "redirect:/auth/login";
+        }
+
+        User recipient = userService.getByUsername(transferDto.getRecipientIdentifier());
+        if (recipient == null) {
+            recipient = userService.getByEmail(transferDto.getRecipientIdentifier());
+        }
+        if (recipient == null) {
+            recipient = userService.getByPhoneNumber(transferDto.getRecipientIdentifier());
+        }
+
+        if (recipient == null) {
+            model.addAttribute("error", "Recipient not found.");
+            return "transfer";
+        }
+
+        if (sender.getUserId() == recipient.getUserId()) {
+            model.addAttribute("error", "You cannot send money to yourself!");
+            return "transfer";
+        }
+
+        if (sender.getBalance() < transferDto.getAmount()) {
+            model.addAttribute("error", "Insufficient funds!");
+            return "transfer";
+        }
+
+        // Proceed to confirmation page
+        model.addAttribute("sender", sender);
+        model.addAttribute("recipient", recipient);
+        model.addAttribute("amount", transferDto.getAmount());
+        return "transfer-confirmation";
+    }
+
+    @PostMapping("/transfer/confirm")
+    public String confirmTransfer(
+            @RequestParam int recipientId,
+            @RequestParam double amount,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
+
+        User sender = (User) session.getAttribute("currentUser");
+        if (sender == null) {
+            return "redirect:/auth/login";
+        }
+
+        User recipient = userService.getById(sender, recipientId);
+        if (recipient == null) {
+            redirectAttributes.addFlashAttribute("error", "Recipient not found.");
+            return "redirect:/wallet/transfer";
+        }
+
+        Transaction transaction = new Transaction();
+        transaction.setSender(sender);
+        transaction.setRecipient(recipient);
+        transaction.setAmount(amount);
+        transaction.setTransactionDate(LocalDateTime.now());
+
+        transactionService.createTransaction(sender, recipient.getUserId(), transaction);
+        redirectAttributes.addFlashAttribute("success", "Transfer successful!");
+
+        return "redirect:/wallet";
+    }
 
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Transfer</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <h1 class="logo-container">
+            <img src="../static/logo.png" th:src="@{/logo.png}" alt="Virtual Wallet Logo" class="logo">
+            <span>Virtual Wallet</span>
+        </h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Home</a></li>
+                <li th:if="${isAuthenticated}"><a th:href="@{/wallet}">Wallet</a></li>
+                <li th:if="${isAuthenticated}"><a th:href="@{/account}" class="active">Account</a></li>
+                <li><a th:href="@{/about}">About</a></li>
+                <li><a th:href="@{/admin/login}">Admin</a></li>
+                <li th:unless="${isAuthenticated}"><a th:href="@{/auth/login}">Login</a></li>
+                <li th:if="${isAuthenticated}"><a th:href="@{/auth/logout}">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<h1>Confirm Transfer</h1>
+
+<p>Recipient: <span th:text="${recipient.username}"></span></p>
+<p>Amount: <span th:text="${amount}"></span> BGN</p>
+
+<form th:action="@{/wallet/transfer/confirm}" method="post">
+    <input type="hidden" name="recipientId" th:value="${recipient.userId}">
+    <input type="hidden" name="amount" th:value="${amount}">
+
+    <button type="submit">Confirm Transfer</button>
+</form>
+
+<form th:action="@{/wallet/transfer}" method="get">
+    <button type="submit">Edit</button>
+</form>
+
+<footer>
+    <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

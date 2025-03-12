@@ -1154,3 +1154,12 @@ footer {
 .button-deposit:hover {
     background-color: #218838;
 }
+
+.success-message {
+    background: #e67e22;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 10px;
+    display: block;
+}
