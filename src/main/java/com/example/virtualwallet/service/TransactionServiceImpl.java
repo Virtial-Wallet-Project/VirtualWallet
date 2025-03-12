@@ -59,5 +59,4 @@ public class TransactionServiceImpl implements TransactionService {
         userRepository.updateUser(recipient);
         return transaction;
     }
-
 }

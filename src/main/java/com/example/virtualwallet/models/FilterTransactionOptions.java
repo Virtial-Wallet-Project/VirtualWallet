@@ -9,8 +9,8 @@ public class FilterTransactionOptions {
     private Optional<Integer> recipientId;
     private Optional<LocalDateTime> startDate;
     private Optional<LocalDateTime> endDate;
-    private Optional<String> sortBy; // "amount" or "transactionDate"
-    private Optional<String> sortOrder; // "asc" or "desc"
+    private Optional<String> sortBy;
+    private Optional<String> sortOrder;
 
     public FilterTransactionOptions(Integer userId, Integer senderId, Integer recipientId,
                                     LocalDateTime startDate, LocalDateTime endDate,
