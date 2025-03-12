@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <meta charset="UTF-8">
+  <title>Wallet</title>
+  <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+  <script src="../static/script.js" th:src="@{/script.js}" defer></script>
+  <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
+
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <h1 class="logo-container">
+      <img src="../static/logo.png" th:src="@{/logo.png}" alt="Virtual Wallet Logo" class="logo">
+      <span>Virtual Wallet</span>
+    </h1>
+    <nav>
+      <ul class="nav-links">
+        <li><a th:href="@{/}">Home</a></li>
+        <li th:if="${isAuthenticated}"><a th:href="@{/wallet}">Wallet</a></li>
+        <li th:if="${isAuthenticated}"><a th:href="@{/account}" class="active">Account</a></li>
+        <li><a th:href="@{/about}">About</a></li>
+        <li><a th:href="@{/admin/login}">Admin</a></li>
+        <li th:unless="${isAuthenticated}"><a th:href="@{/auth/login}">Login</a></li>
+        <li th:if="${isAuthenticated}"><a th:href="@{/auth/logout}">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<h1 class="my-wallet">My Wallet</h1>
+<hr>
+
+<p class="p-balance">Balance: <span th:text="${balance}"></span> BGN</p>
+
+<div class="deposit-container">
+  <h2 class="h2-deposit">Deposit Money</h2>
+  <form class="form-deposit" th:action="@{/wallet/deposit}" method="post">
+    <input class="input-deposit" type="number" name="amount" step="0.01" placeholder="Amount" required>
+    <button class="button-deposit" type="submit">Deposit</button>
+  </form>
+</div>
+
+<h2 class="my-wallet">Your Transactions</h2>
+<hr>
+<table class="transaction-table" id="transaction">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Recipient</th>
+    <th>Amount</th>
+    <th>Date</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="transaction : ${transactions}">
+    <td th:text="${transaction.transactionId}"></td>
+    <td th:text="${transaction.recipient.username}"></td>
+    <td th:text="${transaction.amount} + ' BGN'"></td>
+    <td th:text="${transaction.timestamp}"></td>
+  </tr>
+  </tbody>
+</table>
+
+
+<footer>
+  <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
+</footer>
+</body>
+</html>
