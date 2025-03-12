@@ -1,9 +1,7 @@
 package com.example.virtualwallet.controllers.mvc;
 
 import com.example.virtualwallet.exceptions.InvalidOperationException;
-import com.example.virtualwallet.models.CreditCard;
-import com.example.virtualwallet.models.Transaction;
-import com.example.virtualwallet.models.User;
+import com.example.virtualwallet.models.*;
 import com.example.virtualwallet.repositories.UserRepository;
 import com.example.virtualwallet.service.CreditCardService;
 import com.example.virtualwallet.service.DepositService;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -100,21 +99,37 @@ public class TransactionMvcController {
 //        return "redirect:/wallet";
 //    }
 
-    @GetMapping("/history")
-    public String showTransactionHistory(HttpSession session, Model model) {
-        Object userObj = session.getAttribute("currentUser");
+    @GetMapping("/transactions")
+    public String showAllTransactions(
+            @ModelAttribute("filterTransactionsUserDto") FilterTransactionDto filterTransactionDto,
+            HttpSession session,
+            Model model,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
 
-        if (userObj == null) {
+        User user = (User) session.getAttribute("currentUser");
+        if (user == null) {
             return "redirect:/auth/login";
         }
 
-        User user = (User) userObj;
+        List<Transaction> transactions = transactionService.getAll(
+                new FilterTransactionOptions(
+                        null, null,null,null,null,null, null
+                ),
+                page, size, user
+        );
 
-        List<Transaction> transactions = transactionService.getAll(null, 0, 10, user);
+
+
         model.addAttribute("transactions", transactions);
+        model.addAttribute("currentUserPage", page);
+        model.addAttribute("pageUserSize", size);
+        model.addAttribute("filterTransactionsUserDto", filterTransactionDto);
+        model.addAttribute("isAuthenticated", true);
 
         return "user-wallet";
     }
+
 
 
     @ModelAttribute("isAuthenticated")

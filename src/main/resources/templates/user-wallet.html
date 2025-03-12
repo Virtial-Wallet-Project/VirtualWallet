@@ -58,13 +58,27 @@
   <tbody>
   <tr th:each="transaction : ${transactions}">
     <td th:text="${transaction.transactionId}"></td>
+    <td th:text="${transaction.sender.username}"></td>
     <td th:text="${transaction.recipient.username}"></td>
     <td th:text="${transaction.amount} + ' BGN'"></td>
-    <td th:text="${transaction.timestamp}"></td>
+    <td th:text="${transaction.transactionDate}"></td>
+  </tr>
+  <tr th:if="${#lists.isEmpty(transactions)}">
+    <td colspan="5">No transactions found.</td>
   </tr>
   </tbody>
 </table>
 
+<!--<div class="pagination">-->
+<!--  <a th:if="${currentUserPage > 0}"-->
+<!--     th:href="@{/wallet/transactions(page=${currentUserPage - 1}, size=${pageUserSize}, userId=${filterTransactionsUserDto.userId}, senderId=${filterTransactionsUserDto.senderId}, recipientId=${filterTransactionsUserDto.recipientId}, startDate=${filterTransactionsUserDto.startDate}, endDate=${filterTransactionsUserDto.endDate})}">-->
+<!--    Previous-->
+<!--  </a>-->
+<!--  <span>Page <span th:text="${currentUserPage + 1}"></span></span>-->
+<!--  <a th:href="@{/wallet/transactions(page=${currentUserPage + 1}, size=${pageUserSize}, userId=${filterTransactionsUserDto.userId}, senderId=${filterTransactionsUserDto.senderId}, recipientId=${filterTransactionsUserDto.recipientId}, startDate=${filterTransactionsUserDto.startDate}, endDate=${filterTransactionsUserDto.endDate})}">-->
+<!--    Next-->
+<!--  </a>-->
+<!--</div>-->
 
 <footer>
   <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>

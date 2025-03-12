@@ -947,6 +947,7 @@ footer {
 
 .filter-form {
     background: rgba(255, 255, 255, 0.1);
+    margin-top: 20px;
     padding: 15px;
     border-radius: 10px;
     display: flex;

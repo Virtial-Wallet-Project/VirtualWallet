@@ -30,7 +30,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll(FilterUserOptions filterOptions, int page, int size) {
 
-        if (page <= 0 || size <= 0) {
+        if (page <= -1 || size <= 0) {
             throw new InvalidOperationException("Page and size should be positive numbers!");
         }
 

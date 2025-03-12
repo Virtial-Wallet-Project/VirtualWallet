@@ -10,28 +10,29 @@
 <body>
 
 <h1 class="title">Transaction Management</h1>
+<hr>
 
-<form th:action="@{/admin/transactions}" method="get" class="filter-form">
-    <p id="search">Filter by:</p>
-    <input type="number" name="userId" placeholder="User ID" th:value="${filterTransactionsDto.userId}">
-    <input type="number" name="senderId" placeholder="Sender ID" th:value="${filterTransactionsDto.senderId}">
-    <input type="number" name="recipientId" placeholder="Recipient ID" th:value="${filterTransactionsDto.recipientId}">
-    <input type="datetime-local" name="startDate" placeholder="Start Date" th:value="${filterTransactionsDto.startDate}">
-    <input type="datetime-local" name="endDate" placeholder="End Date" th:value="${filterTransactionsDto.endDate}">
+<!--<form th:action="@{/admin/transactions}" method="get" class="filter-form">-->
+<!--    <p id="search">Filter by:</p>-->
+<!--    <input type="number" name="userId" placeholder="User ID" th:value="${filterTransactionsDto.userId}">-->
+<!--    <input type="number" name="senderId" placeholder="Sender ID" th:value="${filterTransactionsDto.senderId}">-->
+<!--    <input type="number" name="recipientId" placeholder="Recipient ID" th:value="${filterTransactionsDto.recipientId}">-->
+<!--    <input type="datetime-local" name="startDate" placeholder="Start Date" th:value="${filterTransactionsDto.startDate}">-->
+<!--    <input type="datetime-local" name="endDate" placeholder="End Date" th:value="${filterTransactionsDto.endDate}">-->
 
-    <select name="sortBy">
-        <option value="">Sort By</option>
-        <option value="amount">Amount</option>
-        <option value="transactionDate">Date</option>
-    </select>
+<!--    <select name="sortBy">-->
+<!--        <option value="">Sort By</option>-->
+<!--        <option value="amount">Amount</option>-->
+<!--        <option value="transactionDate">Date</option>-->
+<!--    </select>-->
 
-    <select name="sortOrder">
-        <option value="asc">Ascending</option>
-        <option value="desc">Descending</option>
-    </select>
+<!--    <select name="sortOrder">-->
+<!--        <option value="asc">Ascending</option>-->
+<!--        <option value="desc">Descending</option>-->
+<!--    </select>-->
 
-    <button type="submit">Apply Filters</button>
-</form>
+<!--    <button type="submit">Apply Filters</button>-->
+<!--</form>-->
 
 <table class="transaction-table">
     <thead>
