@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/wallet")
 public class DepositRestController {
 
-    private final DepositService withdrawService;
+    private final DepositService depositService;
     private final AuthenticationHelper authorizationHelper;
     private final CreditCardService creditCardService;
 
 
     @Autowired
     public DepositRestController(DepositService withdrawService, AuthenticationHelper authorizationHelper, CreditCardService creditCardService) {
-        this.withdrawService = withdrawService;
+        this.depositService = withdrawService;
         this.authorizationHelper = authorizationHelper;
         this.creditCardService = creditCardService;
     }
@@ -32,12 +32,12 @@ public class DepositRestController {
         User user = authorizationHelper.tryGetUser(headers);
         CreditCard card = creditCardService.getByUserId(user.getUserId());
 
-        String response = withdrawService.depositMoney(user, card, amount);
+        String response = depositService.depositMoney(user, card, amount);
 
         if (response.contains("Deposit Successful")) {
             return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.badRequest().body(response);
         }
+
+        return ResponseEntity.badRequest().body(response);
     }
 }

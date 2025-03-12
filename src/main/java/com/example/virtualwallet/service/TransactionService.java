@@ -11,5 +11,5 @@ public interface TransactionService {
 
     Transaction getById(User user, int id);
 
-    Transaction createTransaction(User sender, int recipientId, double amount, Transaction transaction);
+    Transaction createTransaction(User sender, int recipientId, Transaction transaction);
 }

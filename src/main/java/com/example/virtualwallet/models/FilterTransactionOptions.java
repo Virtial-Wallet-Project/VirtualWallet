@@ -28,6 +28,10 @@ public class FilterTransactionOptions {
         return userId;
     }
 
+    public void setUserId(Optional<Integer> userId) {
+        this.userId = userId;
+    }
+
     public Optional<Integer> getSenderId() {
         return senderId;
     }

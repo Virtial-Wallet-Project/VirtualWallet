@@ -48,7 +48,7 @@ public class CreditCardRepositoryImpl implements CreditCardRepository {
             return card
                     .stream()
                     .findFirst()
-                    .orElse(null);
+                    .orElseThrow(() -> new EntityNotFoundException("Card", "user ID", String.valueOf(userId)));
         }
     }
 
@@ -61,7 +61,7 @@ public class CreditCardRepositoryImpl implements CreditCardRepository {
             return card
                     .stream()
                     .findFirst()
-                    .orElseThrow(() -> new EntityNotFoundException("Card", "user ID", cardNumber));
+                    .orElseThrow(() -> new EntityNotFoundException("Card", "card number", cardNumber));
         }
     }
 

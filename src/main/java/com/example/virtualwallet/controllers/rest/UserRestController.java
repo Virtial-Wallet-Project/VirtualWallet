@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,7 @@ public class UserRestController {
     private final UserMapper userMapper;
     private final AuthenticationHelper authorizationHelper;
 
+    @Autowired
     public UserRestController(UserService userService, UserMapper userMapper, AuthenticationHelper authorizationHelper,
                               CreditCardService cardService) {
         this.userService = userService;

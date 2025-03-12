@@ -11,6 +11,7 @@ import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.service.CreditCardService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ public class CreditCardRestController {
     private final CardMapper cardMapper;
     private final AuthenticationHelper authorizationHelper;
 
+    @Autowired
     public CreditCardRestController(CreditCardService cardService, CardMapper cardMapper, AuthenticationHelper authorizationHelper) {
         this.cardService = cardService;
         this.cardMapper = cardMapper;

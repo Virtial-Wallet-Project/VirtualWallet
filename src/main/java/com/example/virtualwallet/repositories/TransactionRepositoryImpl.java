@@ -1,6 +1,7 @@
 package com.example.virtualwallet.repositories;
 
 import com.example.virtualwallet.exceptions.EntityNotFoundException;
+import com.example.virtualwallet.exceptions.InvalidOperationException;
 import com.example.virtualwallet.models.FilterTransactionOptions;
 import com.example.virtualwallet.models.Transaction;
 import org.hibernate.Session;
@@ -26,6 +27,11 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
     @Override
     public List<Transaction> getAll(FilterTransactionOptions filterOptions, int page, int size) {
+
+        if (page <= 0 || size <= 0) {
+            throw new InvalidOperationException("Page and size should be positive numbers!");
+        }
+
         try (Session session = sessionFactory.openSession()) {
             StringBuilder sb = new StringBuilder("FROM Transaction t");
             List<String> filters = new ArrayList<>();
@@ -61,13 +67,12 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             }
 
             sb.append(createOrderBy(filterOptions));
-            sb.append("LIMIT ");
-            sb.append(size);
-            sb.append("OFFSET ");
-            sb.append(page * size);
 
             Query<Transaction> query = session.createQuery(sb.toString(), Transaction.class);
-            query.setProperties(params);
+            params.forEach(query::setParameter);
+            query.setFirstResult(page * size);
+            query.setMaxResults(size);
+
             return query.list();
         }
     }

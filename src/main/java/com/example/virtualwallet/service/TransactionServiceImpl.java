@@ -37,8 +37,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Transaction createTransaction(User sender, int recipientId, double amount, Transaction transaction) {
-        if (amount <= 0) {
+    public Transaction createTransaction(User sender, int recipientId, Transaction transaction) {
+        if (transaction.getAmount() <= 0) {
             throw new InvalidOperationException("Amount must be greater than zero!");
         }
 
@@ -48,13 +48,13 @@ public class TransactionServiceImpl implements TransactionService {
             throw new InvalidOperationException("You cannot send money to yourself!");
         }
 
-        if (sender.getBalance() <= amount) {
-            throw new IllegalArgumentException("Invalid operation! Insufficient funds!");
+        if (sender.getBalance() <= transaction.getAmount()) {
+            throw new InvalidOperationException("Invalid operation! Insufficient funds!");
         }
 
         transactionRepository.createTransaction(transaction);
-        sender.setBalance(sender.getBalance() - amount);
-        recipient.setBalance(recipient.getBalance() + amount);
+        sender.setBalance(sender.getBalance() - transaction.getAmount());
+        recipient.setBalance(recipient.getBalance() + transaction.getAmount());
         userRepository.updateUser(sender);
         userRepository.updateUser(recipient);
         return transaction;

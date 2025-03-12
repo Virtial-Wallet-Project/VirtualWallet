@@ -1,6 +1,7 @@
 package com.example.virtualwallet.repositories;
 
 import com.example.virtualwallet.exceptions.EntityNotFoundException;
+import com.example.virtualwallet.exceptions.InvalidOperationException;
 import com.example.virtualwallet.models.FilterUserOptions;
 import com.example.virtualwallet.models.User;
 import org.hibernate.Session;
@@ -28,6 +29,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> getAll(FilterUserOptions filterOptions, int page, int size) {
+
+        if (page <= 0 || size <= 0) {
+            throw new InvalidOperationException("Page and size should be positive numbers!");
+        }
+
         try (Session session = sessionFactory.openSession()) {
             StringBuilder sb = new StringBuilder("FROM User");
             List<String> filters = new ArrayList<>();
