@@ -45,7 +45,6 @@ public class UserMvcController {
         }
 
         User user = userService.getByUsername(currentUsername);
-
         CreditCard creditCard = creditCardService.getByUserId(user.getUserId());
 
         model.addAttribute("user", user);
@@ -53,6 +52,8 @@ public class UserMvcController {
 
         return "profile-page";
     }
+
+
 
     @PostMapping("/account/update")
     public String updateAccount(@Valid @ModelAttribute("user") UserDto user,
