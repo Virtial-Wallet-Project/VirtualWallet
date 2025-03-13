@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 public class TransactionDto {
 
     @NotNull(message = "Sender is required")
-    private User sender;
+    private UserDtoOutForTransactions sender;
 
     @NotNull(message = "Recipient is required")
-    private User recipient;
+    private UserDtoOutForTransactions recipient;
 
     @NotNull(message = "Amount is required")
     private double amount;
@@ -25,19 +25,19 @@ public class TransactionDto {
     }
 
 
-    public User getSender() {
+    public UserDtoOutForTransactions getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(UserDtoOutForTransactions sender) {
         this.sender = sender;
     }
 
-    public User getRecipient() {
+    public UserDtoOutForTransactions getRecipient() {
         return recipient;
     }
 
-    public void setRecipient(User recipient) {
+    public void setRecipient(UserDtoOutForTransactions recipient) {
         this.recipient = recipient;
     }
 

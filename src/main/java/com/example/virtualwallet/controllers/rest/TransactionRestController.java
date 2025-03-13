@@ -37,8 +37,8 @@ public class TransactionRestController {
     }
 
     @GetMapping
-    public List<TransactionDto> getAll (@RequestParam(required = false) int senderId,
-                                        @RequestParam(required = false) int recipientId,
+    public List<TransactionDto> getAll (@RequestParam(required = false) Integer senderId,
+                                        @RequestParam(required = false) Integer recipientId,
                                         @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yyyy HH:mm:ss") LocalDateTime startDate,
                                         @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yyyy HH:mm:ss") LocalDateTime endDate,
                                         @RequestParam(required = false) String sortBy,

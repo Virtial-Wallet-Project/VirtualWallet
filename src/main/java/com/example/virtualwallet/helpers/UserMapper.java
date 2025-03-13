@@ -3,6 +3,7 @@ package com.example.virtualwallet.helpers;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.models.UserDto;
 import com.example.virtualwallet.models.UserDtoOut;
+import com.example.virtualwallet.models.UserDtoOutForTransactions;
 import com.example.virtualwallet.service.UserService;
 import org.springframework.stereotype.Component;
 
@@ -61,5 +62,14 @@ public class UserMapper {
         }
 
         return userDto;
+    }
+
+    public UserDtoOutForTransactions userToDtoForTransactions(User user) {
+        if (user == null) {
+            return null;
+        }
+        UserDtoOutForTransactions dto = new UserDtoOutForTransactions();
+        dto.setUsername(user.getUsername());
+        return dto;
     }
 }
