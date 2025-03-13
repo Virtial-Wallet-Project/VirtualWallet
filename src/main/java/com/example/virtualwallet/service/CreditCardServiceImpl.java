@@ -66,6 +66,10 @@ public class CreditCardServiceImpl implements CreditCardService {
             throw new DuplicateEntityException("Card", "number", card.getCardNumber());
         }
 
+        if (userHasCard) {
+            throw new InvalidOperationException("User already has a registered card!");
+        }
+
         card.setCreatedBy(user);
         creditCardRepository.createCard(card);
     }
@@ -73,29 +77,29 @@ public class CreditCardServiceImpl implements CreditCardService {
     @Override
     public void updateCard(User user, CreditCard card) {
 
-        PermissionHelpers.checkIfCreator(card, user);
-
         boolean cardExists = true;
 
+        CreditCard existingCard = creditCardRepository.getByCardNumber(card.getCardNumber());
+
         try {
-            CreditCard existingCard = creditCardRepository.getByCardNumber(card.getCardNumber());
-
-            if (card.getCardNumber().equals(existingCard.getCardNumber()) &&
-                    card.getCheckNumber().equals(existingCard.getCheckNumber()) &&
-                    card.getCardHolder().equals(existingCard.getCardHolder())) {
-
-                throw new InvalidOperationException("Invalid operation! No changes were made!");
-            }
 
             if (existingCard.getCardId() == card.getCardId()){
                 cardExists = false;
             }
+
         } catch (EntityNotFoundException e) {
             cardExists = false;
         }
 
         if (cardExists) {
             throw new DuplicateEntityException("Card", "number", card.getCardNumber());
+        }
+
+        if (card.getCardNumber().equals(existingCard.getCardNumber()) &&
+                card.getCheckNumber().equals(existingCard.getCheckNumber()) &&
+                card.getCardHolder().equals(existingCard.getCardHolder())) {
+
+            throw new InvalidOperationException("Invalid operation! No changes were made!");
         }
 
         creditCardRepository.updateCard(card);

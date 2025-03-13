@@ -36,7 +36,7 @@ public class PermissionHelpers {
     }
 
     public static void checkIfCreator (CreditCard card, User user) {
-        if (!user.equals(card.getCreatedBy())) {
+        if (user.getUserId() != card.getCreatedBy().getUserId()) {
             throw new UnauthorizedOperationException(CREATOR_AUTHORIZATION_ERROR);
         }
     }

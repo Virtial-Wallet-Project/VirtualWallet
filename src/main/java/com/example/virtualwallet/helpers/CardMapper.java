@@ -1,6 +1,7 @@
 package com.example.virtualwallet.helpers;
 
 import com.example.virtualwallet.models.CardDto;
+import com.example.virtualwallet.models.CardUpdateDto;
 import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.service.CreditCardService;
@@ -24,11 +25,20 @@ public class CardMapper {
         return card;
     }
 
-    public CreditCard dtoToObjectForUpdate (CardDto cardDto, User user) {
+    public CreditCard dtoToObjectForUpdate (CardUpdateDto cardDto, User user) {
         CreditCard card = cardService.getByUserId(user.getUserId());
         card.setCardNumber(cardDto.getCardNumber());
         card.setCardHolder(cardDto.getCardHolder());
         card.setCheckNumber(cardDto.getCheckNumber());
         return card;
+    }
+
+    public CardDto objectToDto (CreditCard card) {
+        CardDto cardDto = new CardDto();
+        cardDto.setCardNumber(card.getCardNumber());
+        cardDto.setExpirationDate(card.getExpirationDate());
+        cardDto.setCardHolder(card.getCardHolder());
+        cardDto.setCheckNumber(card.getCheckNumber());
+        return cardDto;
     }
 }

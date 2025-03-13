@@ -7,6 +7,7 @@ import com.example.virtualwallet.exceptions.UnauthorizedOperationException;
 import com.example.virtualwallet.helpers.AuthenticationHelper;
 import com.example.virtualwallet.helpers.CardMapper;
 import com.example.virtualwallet.models.CardDto;
+import com.example.virtualwallet.models.CardUpdateDto;
 import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.service.CreditCardService;
@@ -50,12 +51,13 @@ public class CreditCardRestController {
     }
 
     @PutMapping
-    public CardDto updateCard(@RequestHeader HttpHeaders headers, @Valid @RequestBody CardDto cardDto) {
+    public CardDto updateCard(@RequestHeader HttpHeaders headers, @Valid @RequestBody CardUpdateDto cardDto) {
         try {
             User user = authorizationHelper.tryGetUser(headers);
             CreditCard card = cardMapper.dtoToObjectForUpdate(cardDto, user);
             cardService.updateCard(user, card);
-            return cardDto;
+            return cardMapper.objectToDto(card);
+            
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (DuplicateEntityException e) {
