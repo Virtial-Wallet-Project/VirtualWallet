@@ -36,7 +36,7 @@ public class DepositServiceImpl implements DepositService {
 
     @Override
     @Transactional
-    public String depositMoney(User user, CreditCard userCard, double amount) {
+    public String depositMoney(User user, CreditCard userCard, Double amount) {
         PermissionHelpers.checkIfCreator(userCard, user);
 
         if (amount <= 0) {

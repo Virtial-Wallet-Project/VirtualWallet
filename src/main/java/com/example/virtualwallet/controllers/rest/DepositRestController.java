@@ -27,7 +27,7 @@ public class DepositRestController {
     }
 
     @PostMapping("/deposit")
-    public ResponseEntity<String> depositMoney(@RequestHeader HttpHeaders headers, @RequestParam double amount) {
+    public ResponseEntity<String> depositMoney(@RequestHeader HttpHeaders headers, @RequestParam Double amount) {
 
         User user = authorizationHelper.tryGetUser(headers);
         CreditCard card = creditCardService.getByUserId(user.getUserId());

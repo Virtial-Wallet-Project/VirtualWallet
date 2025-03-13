@@ -4,5 +4,5 @@ import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
 
 public interface DepositService {
-    String depositMoney(User user, CreditCard card, double amount);
+    String depositMoney(User user, CreditCard card, Double amount);
 }
