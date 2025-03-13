@@ -38,6 +38,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction createTransaction(User sender, int recipientId, Transaction transaction) {
+        PermissionHelpers.checkIfBlocked(sender);
+
         if (transaction.getAmount() <= 0) {
             throw new InvalidOperationException("Amount must be greater than zero!");
         }

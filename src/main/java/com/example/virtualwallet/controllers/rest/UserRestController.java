@@ -6,10 +6,7 @@ import com.example.virtualwallet.exceptions.InvalidOperationException;
 import com.example.virtualwallet.exceptions.UnauthorizedOperationException;
 import com.example.virtualwallet.helpers.AuthenticationHelper;
 import com.example.virtualwallet.helpers.UserMapper;
-import com.example.virtualwallet.models.FilterUserOptions;
-import com.example.virtualwallet.models.User;
-import com.example.virtualwallet.models.UserDto;
-import com.example.virtualwallet.models.UserDtoOut;
+import com.example.virtualwallet.models.*;
 import com.example.virtualwallet.service.CreditCardService;
 import com.example.virtualwallet.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,12 +47,17 @@ public class UserRestController {
                                    @RequestParam(defaultValue = "0") int page,
                                    @RequestParam(defaultValue = "10") int size,
                                    @RequestHeader HttpHeaders headers) {
-        User user = authorizationHelper.tryGetUser(headers);
-        FilterUserOptions filterOptions = new FilterUserOptions(username, email, phoneNumber, sortBy, orderBy);
-        return userMapper.allUsersToDtoOut(userService.getAll(filterOptions, page, size, user));
+        try {
+            User user = authorizationHelper.tryGetUser(headers);
+            FilterUserOptions filterOptions = new FilterUserOptions(username, email, phoneNumber, sortBy, orderBy);
+            return userMapper.allUsersToDtoOut(userService.getAll(filterOptions, page, size, user));
+
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public UserDtoOut getUserById(@RequestHeader HttpHeaders headers, @PathVariable int id){
         try {
             User user = authorizationHelper.tryGetUser(headers);
@@ -128,7 +130,7 @@ public class UserRestController {
     @Operation(summary = "Updates a user's information.", description = "Updates a user's personal info such as first name, last name, email or password.")
     @PutMapping("/{id}")
     @SecurityRequirement(name = "authHeader")
-    public UserDtoOut updateUser(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserDto userDto) {
+    public UserDtoOut updateUser(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserUpdateDto userDto) {
         try {
             User modifier = authorizationHelper.tryGetUser(headers);
             User user = userMapper.createUpdatedUserFromDto(userDto, id);
@@ -137,6 +139,7 @@ public class UserRestController {
             UserDtoOut userOut = new UserDtoOut();
             userOut.setUsername(userService.getUserById(id).getUsername());
             userOut.setEmail(user.getEmail());
+            userOut.setPhoneNumber(user.getPhoneNumber());
             return userOut;
 
         } catch (EntityNotFoundException e) {
@@ -165,7 +168,7 @@ public class UserRestController {
     }
 
     @Operation(summary = "Make a user an admin.", description = "An option where an admin can make another regular user an admin.")
-    @PutMapping("/makeAdmin/{id}")
+    @PutMapping("/admins/promote/{id}")
     @SecurityRequirement(name = "authHeader")
     public void makeUserAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
@@ -181,9 +184,9 @@ public class UserRestController {
     }
 
     @Operation(summary = "Demote a user from being an admin.", description = "An option where an admin can make another admin a regular user.")
-    @PutMapping("/removeAdmin/{id}")
+    @PutMapping("/admins/demote/{id}")
     @SecurityRequirement(name = "authHeader")
-    public void removeUserAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+    public void demoteUserAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authorizationHelper.tryGetUser(headers);
             userService.removeAdmin(user, id);
@@ -197,7 +200,7 @@ public class UserRestController {
     }
 
     @Operation(summary = "Block a user.", description = "An option where an admin can block a specific user.")
-    @PutMapping("/blockUser/{id}")
+    @PutMapping("/admins/block/{id}")
     @SecurityRequirement(name = "authHeader")
     public void blockUser (@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
@@ -213,7 +216,7 @@ public class UserRestController {
     }
 
     @Operation(summary = "Unblock a user.", description = "An option where an admin can unblock a specific user.")
-    @PutMapping("/unblockUser/{id}")
+    @PutMapping("/admins/unblock/{id}")
     @SecurityRequirement(name = "authHeader")
     public void unblockUser (@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {

@@ -6,12 +6,15 @@ public class UserDtoOut {
 
     private String email;
 
+    private String phoneNumber;
+
     public UserDtoOut() {
     }
 
-    public UserDtoOut(String username, String email) {
+    public UserDtoOut(String username, String email, String phoneNumber) {
         this.username = username;
         this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getUsername() {
@@ -28,5 +31,13 @@ public class UserDtoOut {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

@@ -1,9 +1,6 @@
 package com.example.virtualwallet.helpers;
 
-import com.example.virtualwallet.models.User;
-import com.example.virtualwallet.models.UserDto;
-import com.example.virtualwallet.models.UserDtoOut;
-import com.example.virtualwallet.models.UserDtoOutForTransactions;
+import com.example.virtualwallet.models.*;
 import com.example.virtualwallet.service.UserService;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +21,8 @@ public class UserMapper {
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
-        user.setPhoneNumber(user.getPhoneNumber());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setBalance(0.0);
         user.setAdmin(false);
         user.setBlocked(false);
         return user;
@@ -34,10 +32,11 @@ public class UserMapper {
         UserDtoOut userOut = new UserDtoOut();
         userOut.setUsername(userDto.getUsername());
         userOut.setEmail(userDto.getEmail());
+        userOut.setPhoneNumber(userDto.getPhoneNumber());
         return userOut;
     }
 
-    public User createUpdatedUserFromDto(UserDto userDto, int id) {
+    public User createUpdatedUserFromDto(UserUpdateDto userDto, int id) {
         User existingUser = userService.getUserById(id);
         existingUser.setPassword(userDto.getPassword());
         existingUser.setEmail(userDto.getEmail());
@@ -49,6 +48,7 @@ public class UserMapper {
         UserDtoOut userOut = new UserDtoOut();
         userOut.setUsername(user.getUsername());
         userOut.setEmail(user.getEmail());
+        userOut.setPhoneNumber(user.getPhoneNumber());
         return userOut;
     }
 
@@ -58,6 +58,7 @@ public class UserMapper {
             UserDtoOut userDtoOut = new UserDtoOut();
             userDtoOut.setUsername(user.getUsername());
             userDtoOut.setEmail(user.getEmail());
+            userDtoOut.setPhoneNumber(user.getPhoneNumber());
             userDto.add(userDtoOut);
         }
 

@@ -5,11 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class UserDto {
-
-    @NotNull(message = "Username cannot be empty!")
-    @Size(min = 2, max = 20, message = "Username should be between 2 and 20 symbols!")
-    private String username;
+public class UserUpdateDto {
 
     @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
             flags = Pattern.Flag.CASE_INSENSITIVE)
@@ -28,16 +24,10 @@ public class UserDto {
             flags = Pattern.Flag.CASE_INSENSITIVE)
     private String phoneNumber;
 
-    public UserDto() {
+
+    public UserUpdateDto() {
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getEmail() {
         return email;

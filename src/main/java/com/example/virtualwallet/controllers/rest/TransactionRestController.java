@@ -37,7 +37,8 @@ public class TransactionRestController {
     }
 
     @GetMapping
-    public List<TransactionDto> getAll (@RequestParam(required = false) Integer senderId,
+    public List<TransactionDto> getAll (@RequestParam(required = false) Integer userId,
+                                        @RequestParam(required = false) Integer senderId,
                                         @RequestParam(required = false) Integer recipientId,
                                         @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yyyy HH:mm:ss") LocalDateTime startDate,
                                         @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yyyy HH:mm:ss") LocalDateTime endDate,
@@ -52,7 +53,7 @@ public class TransactionRestController {
 
         if (user.isAdmin()) {
             filterTransactionOptions = new FilterTransactionOptions(
-                    null, senderId, recipientId, startDate, endDate, sortBy, orderBy
+                    userId, senderId, recipientId, startDate, endDate, sortBy, orderBy
             );
         } else {
             filterTransactionOptions = new FilterTransactionOptions(
