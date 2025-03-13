@@ -26,7 +26,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> getAll(FilterTransactionOptions filterOptions, int page, int size, User user) {
-        // Hardcode the logged user as the filterOptions userId in the Rest Controller!!
         return transactionRepository.getAll(filterOptions, page, size);
     }
 
@@ -50,7 +49,7 @@ public class TransactionServiceImpl implements TransactionService {
             throw new InvalidOperationException("You cannot send money to yourself!");
         }
 
-        if (sender.getBalance() <= transaction.getAmount()) {
+        if (sender.getBalance() < transaction.getAmount()) {
             throw new InvalidOperationException("Invalid operation! Insufficient funds!");
         }
 

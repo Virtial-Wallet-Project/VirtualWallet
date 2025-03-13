@@ -31,6 +31,15 @@ public class TransactionMapper {
         return transaction;
     }
 
+    public TransactionDto fromObjectToDto (Transaction transaction) {
+        TransactionDto transactionDto = new TransactionDto();
+        transactionDto.setSender(userMapper.userToDtoForTransactions(transaction.getSender()));
+        transactionDto.setRecipient(userMapper.userToDtoForTransactions(transaction.getRecipient()));
+        transactionDto.setAmount(transaction.getAmount());
+        transactionDto.setTransactionDate(transaction.getTransactionDate());
+        return transactionDto;
+    }
+
     public List<TransactionDto> transactionsToDtoOut(List<Transaction> transactionList){
         List<TransactionDto> transactionDto = new ArrayList<>();
         for (Transaction transaction : transactionList){

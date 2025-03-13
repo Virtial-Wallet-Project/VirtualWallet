@@ -63,6 +63,20 @@ public class TransactionRestController {
         return transactionMapper.transactionsToDtoOut(transactionService.getAll(filterTransactionOptions, page, size, user));
     }
 
+    @GetMapping("{id}")
+    public TransactionDto getById (@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            Transaction transaction = transactionService.getById(user, id);
+            return transactionMapper.fromObjectToDto(transaction);
+
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
     @PostMapping("{recipientId}")
     public TransactionDto createTransaction (@RequestHeader HttpHeaders headers, @Valid @RequestBody TransactionDto transactionDto,
                                              @PathVariable int recipientId) {
