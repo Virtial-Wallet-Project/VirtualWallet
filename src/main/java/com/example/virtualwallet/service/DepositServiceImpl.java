@@ -69,6 +69,6 @@ public class DepositServiceImpl implements DepositService {
             return "An unexpected error occurred. Please try again later.";
         }
 
-        return "Deposit Failed! Please check your card details.";
+        return "";
     }
 }

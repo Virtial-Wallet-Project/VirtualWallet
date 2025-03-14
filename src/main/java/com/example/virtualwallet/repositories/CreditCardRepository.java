@@ -9,7 +9,7 @@ public interface CreditCardRepository {
 
     CreditCard getById(int id);
 
-    CreditCard getByUserId(int userId);
+    List<CreditCard> getByUserId(int userId);
 
     CreditCard getByCardNumber(String cardNumber);
 

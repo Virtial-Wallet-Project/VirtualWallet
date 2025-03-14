@@ -10,7 +10,7 @@ public interface CreditCardService {
 
     CreditCard getById(int id);
 
-    CreditCard getByUserId(int id);
+    List<CreditCard> getByUserId(int id);
 
     CreditCard getByCardNumber(String cardNumber);
 
@@ -18,5 +18,5 @@ public interface CreditCardService {
 
     void updateCard(User user, CreditCard card);
 
-    void deleteCard(User user);
+    void deleteCard(User user, int cardId);
 }

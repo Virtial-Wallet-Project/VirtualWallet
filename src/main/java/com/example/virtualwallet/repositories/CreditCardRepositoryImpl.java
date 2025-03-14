@@ -40,15 +40,12 @@ public class CreditCardRepositoryImpl implements CreditCardRepository {
     }
 
     @Override
-    public CreditCard getByUserId(int userId) {
+    public List<CreditCard> getByUserId(int userId) {
         try (Session session = sessionFactory.openSession()) {
-            Query<CreditCard> card = session.createQuery(
+            Query<CreditCard> cards = session.createQuery(
                     "From CreditCard Where createdBy.userId = :user_id", CreditCard.class);
-            card.setParameter("user_id", userId);
-            return card
-                    .stream()
-                    .findFirst()
-                    .orElseThrow(() -> new EntityNotFoundException("Card", "user ID", String.valueOf(userId)));
+            cards.setParameter("user_id", userId);
+            return cards.getResultList();
         }
     }
 

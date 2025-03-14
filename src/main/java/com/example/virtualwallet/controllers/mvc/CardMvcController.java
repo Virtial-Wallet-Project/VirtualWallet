@@ -57,19 +57,19 @@ public class CardMvcController {
         return "redirect:/add-credit-card";
     }
 
-    @PostMapping("/delete-card")
-    public String deleteCreditCard(HttpSession httpSession, RedirectAttributes redirectAttributes) {
-        User  user = authenticationHelper.tryGetUser(httpSession);
-
-        try {
-            creditCardService.deleteCard(user);
-            redirectAttributes.addFlashAttribute("successMessage", "Credit card deleted successfully.");
-        } catch (InvalidOperationException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-        }
-
-        return "redirect:/account";
-    }
+//    @PostMapping("/delete-card")
+//    public String deleteCreditCard(HttpSession httpSession, RedirectAttributes redirectAttributes) {
+//        User  user = authenticationHelper.tryGetUser(httpSession);
+//
+//        try {
+//            creditCardService.deleteCard(user);
+//            redirectAttributes.addFlashAttribute("successMessage", "Credit card deleted successfully.");
+//        } catch (InvalidOperationException e) {
+//            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+//        }
+//
+//        return "redirect:/account";
+//    }
 
 
     @ModelAttribute("isAuthenticated")

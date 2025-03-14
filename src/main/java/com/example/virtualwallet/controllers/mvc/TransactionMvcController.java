@@ -61,30 +61,30 @@ public class TransactionMvcController {
     }
 
 
-    @PostMapping("/deposit")
-    public String depositMoney(
-            @RequestParam double amount,
-            HttpSession session,
-            RedirectAttributes redirectAttributes) {
-
-        User user = (User) session.getAttribute("currentUser");
-
-        if (user == null) {
-            return "redirect:/login";
-        }
-
-        CreditCard userCard = creditCardService.getByUserId(user.getUserId());
-
-        if (userCard == null) {
-            redirectAttributes.addFlashAttribute("error", "You need to add a credit card before depositing money.");
-            return "redirect:/account";
-        }
-
-        String resultMessage = depositService.depositMoney(user, userCard, amount);
-        redirectAttributes.addFlashAttribute("message", resultMessage);
-
-        return "redirect:/wallet";
-    }
+//    @PostMapping("/deposit")
+//    public String depositMoney(
+//            @RequestParam double amount,
+//            HttpSession session,
+//            RedirectAttributes redirectAttributes) {
+//
+//        User user = (User) session.getAttribute("currentUser");
+//
+//        if (user == null) {
+//            return "redirect:/login";
+//        }
+//
+//        CreditCard userCard = creditCardService.getByUserId(user.getUserId());
+//
+//        if (userCard == null) {
+//            redirectAttributes.addFlashAttribute("error", "You need to add a credit card before depositing money.");
+//            return "redirect:/account";
+//        }
+//
+//        String resultMessage = depositService.depositMoney(user, userCard, amount);
+//        redirectAttributes.addFlashAttribute("message", resultMessage);
+//
+//        return "redirect:/wallet";
+//    }
 
     @GetMapping("/transactions/")
     public String showAllTransactions(@ModelAttribute("filterTransactionsUserDto") FilterTransactionDto filterTransactionDto,

@@ -11,10 +11,6 @@ public interface TransactionRepository {
 
     Transaction getById(int id);
 
-    List<Transaction> getBySenderId(int senderId);
-
-    List<Transaction> getByRecipientId(int recipientId);
-
     void createTransaction(Transaction transaction);
 
     void updateTransaction(Transaction transaction);

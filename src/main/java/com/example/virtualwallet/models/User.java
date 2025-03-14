@@ -2,6 +2,8 @@ package com.example.virtualwallet.models;
 
 import jakarta.persistence.*;
 
+import javax.smartcardio.Card;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,6 +36,9 @@ public class User {
 
     @Column(name = "is_blocked")
     private boolean isBlocked;
+
+    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<CreditCard> cards = new ArrayList<>();
 
     public User() {
     }
@@ -112,6 +117,14 @@ public class User {
 
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
+    }
+
+    public List<CreditCard> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<CreditCard> cards) {
+        this.cards = cards;
     }
 
     @Override

@@ -50,11 +50,13 @@ public class CreditCardRestController {
         }
     }
 
-    @PutMapping
-    public CardDto updateCard(@RequestHeader HttpHeaders headers, @Valid @RequestBody CardUpdateDto cardDto) {
+    @PutMapping("/{id}")
+    public CardDto updateCard(@RequestHeader HttpHeaders headers, @Valid @RequestBody CardUpdateDto cardDto,
+                              @PathVariable int id) {
         try {
             User user = authorizationHelper.tryGetUser(headers);
-            CreditCard card = cardMapper.dtoToObjectForUpdate(cardDto, user);
+            cardDto.setId(id);
+            CreditCard card = cardMapper.dtoToObjectForUpdate(cardDto);
             cardService.updateCard(user, card);
             return cardMapper.objectToDto(card);
             
@@ -69,11 +71,11 @@ public class CreditCardRestController {
         }
     }
 
-    @DeleteMapping
-    public void deleteCard(@RequestHeader HttpHeaders headers) {
+    @DeleteMapping("/{id}")
+    public void deleteCard(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authorizationHelper.tryGetUser(headers);
-            cardService.deleteCard(user);
+            cardService.deleteCard(user, id);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (UnauthorizedOperationException e) {

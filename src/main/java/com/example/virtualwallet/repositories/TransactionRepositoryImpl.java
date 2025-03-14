@@ -89,26 +89,6 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public List<Transaction> getBySenderId(int senderId) {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Transaction> transactions = session.createQuery(
-                    "From Transaction Where sender.userId = :sender_id", Transaction.class);
-            transactions.setParameter("sender_id", senderId);
-            return transactions.getResultList();
-        }
-    }
-
-    @Override
-    public List<Transaction> getByRecipientId(int recipientId) {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Transaction> transactions = session.createQuery(
-                    "From Transaction Where recipient.userId = :recipient_id", Transaction.class);
-            transactions.setParameter("recipient_id", recipientId);
-            return transactions.getResultList();
-        }
-    }
-
-    @Override
     public void createTransaction(Transaction transaction) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

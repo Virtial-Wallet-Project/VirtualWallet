@@ -15,7 +15,7 @@ public class CreditCard {
     @Column(name = "id")
     private int cardId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User createdBy;
 

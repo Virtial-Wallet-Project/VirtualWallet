@@ -6,10 +6,7 @@ import jakarta.validation.constraints.Size;
 
 public class CardUpdateDto {
 
-    @NotNull(message = "Card number is required")
-    @Size(min = 16, max = 16, message = "Card number must be exactly 16 digits")
-    @Pattern(regexp = "\\d{16}", message = "Card number must contain only digits")
-    private String cardNumber;
+    private int id;
 
     @NotNull(message = "Card holder name is required")
     @Size(min = 2, max = 30, message = "Card holder name must be between 2 and 30 characters")
@@ -22,12 +19,12 @@ public class CardUpdateDto {
     public CardUpdateDto() {
     }
 
-    public String getCardNumber() {
-        return cardNumber;
+    public int getId() {
+        return id;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCardHolder() {

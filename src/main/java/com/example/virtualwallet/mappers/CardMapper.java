@@ -25,9 +25,8 @@ public class CardMapper {
         return card;
     }
 
-    public CreditCard dtoToObjectForUpdate (CardUpdateDto cardDto, User user) {
-        CreditCard card = cardService.getByUserId(user.getUserId());
-        card.setCardNumber(cardDto.getCardNumber());
+    public CreditCard dtoToObjectForUpdate (CardUpdateDto cardDto) {
+        CreditCard card = cardService.getById(cardDto.getId());
         card.setCardHolder(cardDto.getCardHolder());
         card.setCheckNumber(cardDto.getCheckNumber());
         return card;

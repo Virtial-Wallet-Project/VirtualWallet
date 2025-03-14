@@ -23,12 +23,6 @@ public class PermissionHelpers {
         }
     }
 
-    public static void checkIfCreatorOrAdminForCreditCard(User user, CreditCard card) {
-        if (!user.equals(card.getCreatedBy()) && !user.isAdmin()) {
-            throw new UnauthorizedOperationException(AUTHORIZATION_PERMISSION_ERROR);
-        }
-    }
-
     public static void checkIfCreatorOrAdmin(int entityOwnerId, User modifier) {
         if (entityOwnerId != modifier.getUserId() && !modifier.isAdmin()) {
             throw new UnauthorizedOperationException(AUTHORIZATION_PERMISSION_ERROR);
