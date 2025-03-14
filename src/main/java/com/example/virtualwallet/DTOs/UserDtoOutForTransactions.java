@@ -1,4 +1,4 @@
-package com.example.virtualwallet.models;
+package com.example.virtualwallet.DTOs;
 
 public class UserDtoOutForTransactions {
 

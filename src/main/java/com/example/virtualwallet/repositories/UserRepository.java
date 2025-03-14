@@ -1,6 +1,6 @@
 package com.example.virtualwallet.repositories;
 
-import com.example.virtualwallet.models.FilterUserOptions;
+import com.example.virtualwallet.filtering.FilterUserOptions;
 import com.example.virtualwallet.models.User;
 
 import java.util.List;

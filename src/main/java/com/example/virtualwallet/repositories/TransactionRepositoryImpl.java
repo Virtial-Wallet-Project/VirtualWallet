@@ -2,7 +2,7 @@ package com.example.virtualwallet.repositories;
 
 import com.example.virtualwallet.exceptions.EntityNotFoundException;
 import com.example.virtualwallet.exceptions.InvalidOperationException;
-import com.example.virtualwallet.models.FilterTransactionOptions;
+import com.example.virtualwallet.filtering.FilterTransactionOptions;
 import com.example.virtualwallet.models.Transaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

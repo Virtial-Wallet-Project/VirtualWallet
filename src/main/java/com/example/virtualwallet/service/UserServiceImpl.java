@@ -4,7 +4,7 @@ import com.example.virtualwallet.exceptions.DuplicateEntityException;
 import com.example.virtualwallet.exceptions.EntityNotFoundException;
 import com.example.virtualwallet.exceptions.InvalidOperationException;
 import com.example.virtualwallet.helpers.PermissionHelpers;
-import com.example.virtualwallet.models.FilterUserOptions;
+import com.example.virtualwallet.filtering.FilterUserOptions;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

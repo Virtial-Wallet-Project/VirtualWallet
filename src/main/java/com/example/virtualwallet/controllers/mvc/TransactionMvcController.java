@@ -1,5 +1,8 @@
 package com.example.virtualwallet.controllers.mvc;
 
+import com.example.virtualwallet.filtering.DTOs.FilterTransactionDto;
+import com.example.virtualwallet.DTOs.TransferDto;
+import com.example.virtualwallet.filtering.FilterTransactionOptions;
 import com.example.virtualwallet.models.*;
 import com.example.virtualwallet.service.CreditCardService;
 import com.example.virtualwallet.service.DepositService;

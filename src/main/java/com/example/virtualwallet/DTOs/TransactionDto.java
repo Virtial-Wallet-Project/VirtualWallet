@@ -1,4 +1,4 @@
-package com.example.virtualwallet.models;
+package com.example.virtualwallet.DTOs;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -7,12 +7,6 @@ import java.time.LocalDateTime;
 
 public class TransactionDto {
 
-    @NotNull(message = "Sender is required")
-    private UserDtoOutForTransactions sender;
-
-    @NotNull(message = "Recipient is required")
-    private UserDtoOutForTransactions recipient;
-
     @NotNull(message = "Amount is required")
     private double amount;
 
@@ -20,25 +14,7 @@ public class TransactionDto {
     @PastOrPresent(message = "Transaction date must be in the past or present")
     private LocalDateTime transactionDate;
 
-
     public TransactionDto() {
-    }
-
-
-    public UserDtoOutForTransactions getSender() {
-        return sender;
-    }
-
-    public void setSender(UserDtoOutForTransactions sender) {
-        this.sender = sender;
-    }
-
-    public UserDtoOutForTransactions getRecipient() {
-        return recipient;
-    }
-
-    public void setRecipient(UserDtoOutForTransactions recipient) {
-        this.recipient = recipient;
     }
 
     public double getAmount() {
@@ -57,4 +33,3 @@ public class TransactionDto {
         this.transactionDate = transactionDate;
     }
 }
-

@@ -2,7 +2,7 @@ package com.example.virtualwallet.service;
 
 import com.example.virtualwallet.exceptions.InvalidOperationException;
 import com.example.virtualwallet.helpers.PermissionHelpers;
-import com.example.virtualwallet.models.CardForDummyAPI;
+import com.example.virtualwallet.DTOs.CardForDummyAPI;
 import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.Transaction;
 import com.example.virtualwallet.models.User;

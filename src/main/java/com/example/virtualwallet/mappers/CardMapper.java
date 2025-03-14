@@ -1,7 +1,7 @@
-package com.example.virtualwallet.helpers;
+package com.example.virtualwallet.mappers;
 
-import com.example.virtualwallet.models.CardDto;
-import com.example.virtualwallet.models.CardUpdateDto;
+import com.example.virtualwallet.DTOs.CardDto;
+import com.example.virtualwallet.DTOs.CardUpdateDto;
 import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.service.CreditCardService;

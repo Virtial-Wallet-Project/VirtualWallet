@@ -1,19 +1,15 @@
-package com.example.virtualwallet.models;
+package com.example.virtualwallet.DTOs;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
-import java.time.LocalDate;
-
-
-public class CardDto {
+public class CardUpdateDto {
 
     @NotNull(message = "Card number is required")
     @Size(min = 16, max = 16, message = "Card number must be exactly 16 digits")
     @Pattern(regexp = "\\d{16}", message = "Card number must contain only digits")
     private String cardNumber;
-
-    @NotNull(message = "Expiration date is required")
-    private LocalDate expirationDate;
 
     @NotNull(message = "Card holder name is required")
     @Size(min = 2, max = 30, message = "Card holder name must be between 2 and 30 characters")
@@ -23,7 +19,7 @@ public class CardDto {
     @Pattern(regexp = "\\d{3}", message = "Check number must be exactly 3 digits and contain only digits")
     private String checkNumber;
 
-    public CardDto() {
+    public CardUpdateDto() {
     }
 
     public String getCardNumber() {
@@ -32,14 +28,6 @@ public class CardDto {
 
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
-    }
-
-    public LocalDate getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(LocalDate expirationDate) {
-        this.expirationDate = expirationDate;
     }
 
     public String getCardHolder() {

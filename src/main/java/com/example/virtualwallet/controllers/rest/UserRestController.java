@@ -1,11 +1,15 @@
 package com.example.virtualwallet.controllers.rest;
 
+import com.example.virtualwallet.DTOs.UserDto;
+import com.example.virtualwallet.DTOs.UserDtoOut;
+import com.example.virtualwallet.DTOs.UserUpdateDto;
 import com.example.virtualwallet.exceptions.DuplicateEntityException;
 import com.example.virtualwallet.exceptions.EntityNotFoundException;
 import com.example.virtualwallet.exceptions.InvalidOperationException;
 import com.example.virtualwallet.exceptions.UnauthorizedOperationException;
+import com.example.virtualwallet.filtering.FilterUserOptions;
 import com.example.virtualwallet.helpers.AuthenticationHelper;
-import com.example.virtualwallet.helpers.UserMapper;
+import com.example.virtualwallet.mappers.UserMapper;
 import com.example.virtualwallet.models.*;
 import com.example.virtualwallet.service.CreditCardService;
 import com.example.virtualwallet.service.UserService;

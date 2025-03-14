@@ -2,7 +2,7 @@ package com.example.virtualwallet.service;
 
 import com.example.virtualwallet.exceptions.InvalidOperationException;
 import com.example.virtualwallet.helpers.PermissionHelpers;
-import com.example.virtualwallet.models.FilterTransactionOptions;
+import com.example.virtualwallet.filtering.FilterTransactionOptions;
 import com.example.virtualwallet.models.Transaction;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.repositories.TransactionRepository;

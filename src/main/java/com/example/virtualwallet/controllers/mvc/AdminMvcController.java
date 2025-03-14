@@ -1,6 +1,11 @@
 package com.example.virtualwallet.controllers.mvc;
 
+import com.example.virtualwallet.filtering.DTOs.FilterTransactionDto;
+import com.example.virtualwallet.DTOs.LoginDto;
 import com.example.virtualwallet.exceptions.AuthenticationFailureException;
+import com.example.virtualwallet.filtering.FilterTransactionOptions;
+import com.example.virtualwallet.filtering.DTOs.FilterUserDto;
+import com.example.virtualwallet.filtering.FilterUserOptions;
 import com.example.virtualwallet.helpers.AuthenticationHelper;
 import com.example.virtualwallet.models.*;
 import com.example.virtualwallet.service.TransactionService;

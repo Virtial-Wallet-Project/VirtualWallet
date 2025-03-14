@@ -1,6 +1,5 @@
-package com.example.virtualwallet.models;
+package com.example.virtualwallet.filtering.DTOs;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 

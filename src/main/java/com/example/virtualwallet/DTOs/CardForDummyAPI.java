@@ -1,4 +1,4 @@
-package com.example.virtualwallet.models;
+package com.example.virtualwallet.DTOs;
 
 //This class is used to make a card model for the dummy restAPI in order to withdraw money
 

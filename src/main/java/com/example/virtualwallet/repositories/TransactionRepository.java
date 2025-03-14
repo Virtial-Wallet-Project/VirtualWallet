@@ -1,8 +1,7 @@
 package com.example.virtualwallet.repositories;
 
-import com.example.virtualwallet.models.FilterTransactionOptions;
+import com.example.virtualwallet.filtering.FilterTransactionOptions;
 import com.example.virtualwallet.models.Transaction;
-import com.example.virtualwallet.models.User;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.virtualwallet.models;
+package com.example.virtualwallet.filtering;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

@@ -1,5 +1,9 @@
-package com.example.virtualwallet.helpers;
+package com.example.virtualwallet.mappers;
 
+import com.example.virtualwallet.DTOs.UserDto;
+import com.example.virtualwallet.DTOs.UserDtoOut;
+import com.example.virtualwallet.DTOs.UserDtoOutForTransactions;
+import com.example.virtualwallet.DTOs.UserUpdateDto;
 import com.example.virtualwallet.models.*;
 import com.example.virtualwallet.service.UserService;
 import org.springframework.stereotype.Component;

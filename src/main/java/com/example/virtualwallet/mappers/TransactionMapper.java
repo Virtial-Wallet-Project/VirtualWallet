@@ -1,9 +1,8 @@
-package com.example.virtualwallet.helpers;
+package com.example.virtualwallet.mappers;
 
 import com.example.virtualwallet.models.Transaction;
-import com.example.virtualwallet.models.TransactionDto;
-import com.example.virtualwallet.service.TransactionService;
-import com.example.virtualwallet.service.UserService;
+import com.example.virtualwallet.DTOs.TransactionDto;
+import com.example.virtualwallet.DTOs.TransactionDtoOut;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,27 +11,21 @@ import java.util.List;
 @Component
 public class TransactionMapper {
 
-    private final TransactionService transactionService;
-    private final UserService userService;
     private final UserMapper userMapper;
 
-    public TransactionMapper(TransactionService transactionService, UserService userService, UserMapper userMapper) {
-        this.transactionService = transactionService;
-        this.userService = userService;
+    public TransactionMapper(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
 
     public Transaction fromDtoToObject (TransactionDto transactionDto) {
         Transaction transaction = new Transaction();
-        transaction.setSender(userService.getByUsername(transactionDto.getSender().getUsername()));
-        transaction.setRecipient(userService.getByUsername(transactionDto.getRecipient().getUsername()));
         transaction.setAmount(transactionDto.getAmount());
         transaction.setTransactionDate(transactionDto.getTransactionDate());
         return transaction;
     }
 
-    public TransactionDto fromObjectToDto (Transaction transaction) {
-        TransactionDto transactionDto = new TransactionDto();
+    public TransactionDtoOut fromObjectToDto (Transaction transaction) {
+        TransactionDtoOut transactionDto = new TransactionDtoOut();
         transactionDto.setSender(userMapper.userToDtoForTransactions(transaction.getSender()));
         transactionDto.setRecipient(userMapper.userToDtoForTransactions(transaction.getRecipient()));
         transactionDto.setAmount(transaction.getAmount());
@@ -40,10 +33,10 @@ public class TransactionMapper {
         return transactionDto;
     }
 
-    public List<TransactionDto> transactionsToDtoOut(List<Transaction> transactionList){
-        List<TransactionDto> transactionDto = new ArrayList<>();
+    public List<TransactionDtoOut> transactionsToDtoOut(List<Transaction> transactionList){
+        List<TransactionDtoOut> transactionDto = new ArrayList<>();
         for (Transaction transaction : transactionList){
-            TransactionDto transactionDtoOut = new TransactionDto();
+            TransactionDtoOut transactionDtoOut = new TransactionDtoOut();
             transactionDtoOut.setSender(userMapper.userToDtoForTransactions(transaction.getSender()));
             transactionDtoOut.setRecipient(userMapper.userToDtoForTransactions(transaction.getRecipient()));
             transactionDtoOut.setAmount(transaction.getAmount());
