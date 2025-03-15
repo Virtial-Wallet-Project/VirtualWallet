@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(User user, int id) {
         PermissionHelpers.checkIfBlocked(user);
-        PermissionHelpers.checkIfAdmin(user);
         return userRepository.getById(id);
     }
 
@@ -54,6 +53,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getByPhoneNumber(String phoneNumber) {
         return userRepository.getByPhoneNumber(phoneNumber);
+    }
+
+    public User getByUsernameOrEmailOrPhone(String identifier) {
+        return userRepository.getByUsernameOrEmailOrPhone(identifier);
     }
 
     @Override

@@ -18,6 +18,8 @@ public interface UserService {
 
     User getByPhoneNumber(String phoneNumber);
 
+    User getByUsernameOrEmailOrPhone(String identifier);
+
     void createUser(User user);
 
     void updateUser(User user, User modifier);

@@ -1238,6 +1238,14 @@ footer {
     margin-bottom: 10px;
 }
 
+#error-message {
+    color: #f60800;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
 .label-transfer {
     display: block;
     font-weight: bold;

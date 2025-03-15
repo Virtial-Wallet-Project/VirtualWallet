@@ -17,6 +17,8 @@ public interface UserRepository {
 
     User getByPhoneNumber (String phoneNumber);
 
+    User getByUsernameOrEmailOrPhone(String identifier);
+
     void createUser(User user);
 
     void updateUser(User user);

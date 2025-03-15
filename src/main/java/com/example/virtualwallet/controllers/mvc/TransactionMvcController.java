@@ -1,5 +1,6 @@
 package com.example.virtualwallet.controllers.mvc;
 
+import com.example.virtualwallet.exceptions.EntityNotFoundException;
 import com.example.virtualwallet.filtering.DTOs.FilterTransactionDto;
 import com.example.virtualwallet.DTOs.TransferDto;
 import com.example.virtualwallet.filtering.FilterTransactionOptions;
@@ -139,15 +140,10 @@ public class TransactionMvcController {
             return "redirect:/auth/login";
         }
 
-        User recipient = userService.getByUsername(transferDto.getRecipientIdentifier());
-        if (recipient == null) {
-            recipient = userService.getByEmail(transferDto.getRecipientIdentifier());
-        }
-        if (recipient == null) {
-            recipient = userService.getByPhoneNumber(transferDto.getRecipientIdentifier());
-        }
-
-        if (recipient == null) {
+        User recipient;
+        try {
+            recipient = userService.getByUsernameOrEmailOrPhone(transferDto.getRecipientIdentifier());
+        } catch (EntityNotFoundException e) {
             model.addAttribute("error", "Recipient not found.");
             return "transfer";
         }
@@ -162,12 +158,12 @@ public class TransactionMvcController {
             return "transfer";
         }
 
-        // Proceed to confirmation page
         model.addAttribute("sender", sender);
         model.addAttribute("recipient", recipient);
         model.addAttribute("amount", transferDto.getAmount());
         return "transfer-confirmation";
     }
+
 
     @PostMapping("/transfer/confirm")
     public String confirmTransfer(

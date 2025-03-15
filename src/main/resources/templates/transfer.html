@@ -31,7 +31,6 @@
 <hr>
 
 <div class="transfer-wrapper">
-    <p th:if="${error}" class="error-message" th:text="${error}"></p>
 
     <form th:action="@{/wallet/transfer}" method="post" th:object="${transferDto}" class="form-transfer">
         <label class="label-transfer" for="recipient">Recipient (Username, Email, or Phone):</label>
@@ -42,6 +41,8 @@
 
         <button class="button-transfer" type="submit">Proceed to Confirmation</button>
     </form>
+
+    <p th:if="${error}" id="error-message" th:text="${error}"></p>
 </div>
 
 

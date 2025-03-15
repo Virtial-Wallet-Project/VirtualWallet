@@ -128,6 +128,25 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public User getByUsernameOrEmailOrPhone(String identifier) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery(
+                    "FROM User WHERE username = :identifier OR email = :identifier OR phoneNumber = :identifier",
+                    User.class
+            );
+            query.setParameter("identifier", identifier);
+
+            List<User> result = query.list();
+            if (result.isEmpty()) {
+                throw new EntityNotFoundException("User", "identifier", identifier);
+            }
+
+            return result.get(0);
+        }
+    }
+
+
+    @Override
     public void createUser(User user) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
