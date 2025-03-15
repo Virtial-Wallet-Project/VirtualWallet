@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 
 
 @Controller
@@ -37,21 +38,22 @@ public class UserMvcController {
         this.userMapper = userMapper;
     }
 
-//    @GetMapping("/account")
-//    public String showAccountPage(HttpSession session, Model model) {
-//        String currentUsername = (String) session.getAttribute("currentUser");
-//        if (currentUsername == null) {
-//            return "redirect:/auth/login";
-//        }
-//
-//        User user = userService.getByUsername(currentUsername);
-//        CreditCard creditCard = creditCardService.getByUserId(user.getUserId());
-//
-//        model.addAttribute("user", user);
-//        model.addAttribute("creditCard", creditCard);
-//
-//        return "profile-page";
-//    }
+    @GetMapping("/account")
+    public String showAccountPage(HttpSession session, Model model) {
+        String currentUsername = (String) session.getAttribute("currentUser");
+        if (currentUsername == null) {
+            return "redirect:/auth/login";
+        }
+
+        User user = userService.getByUsername(currentUsername);
+        List<CreditCard> creditCards = creditCardService.getByUserId(user.getUserId());
+
+        model.addAttribute("user", user);
+        model.addAttribute("creditCards", creditCards);
+
+        return "profile-page";
+    }
+
 
 
 

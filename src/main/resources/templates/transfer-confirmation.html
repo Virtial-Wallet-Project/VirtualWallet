@@ -27,21 +27,26 @@
     </div>
 </header>
 
-<h1>Confirm Transfer</h1>
+<h1 id="info">Confirm Transfer</h1>
+<hr>
 
-<p>Recipient: <span th:text="${recipient.username}"></span></p>
-<p>Amount: <span th:text="${amount}"></span> BGN</p>
+<div class="transfer-confirmation">
+    <h2>Transfer Confirmation</h2>
 
-<form th:action="@{/wallet/transfer/confirm}" method="post">
-    <input type="hidden" name="recipientId" th:value="${recipient.userId}">
-    <input type="hidden" name="amount" th:value="${amount}">
+    <p class="transfer-detail">Recipient: <span class="transfer-value" th:text="${recipient.username}"></span></p>
+    <p class="transfer-detail">Amount: <span class="transfer-value" th:text="${amount}"></span> BGN</p>
 
-    <button type="submit">Confirm Transfer</button>
-</form>
+    <form th:action="@{/wallet/transfer/confirm}" method="post">
+        <input type="hidden" name="recipientId" th:value="${recipient.userId}">
+        <input type="hidden" name="amount" th:value="${amount}">
+        <button class="confirm-button" type="submit">Confirm Transfer</button>
+    </form>
 
-<form th:action="@{/wallet/transfer}" method="get">
-    <button type="submit">Edit</button>
-</form>
+    <form th:action="@{/wallet/transfer}" method="get">
+        <button class="edit-button" type="submit">Edit</button>
+    </form>
+</div>
+
 
 <footer>
     <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>

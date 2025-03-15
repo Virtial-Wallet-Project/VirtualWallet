@@ -27,19 +27,23 @@
     </div>
 </header>
 
-<h1>Transfer Money</h1>
+<h1 id="info">Transfer Money</h1>
+<hr>
 
-<p th:if="${error}" class="error" th:text="${error}"></p>
+<div class="transfer-wrapper">
+    <p th:if="${error}" class="error-message" th:text="${error}"></p>
 
-<form th:action="@{/wallet/transfer}" method="post" th:object="${transferDto}">
-    <label for="recipient">Recipient (Username, Email, or Phone):</label>
-    <input type="text" id="recipient" name="recipientIdentifier" required>
+    <form th:action="@{/wallet/transfer}" method="post" th:object="${transferDto}" class="form-transfer">
+        <label class="label-transfer" for="recipient">Recipient (Username, Email, or Phone):</label>
+        <input class="input-transfer" type="text" id="recipient" name="recipientIdentifier" required>
 
-    <label for="amount">Amount (BGN):</label>
-    <input type="number" id="amount" name="amount" step="0.01" required>
+        <label class="label-transfer" for="amount">Amount (BGN):</label>
+        <input class="input-transfer" type="number" id="amount" name="amount" step="0.01" required>
 
-    <button type="submit">Proceed to Confirmation</button>
-</form>
+        <button class="button-transfer" type="submit">Proceed to Confirmation</button>
+    </form>
+</div>
+
 
 <footer>
     <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>

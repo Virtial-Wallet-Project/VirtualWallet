@@ -738,6 +738,31 @@ footer {
     transform: scale(1.05);
 }
 
+.add-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#card-add {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 19px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    padding: 10px 20px;
+    margin-bottom: 35px;
+    border-radius: 8px;
+    transition: 0.3s;
+    text-align: center;
+}
+
+#card-add:hover {
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    transform: scale(1.05);
+}
+
 #form-margin{
     margin-top: 30px;
     margin-bottom: 30px;
@@ -1107,7 +1132,7 @@ footer {
     width: 40%;
     margin: 20px auto;
     border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
@@ -1163,3 +1188,150 @@ footer {
     margin-top: 10px;
     display: block;
 }
+
+.transfer-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.transfer-money {
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #4CAF50;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid black;
+
+}
+
+.transfer-money:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.transfer-wrapper {
+    max-width: 400px;
+    margin: 50px auto;
+    margin-bottom: 224px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.error-message {
+    color: #d9534f;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.label-transfer {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
+    color: #333;
+    text-align: left;
+}
+
+.input-transfer {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.button-transfer {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.button-transfer:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.transfer-confirmation {
+    max-width: 400px;
+    margin: 50px auto;
+    margin-bottom: 232px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.transfer-confirmation h2 {
+    color: #333;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.transfer-detail {
+    font-size: 16px;
+    color: #555;
+    margin: 8px 0;
+}
+
+.transfer-value {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.confirm-button, .edit-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.confirm-button {
+    background-color: #28a745;
+}
+
+.confirm-button:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.edit-button {
+    background-color: #007bff;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+

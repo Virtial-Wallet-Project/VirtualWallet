@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.format.DateTimeParseException;
@@ -57,19 +58,22 @@ public class CardMvcController {
         return "redirect:/add-credit-card";
     }
 
-//    @PostMapping("/delete-card")
-//    public String deleteCreditCard(HttpSession httpSession, RedirectAttributes redirectAttributes) {
-//        User  user = authenticationHelper.tryGetUser(httpSession);
-//
-//        try {
-//            creditCardService.deleteCard(user);
-//            redirectAttributes.addFlashAttribute("successMessage", "Credit card deleted successfully.");
-//        } catch (InvalidOperationException e) {
-//            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-//        }
-//
-//        return "redirect:/account";
-//    }
+    @PostMapping("/delete-card")
+    public String deleteCreditCard(@RequestParam("cardId") int cardId,
+                                   HttpSession httpSession,
+                                   RedirectAttributes redirectAttributes) {
+        User user = authenticationHelper.tryGetUser(httpSession);
+
+        try {
+            creditCardService.deleteCard(user, cardId);
+            redirectAttributes.addFlashAttribute("successMessage", "Credit card deleted successfully.");
+        } catch (InvalidOperationException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+
+        return "redirect:/account";
+    }
+
 
 
     @ModelAttribute("isAuthenticated")

@@ -7,6 +7,10 @@ import jakarta.validation.constraints.Size;
 
 public class UserUpdateDto {
 
+    private String username;
+
+    private int userId;
+
     @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
             flags = Pattern.Flag.CASE_INSENSITIVE)
     @NotNull(message = "Email should be valid an non-empty!")
@@ -28,6 +32,21 @@ public class UserUpdateDto {
     public UserUpdateDto() {
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public String getEmail() {
         return email;
