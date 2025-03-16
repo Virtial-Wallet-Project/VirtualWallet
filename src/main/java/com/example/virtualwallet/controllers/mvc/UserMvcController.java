@@ -40,12 +40,20 @@ public class UserMvcController {
 
     @GetMapping("/account")
     public String showAccountPage(HttpSession session, Model model) {
-        String currentUsername = (String) session.getAttribute("currentUser");
-        if (currentUsername == null) {
+        Object currentUser = session.getAttribute("currentUser");
+
+        if (currentUser == null) {
             return "redirect:/auth/login";
         }
 
-        User user = userService.getByUsername(currentUsername);
+        if (currentUser instanceof String) {
+            currentUser = userService.getByUsername((String) currentUser);
+        } else if (!(currentUser instanceof User)) {
+            model.addAttribute("error", "Invalid session data. Please log in again.");
+            return "login";
+        }
+
+        User user = (User) currentUser;
         List<CreditCard> creditCards = creditCardService.getByUserId(user.getUserId());
 
         model.addAttribute("user", user);
@@ -53,6 +61,7 @@ public class UserMvcController {
 
         return "profile-page";
     }
+
 
 
 
