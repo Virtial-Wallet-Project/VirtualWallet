@@ -1,8 +1,8 @@
 package com.example.virtualwallet.controllers.mvc;
 
 import com.example.virtualwallet.exceptions.EntityNotFoundException;
-import com.example.virtualwallet.filtering.DTOs.FilterTransactionDto;
 import com.example.virtualwallet.DTOs.TransferDto;
+import com.example.virtualwallet.filtering.DTOs.FilterTransactionDto;
 import com.example.virtualwallet.filtering.FilterTransactionOptions;
 import com.example.virtualwallet.models.*;
 import com.example.virtualwallet.service.CreditCardService;
@@ -104,7 +104,8 @@ public class TransactionMvcController {
 
         List<Transaction> transactions = transactionService.getAll(
                 new FilterTransactionOptions(
-                        null, null,null,null,null,null, null
+                        user.getUserId(),
+                        null, null, null, null, null, null
                 ),
                 page, size, user
         );
