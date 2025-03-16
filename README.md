@@ -72,7 +72,7 @@ Transactions rely on a dummy REST API for fund withdrawals from bank accounts.
 - HQL
 - Hibernate
 - HTML / CSS
-- JavaScripH
+- JavaScript
 - Thymeleaf
 - RestAPI
 - Swagger (API Documentation)
