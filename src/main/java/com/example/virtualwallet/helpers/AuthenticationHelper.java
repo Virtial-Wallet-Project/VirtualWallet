@@ -61,13 +61,20 @@ public class AuthenticationHelper {
     }
 
     public User tryGetUser(HttpSession httpSession){
-        String currentUser = (String) httpSession.getAttribute("currentUser");
+
+        Object currentUser = httpSession.getAttribute("currentUser");
 
         if (currentUser == null) {
             throw new AuthenticationFailureException("No user logged in.");
         }
 
-        return userService.getByUsername(currentUser);
+        if (currentUser instanceof String) {
+            return userService.getByUsername((String) currentUser);
+        } else if (currentUser instanceof User) {
+            return (User) currentUser;
+        } else {
+            throw new IllegalStateException("Invalid session data for currentUser.");
+        }
     }
 
     private String getUsername(String userInfo) {
