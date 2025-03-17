@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Service
-public class EmailVerificationServiceImpl {
+public class EmailVerificationServiceImpl implements EmailVerificationService {
 
     private final JavaMailSender mailSender;
 
@@ -18,6 +18,7 @@ public class EmailVerificationServiceImpl {
         this.mailSender = mailSender;
     }
 
+    @Override
     public void sendVerificationEmail(String email, String token) {
 
         String subject = "Verify Your Email - Virtual Wallet";
@@ -41,6 +42,7 @@ public class EmailVerificationServiceImpl {
         mailSender.send(msgPreparator);
     }
 
+    @Override
     public String loadEmailTemplate() {
         String filePath = "src/main/resources/templates/VerifyEmailMail.html";
         try {

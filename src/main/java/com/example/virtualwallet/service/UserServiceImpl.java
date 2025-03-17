@@ -17,10 +17,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final EmailVerificationServiceImpl emailService;
+    private final EmailVerificationService emailService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, EmailVerificationServiceImpl emailService) {
+    public UserServiceImpl(UserRepository userRepository, EmailVerificationService emailService) {
         this.userRepository = userRepository;
         this.emailService = emailService;
     }
