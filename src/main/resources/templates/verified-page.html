@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Verified</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+    <script src="../static/script.js" th:src="@{/script.js}" defer></script>
+    <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
+</head>
+<body id="body">
+
+<div class="container-admin">
+    <h1 class="welcome-admin">Email verified!</h1>
+    <a class="btn btn-primary" href="/auth/login" th:href="@{/auth/login}">LogIn</a>
+</div>
+
+</body>
+</html>

@@ -2,7 +2,7 @@ package com.example.virtualwallet.models;
 
 import jakarta.persistence.*;
 
-import javax.smartcardio.Card;
+//import javax.smartcardio.Card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Invalid Token</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+    <script src="../static/script.js" th:src="@{/script.js}" defer></script>
+    <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <h1 class="logo-container">
+            <img src="../static/logo.png" th:src="@{/logo.png}" alt="Virtual Wallet Logo" class="logo">
+            <span>Virtual Wallet</span>
+        </h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Home</a></li>
+                <li th:if="${isAuthenticated}"><a th:href="@{/wallet}">Wallet</a></li>
+                <li th:if="${isAuthenticated}"><a th:href="@{/account}" class="active">Account</a></li>
+                <li><a th:href="@{/about}">About</a></li>
+                <li><a th:href="@{/admin/login}">Admin</a></li>
+                <li th:unless="${isAuthenticated}"><a th:href="@{/auth/login}">Login</a></li>
+                <li th:if="${isAuthenticated}"><a th:href="@{/auth/logout}">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="access-denied-container">
+    <h1 class="access-denied-title">Expired Token</h1>
+    <p class="fieldName">Oops! Your token has expired, please fill the login form, and we'll send you a new one!</p>
+    <a class="btn btn-primary" href="/auth/login" th:href="@{/auth/login}">LogIn</a>
+</div>
+
+<footer>
+    <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

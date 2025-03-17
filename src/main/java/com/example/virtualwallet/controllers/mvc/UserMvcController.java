@@ -62,10 +62,6 @@ public class UserMvcController {
         return "profile-page";
     }
 
-
-
-
-
     @PostMapping("/account/update")
     public String updateAccount(@Valid @ModelAttribute("user") UserUpdateDto user,
                                 BindingResult errors,

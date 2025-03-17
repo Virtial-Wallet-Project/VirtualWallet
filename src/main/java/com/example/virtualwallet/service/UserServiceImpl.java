@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -130,9 +131,12 @@ public class UserServiceImpl implements UserService {
         try {
             User existingUser = userRepository.getByEmail(user.getEmail());
 
+            boolean isTokenChanged = !Objects.equals(existingUser.getVerificationToken(), user.getVerificationToken());
+
             if (user.getPassword().equals(existingUser.getPassword()) &&
                     user.getEmail().equals(existingUser.getEmail()) &&
-                    user.getPhoneNumber().equals(existingUser.getPhoneNumber())) {
+                    user.getPhoneNumber().equals(existingUser.getPhoneNumber()) &&
+                    !isTokenChanged) {
 
                 throw new InvalidOperationException("Invalid operation! Nothing was changed!");
             }
