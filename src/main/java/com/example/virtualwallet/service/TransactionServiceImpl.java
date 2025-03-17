@@ -37,6 +37,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction createTransaction(User sender, int recipientId, Transaction transaction) {
+
+        PermissionHelpers.checkIfVerified(sender);
         PermissionHelpers.checkIfBlocked(sender);
 
         if (transaction.getAmount() <= 0) {

@@ -7,7 +7,9 @@ CREATE TABLE users
     phone_number VARCHAR(10)    NOT NULL UNIQUE,
     balance      DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
     is_admin     BOOLEAN                 DEFAULT FALSE,
-    is_blocked   BOOLEAN                 DEFAULT FALSE
+    is_blocked   BOOLEAN                 DEFAULT FALSE,
+    verification_token VARCHAR(255) UNIQUE,
+    account_verified   BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE credit_cards

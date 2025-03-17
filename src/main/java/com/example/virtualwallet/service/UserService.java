@@ -22,6 +22,8 @@ public interface UserService {
 
     void createUser(User user);
 
+    boolean verifyUser(String token);
+
     void updateUser(User user, User modifier);
 
     void deleteUser(User admin, int id);

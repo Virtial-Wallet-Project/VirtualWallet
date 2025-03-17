@@ -1,19 +1,19 @@
-INSERT INTO users (username, password, email, phone_number, balance, is_admin, is_blocked) VALUES
-('ivan1999', 'Ivan1999!', 'ivan@gmail.com', '0888359305', 100.00, FALSE, FALSE),
-('vik050302', 'VikGeorg05@', 'vik@abv.bg', '0889345123', 25.00, FALSE, FALSE),
-('georgiMar', 'GoshoMarinov00#', 'gosho@gmail.com', '0887123456', 1000.00, TRUE, FALSE),
-('venciVenc', 'Venc1989$', 'venci@gmail.com', '0888654321', 2000.00, FALSE, TRUE),
-('martinBlag', 'MartoBlag03%', 'marto123@gmail.com', '0887987654', 700.00, FALSE, FALSE),
-('gergana03', 'Gergana03^', 'gerii@abv.bg', '0887765432', 200.00, FALSE, FALSE),
-('drago3636', 'Drago6363&', 'drago@abv.bg', '0887555555', 50.00, FALSE, FALSE),
-('marinMar', 'MartiMari05*', 'marinov@gmail.com', '0887234567', 500.00, TRUE, FALSE),
-('simonaIvn', 'SimonaIvn01(', 'moni@gmail.com', '0887878787', 1500.00, FALSE, TRUE),
-('blagoi02', 'Blagoi2002)', 'blago@gmail.com', '0887698523', 300.00, FALSE, FALSE),
-('ivanelaBoris', 'Ivanela99-', 'ivanela@gmail.com', '0887456123', 750.00, FALSE, FALSE),
-('chavo1221', 'Chavo2112_', 'chavo@gmail.com', '0887999888', 75.00, FALSE, FALSE),
-('anna-mary', 'Anna-Mary88=', 'anna-mary@abv.bg', '0887123123', 600.00, TRUE, FALSE),
-('emilAng', 'EmilAng66+', 'emo@gmail.com', '0887543210', 2500.00, FALSE, TRUE),
-('raya06', 'Raya2006!', 'raya@gmail.com', '0887222333', 900.00, FALSE, FALSE);
+INSERT INTO users (username, password, email, phone_number, balance, is_admin, is_blocked, account_verified) VALUES
+('ivan1999', 'Ivan1999!', 'ivan@gmail.com', '0888359305', 100.00, FALSE, FALSE, TRUE),
+('vik050302', 'VikGeorg05@', 'vik@abv.bg', '0889345123', 25.00, FALSE, FALSE, TRUE),
+('georgiMar', 'GoshoMarinov00#', 'gosho@gmail.com', '0887123456', 1000.00, TRUE, FALSE, TRUE),
+('venciVenc', 'Venc1989$', 'venci@gmail.com', '0888654321', 2000.00, FALSE, TRUE, TRUE),
+('martinBlag', 'MartoBlag03%', 'marto123@gmail.com', '0887987654', 700.00, FALSE, FALSE, TRUE),
+('gergana03', 'Gergana03^', 'gerii@abv.bg', '0887765432', 200.00, FALSE, FALSE, TRUE),
+('drago3636', 'Drago6363&', 'drago@abv.bg', '0887555555', 50.00, FALSE, FALSE, TRUE),
+('marinMar', 'MartiMari05*', 'marinov@gmail.com', '0887234567', 500.00, TRUE, FALSE, TRUE),
+('simonaIvn', 'SimonaIvn01(', 'moni@gmail.com', '0887878787', 1500.00, FALSE, TRUE, TRUE),
+('blagoi02', 'Blagoi2002)', 'blago@gmail.com', '0887698523', 300.00, FALSE, FALSE, TRUE),
+('ivanelaBoris', 'Ivanela99-', 'ivanela@gmail.com', '0887456123', 750.00, FALSE, FALSE, TRUE),
+('chavo1221', 'Chavo2112_', 'chavo@gmail.com', '0887999888', 75.00, FALSE, FALSE, TRUE),
+('anna-mary', 'Anna-Mary88=', 'anna-mary@abv.bg', '0887123123', 600.00, TRUE, FALSE, TRUE),
+('emilAng', 'EmilAng66+', 'emo@gmail.com', '0887543210', 2500.00, FALSE, TRUE, TRUE),
+('raya06', 'Raya2006!', 'raya@gmail.com', '0887222333', 900.00, FALSE, FALSE, TRUE);
 
 INSERT INTO credit_cards (user_id, card_number, expiration_date, card_holder, check_number) VALUES
 

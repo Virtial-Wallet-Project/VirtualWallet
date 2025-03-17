@@ -5,6 +5,7 @@ import com.example.virtualwallet.exceptions.EntityNotFoundException;
 import com.example.virtualwallet.exceptions.InvalidOperationException;
 import com.example.virtualwallet.helpers.PermissionHelpers;
 import com.example.virtualwallet.filtering.FilterUserOptions;
+import com.example.virtualwallet.helpers.TokenGenerator;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final EmailVerificationServiceImpl emailService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, EmailVerificationServiceImpl emailService) {
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -98,7 +101,23 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateEntityException("User", "phone number", user.getPhoneNumber());
         }
 
+        String token = TokenGenerator.generateToken();
+        user.setVerificationToken(token);
+        user.setAccountVerified(false);
         userRepository.createUser(user);
+        emailService.sendVerificationEmail(user.getEmail(), user.getVerificationToken());
+    }
+
+    @Override
+    public boolean verifyUser(String token) {
+        User user = userRepository.findByVerificationToken(token);
+        if (user != null) {
+            user.setAccountVerified(true);
+            user.setVerificationToken(null);
+            userRepository.updateUser(user);
+            return true;
+        }
+        return false;
     }
 
     @Override

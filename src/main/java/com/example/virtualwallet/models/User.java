@@ -40,6 +40,12 @@ public class User {
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<CreditCard> cards = new ArrayList<>();
 
+    @Column(name = "verification_token", unique = true)
+    private String verificationToken;
+
+    @Column(name = "account_verified", nullable = false)
+    private boolean accountVerified = false;
+
     public User() {
     }
 
@@ -125,6 +131,22 @@ public class User {
 
     public void setCards(List<CreditCard> cards) {
         this.cards = cards;
+    }
+
+    public String getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(String verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
+    public boolean isAccountVerified() {
+        return accountVerified;
+    }
+
+    public void setAccountVerified(boolean accountVerified) {
+        this.accountVerified = accountVerified;
     }
 
     @Override

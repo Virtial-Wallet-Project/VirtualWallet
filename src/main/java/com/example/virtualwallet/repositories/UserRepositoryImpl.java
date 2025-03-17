@@ -4,6 +4,9 @@ import com.example.virtualwallet.exceptions.EntityNotFoundException;
 import com.example.virtualwallet.exceptions.InvalidOperationException;
 import com.example.virtualwallet.filtering.FilterUserOptions;
 import com.example.virtualwallet.models.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -20,6 +23,9 @@ import java.util.Map;
 public class UserRepositoryImpl implements UserRepository {
 
     private final SessionFactory sessionFactory;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     public UserRepositoryImpl(SessionFactory sessionFactory) {
@@ -192,5 +198,14 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         return orderBy;
+    }
+
+    @Override
+    public User findByVerificationToken(String token) {
+        TypedQuery<User> query = entityManager.createQuery(
+                "SELECT u FROM User u WHERE u.verificationToken = :token", User.class);
+        query.setParameter("token", token);
+
+        return query.getResultStream().findFirst().orElse(null);
     }
 }
