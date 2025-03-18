@@ -24,7 +24,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
     public void sendVerificationEmail(String email, String token) {
 
         String subject = "Verify Your Email - Virtual Wallet";
-        String verificationLink = "http://localhost:50500/auth/verify?token=" + token;
+        String verificationLink = "http://localhost:8080/auth/verify?token=" + token;
         String message = "Click the link below to verify your email: \n" + verificationLink;
 
         String htmlMessage = loadEmailTemplate();
