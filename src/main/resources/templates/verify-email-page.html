@@ -1,18 +1,1 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Verify Email</title>
-    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
-    <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
-</head>
-<body id="body">
-
-<div class="container-admin">
-    <h1 class="welcome-admin">Verify Your Email - Virtual Wallet</h1>
-    <p style="color: black;" class="message">Click the button below for verification</p>
-    <a class="btn btn-primary" href="http://localhost:3308/auth/verify?token={YOUR-TOKEN}">Verify Email</a>
-</div>
-
-</body>
-</html>
+<html><body>Verify: {verificationLink}</body></html>

@@ -42,7 +42,9 @@ public class UserRestController {
         this.authorizationHelper = authorizationHelper;
     }
 
+    @Operation(summary = "Returns all users in the app.", description = "Returns all users with their proper fields with filtering provided.")
     @GetMapping
+    @SecurityRequirement(name = "authHeader")
     public List<UserDtoOut> getAll(@RequestParam(required = false) String username,
                                    @RequestParam(required = false) String email,
                                    @RequestParam(required = false) String phoneNumber,
@@ -60,8 +62,9 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-
+    @Operation(summary = "Get a specific user.", description = "Fetches a user by their unique ID.")
     @GetMapping("/id/{id}")
+    @SecurityRequirement(name = "authHeader")
     public UserDtoOut getUserById(@RequestHeader HttpHeaders headers, @PathVariable int id){
         try {
             User user = authorizationHelper.tryGetUser(headers);
@@ -131,7 +134,7 @@ public class UserRestController {
         }
     }
 
-    @Operation(summary = "Updates a user's information.", description = "Updates a user's personal info such as first name, last name, email or password.")
+    @Operation(summary = "Updates a user's information.", description = "Updates a user's personal info such as email or password.")
     @PutMapping("/{id}")
     @SecurityRequirement(name = "authHeader")
     public UserDtoOut updateUser(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserUpdateDto userDto) {

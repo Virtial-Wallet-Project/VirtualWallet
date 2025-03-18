@@ -11,6 +11,9 @@ import com.example.virtualwallet.DTOs.CardUpdateDto;
 import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.service.CreditCardService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/cards")
+@Tag(name = "Card Controller", description = "Different card related options. Create, Update or Delete a card.")
 public class CreditCardRestController {
 
     private final CreditCardService cardService;
@@ -33,7 +37,9 @@ public class CreditCardRestController {
         this.authorizationHelper = authorizationHelper;
     }
 
+    @Operation(summary = "Create a card.", description = "Creates a card after providing unique card information.")
     @PostMapping
+    @SecurityRequirement(name = "authHeader")
     public CardDto createCard(@RequestHeader HttpHeaders headers, @Valid @RequestBody CardDto cardDto) {
         try {
             User user = authorizationHelper.tryGetUser(headers);
@@ -50,7 +56,9 @@ public class CreditCardRestController {
         }
     }
 
+    @Operation(summary = "Update a card.", description = "Updates a card's check number or card holder.")
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "authHeader")
     public CardDto updateCard(@RequestHeader HttpHeaders headers, @Valid @RequestBody CardUpdateDto cardDto,
                               @PathVariable int id) {
         try {
@@ -71,7 +79,9 @@ public class CreditCardRestController {
         }
     }
 
+    @Operation(summary = "Delete a card.", description = "Deletes a card after valid authentication.")
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "authHeader")
     public void deleteCard(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authorizationHelper.tryGetUser(headers);

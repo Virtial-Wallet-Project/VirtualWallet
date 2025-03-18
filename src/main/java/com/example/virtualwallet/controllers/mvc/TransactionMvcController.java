@@ -178,7 +178,7 @@ public class TransactionMvcController {
             return "redirect:/auth/login";
         }
 
-        User recipient = userService.getById(sender, recipientId);
+        User recipient = userService.getUserById(recipientId);
         if (recipient == null) {
             redirectAttributes.addFlashAttribute("error", "Recipient not found.");
             return "redirect:/wallet/transfer";

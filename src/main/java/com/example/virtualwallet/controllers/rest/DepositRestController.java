@@ -8,6 +8,9 @@ import com.example.virtualwallet.models.CreditCard;
 import com.example.virtualwallet.models.User;
 import com.example.virtualwallet.service.CreditCardService;
 import com.example.virtualwallet.service.DepositService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/wallet")
+@Tag(name = "Deposit Controller", description = "Deposit money from your bank account to your virtual wallet account.")
 public class DepositRestController {
 
     private final DepositService depositService;
@@ -31,7 +35,9 @@ public class DepositRestController {
         this.creditCardService = creditCardService;
     }
 
+    @Operation(summary = "Deposit money.", description = "Deposit money in your account after authentication.")
     @PostMapping("/deposit/{cardNumber}")
+    @SecurityRequirement(name = "authHeader")
     public ResponseEntity<String> depositMoney(@RequestHeader HttpHeaders headers, @RequestParam Double amount,
                                                @PathVariable long cardNumber) {
         try {

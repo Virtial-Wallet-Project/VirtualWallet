@@ -11,6 +11,9 @@ import com.example.virtualwallet.mappers.TransactionMapper;
 import com.example.virtualwallet.models.*;
 import com.example.virtualwallet.service.TransactionService;
 import com.example.virtualwallet.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,6 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/transactions")
+@Tag(name = "Transaction Controller", description = "Create a transaction and see all your transactions filtered.")
 public class TransactionRestController {
 
     private final TransactionService transactionService;
@@ -39,7 +43,9 @@ public class TransactionRestController {
         this.authenticationHelper = authenticationHelper;
     }
 
+    @Operation(summary = "Transaction history.", description = "See your transaction history filtered. If admin, check all users' transaction history.")
     @GetMapping
+    @SecurityRequirement(name = "authHeader")
     public List<TransactionDtoOut> getAll (@RequestParam(required = false) Integer userId,
                                            @RequestParam(required = false) Integer senderId,
                                            @RequestParam(required = false) Integer recipientId,
@@ -66,7 +72,9 @@ public class TransactionRestController {
         return transactionMapper.transactionsToDtoOut(transactionService.getAll(filterTransactionOptions, page, size, user));
     }
 
+    @Operation(summary = "Get transaction by ID.", description = "Admin exclusive. Get a specific transaction by its ID.")
     @GetMapping("{id}")
+    @SecurityRequirement(name = "authHeader")
     public TransactionDtoOut getById (@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
@@ -80,7 +88,9 @@ public class TransactionRestController {
         }
     }
 
+    @Operation(summary = "Create Transaction", description = "Send money to a user by choosing them by their username, email or phone number.")
     @PostMapping("{recipientId}")
+    @SecurityRequirement(name = "authHeader")
     public TransactionDtoOut createTransaction (@RequestHeader HttpHeaders headers, @Valid @RequestBody TransactionDto transactionDto,
                                                 @PathVariable int recipientId) {
         try {

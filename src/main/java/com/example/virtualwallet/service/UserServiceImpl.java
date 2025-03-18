@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getById(User user, int id) {
+        PermissionHelpers.checkIfAdmin(user);
         PermissionHelpers.checkIfBlocked(user);
         return userRepository.getById(id);
     }
@@ -131,12 +132,9 @@ public class UserServiceImpl implements UserService {
         try {
             User existingUser = userRepository.getByEmail(user.getEmail());
 
-            boolean isTokenChanged = !Objects.equals(existingUser.getVerificationToken(), user.getVerificationToken());
-
             if (user.getPassword().equals(existingUser.getPassword()) &&
                     user.getEmail().equals(existingUser.getEmail()) &&
-                    user.getPhoneNumber().equals(existingUser.getPhoneNumber()) &&
-                    !isTokenChanged) {
+                    user.getPhoneNumber().equals(existingUser.getPhoneNumber())) {
 
                 throw new InvalidOperationException("Invalid operation! Nothing was changed!");
             }
@@ -147,7 +145,6 @@ public class UserServiceImpl implements UserService {
 
         } catch (EntityNotFoundException e) {
             duplicateExistsForEmail = false;
-
         }
 
         try {
