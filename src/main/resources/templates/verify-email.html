@@ -2,16 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Verify Email</title>
+    <title>Verify email</title>
     <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
     <link rel="icon" href="../static/favicon.png" th:href="@{/favicon.png}">
 </head>
 <body id="body">
 
 <div class="container-admin">
-    <h1 class="welcome-admin">Verify Your Email - Virtual Wallet</h1>
-    <p style="color: black;" class="message">Click the button below for verification</p>
-    <a class="btn btn-primary" href="http://localhost:50500/auth/verify?token={YOUR-TOKEN}">Verify Email</a>
+    <h1 class="welcome-admin">Verify your email</h1>
+    <p class="fieldName">Please verify your email and log in!</p>
+    <a class="btn btn-primary" href="/" th:href="@{/}">Go Back Home</a>
 </div>
 
 </body>

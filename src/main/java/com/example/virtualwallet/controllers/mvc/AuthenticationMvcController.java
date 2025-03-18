@@ -58,13 +58,13 @@ public class AuthenticationMvcController {
                 String oldToken = user.getVerificationToken();
                 String newToken = TokenGenerator.renewToken(oldToken);
 
-                if (!oldToken.equals(newToken)) {  // Only update if the token actually changes
+                if (!oldToken.equals(newToken)) {
                     user.setVerificationToken(newToken);
                     userService.updateUser(user, user);
                     emailService.sendVerificationEmail(user.getEmail(), newToken);
                 }
 
-                return "verified-page";
+                return "verify-email";
             }
 
             session.setAttribute("currentUser", user);
@@ -106,7 +106,7 @@ public class AuthenticationMvcController {
         try {
             User user = registerMapper.fromDto(registerDto);
             userService.createUser(user);
-            return "verified-page";
+            return "verify-email";
         } catch (DuplicateEntityException e){
             bindingResult.rejectValue("username", "username.error", e.getMessage());
             return "register-page";
