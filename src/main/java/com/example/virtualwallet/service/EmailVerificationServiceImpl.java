@@ -44,7 +44,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 
     @Override
     public String loadEmailTemplate() {
-        String filePath = "src/main/resources/templates/VerifyEmailMail.html";
+        String filePath = "src/main/resources/templates/verify-email-page.html";
         try {
             return new String(Files.readAllBytes(Paths.get(filePath)));
         } catch (IOException e) {
