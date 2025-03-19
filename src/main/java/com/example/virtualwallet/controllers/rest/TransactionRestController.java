@@ -47,8 +47,8 @@ public class TransactionRestController {
     @GetMapping
     @SecurityRequirement(name = "authHeader")
     public List<TransactionDtoOut> getAll (@RequestParam(required = false) String userId,
-                                           @RequestParam(required = false) String senderId,
-                                           @RequestParam(required = false) String recipientId,
+                                           @RequestParam(required = false) String senderUsername,
+                                           @RequestParam(required = false) String recipientUsername,
                                            @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yyyy HH:mm:ss") LocalDateTime startDate,
                                            @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yyyy HH:mm:ss") LocalDateTime endDate,
                                            @RequestParam(required = false) String sortBy,
@@ -62,11 +62,11 @@ public class TransactionRestController {
 
         if (user.isAdmin()) {
             filterTransactionOptions = new FilterTransactionOptions(
-                    senderId, recipientId, startDate, endDate, sortBy, orderBy
+                    userId, senderUsername, recipientUsername, startDate, endDate, sortBy, orderBy
             );
         } else {
             filterTransactionOptions = new FilterTransactionOptions(
-                    senderId, recipientId, startDate, endDate, sortBy, orderBy
+                    String.valueOf(user.getUserId()), senderUsername, recipientUsername, startDate, endDate, sortBy, orderBy
             );
         }
         return transactionMapper.transactionsToDtoOut(transactionService.getAll(filterTransactionOptions, page, size, user));

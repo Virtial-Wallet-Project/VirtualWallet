@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 public class FilterTransactionDto {
 
+    private String userId;
     private String sender;
     private String recipient;
     private LocalDateTime startDate;
@@ -13,6 +14,14 @@ public class FilterTransactionDto {
     private String sortOrder;
 
     public FilterTransactionDto() {
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getRecipient() {

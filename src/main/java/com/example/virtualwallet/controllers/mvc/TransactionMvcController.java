@@ -107,7 +107,7 @@ public class TransactionMvcController {
 
         List<Transaction> transactions = transactionService.getAll(
                 new FilterTransactionOptions(
-            null,null,null,null,null,null
+            null, null,null,null,null,null,null
                 ),
                 page, size, user
         );

@@ -125,6 +125,7 @@ public class AdminMvcController {
 
         List<Transaction> transactions = transactionService.getAll(
                 new FilterTransactionOptions(
+                        filterTransactionDto.getUserId(),
                         filterTransactionDto.getSender(),
                         filterTransactionDto.getRecipient(),
                         filterTransactionDto.getStartDate(),

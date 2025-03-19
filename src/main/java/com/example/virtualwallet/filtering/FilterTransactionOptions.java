@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class FilterTransactionOptions {
+    private Optional<String> userId;
     private Optional<String> sender;
     private Optional<String> recipient;
     private Optional<LocalDateTime> startDate;
@@ -11,15 +12,24 @@ public class FilterTransactionOptions {
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
 
-    public FilterTransactionOptions(String sender, String recipient,
+    public FilterTransactionOptions(String userId, String sender, String recipient,
                                     LocalDateTime startDate, LocalDateTime endDate,
                                     String sortBy, String sortOrder) {
+        this.userId = Optional.ofNullable(userId);
         this.sender = Optional.ofNullable(sender);
         this.recipient = Optional.ofNullable(recipient);
         this.startDate = Optional.ofNullable(startDate);
         this.endDate = Optional.ofNullable(endDate);
         this.sortBy = Optional.ofNullable(sortBy);
         this.sortOrder = Optional.ofNullable(sortOrder);
+    }
+
+    public Optional<String> getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Optional<String> userId) {
+        this.userId = userId;
     }
 
     public Optional<String> getSender() {

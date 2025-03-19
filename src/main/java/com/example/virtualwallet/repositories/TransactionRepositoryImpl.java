@@ -33,11 +33,16 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
         try (Session session = sessionFactory.openSession()) {
             StringBuilder sb = new StringBuilder("FROM Transaction t ");
-            sb.append("JOIN t.sender s "); // Joining sender (User)
-            sb.append("JOIN t.recipient r "); // Joining recipient (User)
+            sb.append("JOIN t.sender s ");
+            sb.append("JOIN t.recipient r ");
 
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
+
+            filterOptions.getUserId().ifPresent(userId -> {
+                filters.add("(t.sender.userId = :userId OR t.recipient.userId = :userId)");
+                params.put("userId", userId);
+            });
 
             filterOptions.getSender().ifPresent(sender -> {
                 filters.add("s.username = :sender");
