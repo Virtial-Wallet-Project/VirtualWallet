@@ -126,19 +126,32 @@ public class TransactionMvcController {
             return "redirect:/auth/login";
         }
 
+        List<CreditCard> cards = creditCardService.getByUserId(sender.getUserId());
+        if (cards.isEmpty()) {
+            return "redirect:/account";
+        }
+
         model.addAttribute("transferDto", new TransferDto());
+        model.addAttribute("cards", cards);
         return "transfer";
     }
 
     @PostMapping("/transfer")
     public String processTransfer(
             @ModelAttribute("transferDto") TransferDto transferDto,
+            @RequestParam int cardId,
             HttpSession session,
             Model model) {
 
         User sender = (User) session.getAttribute("currentUser");
         if (sender == null) {
             return "redirect:/auth/login";
+        }
+
+        CreditCard selectedCard = creditCardService.getById(cardId);
+        if (selectedCard == null) {
+            model.addAttribute("error", "Invalid card selection.");
+            return "transfer";
         }
 
         User recipient;
@@ -162,6 +175,7 @@ public class TransactionMvcController {
         model.addAttribute("sender", sender);
         model.addAttribute("recipient", recipient);
         model.addAttribute("amount", transferDto.getAmount());
+        model.addAttribute("selectedCard", selectedCard);
         return "transfer-confirmation";
     }
 
@@ -170,12 +184,19 @@ public class TransactionMvcController {
     public String confirmTransfer(
             @RequestParam int recipientId,
             @RequestParam double amount,
+            @RequestParam int cardId,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
 
         User sender = (User) session.getAttribute("currentUser");
         if (sender == null) {
             return "redirect:/auth/login";
+        }
+
+        CreditCard selectedCard = creditCardService.getById(cardId);
+        if (selectedCard == null) {
+            redirectAttributes.addFlashAttribute("error", "Invalid card selection.");
+            return "redirect:/wallet/transfer";
         }
 
         User recipient = userService.getUserById(recipientId);
@@ -188,6 +209,7 @@ public class TransactionMvcController {
         transaction.setSender(sender);
         transaction.setRecipient(recipient);
         transaction.setAmount(amount);
+      //  transaction.setCardUsed(selectedCard);
         transaction.setTransactionDate(LocalDateTime.now());
 
         transactionService.createTransaction(sender, recipient.getUserId(), transaction);

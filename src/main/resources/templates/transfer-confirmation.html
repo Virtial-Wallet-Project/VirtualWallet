@@ -34,10 +34,12 @@
     <h2>Transfer Confirmation</h2>
 
     <p class="transfer-detail">Recipient: <span class="transfer-value" th:text="${recipient.username}"></span></p>
+    <p class="transfer-detail">Card Used: <span class="transfer-value" th:text="${selectedCard.cardNumber}"></span></p>
     <p class="transfer-detail">Amount: <span class="transfer-value" th:text="${amount}"></span> BGN</p>
 
     <form th:action="@{/wallet/transfer/confirm}" method="post">
         <input type="hidden" name="recipientId" th:value="${recipient.userId}">
+        <input type="hidden" name="cardId" th:value="${selectedCard.cardId}">
         <input type="hidden" name="amount" th:value="${amount}">
         <button class="confirm-button" type="submit">Confirm Transfer</button>
     </form>
