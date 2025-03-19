@@ -56,7 +56,7 @@ class TransactionServiceImplTests {
 
     @Test
     public void getAll_ShouldReturnAllUsers_WhenValid() {
-        FilterTransactionOptions filterTransactionOptions = new FilterTransactionOptions(1, 1, 2,
+        FilterTransactionOptions filterTransactionOptions = new FilterTransactionOptions("senderId", "recipientId",
                 LocalDateTime.now(), LocalDateTime.now(), "sortBy", "sortOrder");
         int page = 1;
         int size = 2;

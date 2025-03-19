@@ -4,40 +4,30 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class FilterTransactionOptions {
-    private Optional<Integer> userId;
-    private Optional<Integer> senderId;
-    private Optional<Integer> recipientId;
+    private Optional<String> sender;
+    private Optional<String> recipient;
     private Optional<LocalDateTime> startDate;
     private Optional<LocalDateTime> endDate;
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
 
-    public FilterTransactionOptions(Integer userId, Integer senderId, Integer recipientId,
+    public FilterTransactionOptions(String sender, String recipient,
                                     LocalDateTime startDate, LocalDateTime endDate,
                                     String sortBy, String sortOrder) {
-        this.userId = Optional.ofNullable(userId);
-        this.senderId = Optional.ofNullable(senderId);
-        this.recipientId = Optional.ofNullable(recipientId);
+        this.sender = Optional.ofNullable(sender);
+        this.recipient = Optional.ofNullable(recipient);
         this.startDate = Optional.ofNullable(startDate);
         this.endDate = Optional.ofNullable(endDate);
         this.sortBy = Optional.ofNullable(sortBy);
         this.sortOrder = Optional.ofNullable(sortOrder);
     }
 
-    public Optional<Integer> getUserId() {
-        return userId;
+    public Optional<String> getSender() {
+        return sender;
     }
 
-    public void setUserId(Optional<Integer> userId) {
-        this.userId = userId;
-    }
-
-    public Optional<Integer> getSenderId() {
-        return senderId;
-    }
-
-    public Optional<Integer> getRecipientId() {
-        return recipientId;
+    public Optional<String> getRecipient() {
+        return recipient;
     }
 
     public Optional<LocalDateTime> getStartDate() {

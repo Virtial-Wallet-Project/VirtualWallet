@@ -27,29 +27,26 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
     @Override
     public List<Transaction> getAll(FilterTransactionOptions filterOptions, int page, int size) {
-
-        if (page <= -1 || size <= 0) {
+        if (page < 0 || size <= 0) {
             throw new InvalidOperationException("Page and size should be positive numbers!");
         }
 
         try (Session session = sessionFactory.openSession()) {
-            StringBuilder sb = new StringBuilder("FROM Transaction t");
+            StringBuilder sb = new StringBuilder("FROM Transaction t ");
+            sb.append("JOIN t.sender s "); // Joining sender (User)
+            sb.append("JOIN t.recipient r "); // Joining recipient (User)
+
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
-            filterOptions.getUserId().ifPresent(userId -> {
-                filters.add("(t.sender.userId = :userId OR t.recipient.userId = :userId)");
-                params.put("userId", userId);
+            filterOptions.getSender().ifPresent(sender -> {
+                filters.add("s.username = :sender");
+                params.put("sender", sender);
             });
 
-            filterOptions.getSenderId().ifPresent(senderId -> {
-                filters.add("t.sender.userId = :senderId");
-                params.put("senderId", senderId);
-            });
-
-            filterOptions.getRecipientId().ifPresent(recipientId -> {
-                filters.add("t.recipient.userId = :recipientId");
-                params.put("recipientId", recipientId);
+            filterOptions.getRecipient().ifPresent(recipient -> {
+                filters.add("r.username = :recipient");
+                params.put("recipient", recipient);
             });
 
             filterOptions.getStartDate().ifPresent(startDate -> {

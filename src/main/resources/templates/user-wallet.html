@@ -52,10 +52,12 @@
 
 <h2 class="my-wallet">Your Transactions</h2>
 <hr>
-<table class="transaction-table" id="transaction">
+
+<table class="transaction-table">
   <thead>
   <tr>
-    <th>ID</th>
+    <th>Transaction ID</th>
+    <th>Sender</th>
     <th>Recipient</th>
     <th>Amount</th>
     <th>Date</th>
@@ -66,9 +68,8 @@
     <td th:text="${transaction.transactionId}"></td>
     <td th:text="${transaction.sender != null ? transaction.sender.username : 'N/A'}"></td>
     <td th:text="${transaction.recipient != null ? transaction.recipient.username : 'N/A'}"></td>
-    <td th:text="${transaction.amount} + ' BGN'"></td>
-    <td th:text="${#dates.format(transaction.transactionDate, 'yyyy-MM-dd HH:mm')}"></td>
-
+    <td th:text="${transaction.amount}"></td>
+    <td th:text="${#temporals.format(transaction.transactionDate, 'yyyy-MM-dd HH:mm')}"></td>
   </tr>
   <tr th:if="${#lists.isEmpty(transactions)}">
     <td colspan="5">No transactions found.</td>
@@ -78,11 +79,11 @@
 
 <!--<div class="pagination">-->
 <!--  <a th:if="${currentUserPage > 0}"-->
-<!--     th:href="@{/wallet/transactions(page=${currentUserPage - 1}, size=${pageUserSize}, userId=${filterTransactionsUserDto.userId}, senderId=${filterTransactionsUserDto.senderId}, recipientId=${filterTransactionsUserDto.recipientId}, startDate=${filterTransactionsUserDto.startDate}, endDate=${filterTransactionsUserDto.endDate})}">-->
+<!--     th:href="@{/wallet/transactions(page=${currentUserPage - 1}, size=${pageUserSize}, senderId=${filterTransactionsDto.sender}, recipientId=${filterTransactionsDto.recipient}, startDate=${filterTransactionsDto.startDate}, endDate=${filterTransactionsDto.endDate})}">-->
 <!--    Previous-->
 <!--  </a>-->
-<!--  <span>Page <span th:text="${currentUserPage + 1}"></span></span>-->
-<!--  <a th:href="@{/wallet/transactions(page=${currentUserPage + 1}, size=${pageUserSize}, userId=${filterTransactionsUserDto.userId}, senderId=${filterTransactionsUserDto.senderId}, recipientId=${filterTransactionsUserDto.recipientId}, startDate=${filterTransactionsUserDto.startDate}, endDate=${filterTransactionsUserDto.endDate})}">-->
+<!--  <span>Page <span th:text="${currentUserPage != null ? currentUserPage + 1 : 1}"></span></span>-->
+<!--  <a th:href="@{/wallet/transactions(page=${currentUserPage + 1}, size=${pageUserSize}, senderId=${filterTransactionsDto.sender}, recipientId=${filterTransactionsDto.recipient}, startDate=${filterTransactionsDto.startDate}, endDate=${filterTransactionsDto.endDate})}">-->
 <!--    Next-->
 <!--  </a>-->
 <!--</div>-->

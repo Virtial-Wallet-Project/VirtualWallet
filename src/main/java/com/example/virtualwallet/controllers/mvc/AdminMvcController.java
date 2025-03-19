@@ -125,7 +125,12 @@ public class AdminMvcController {
 
         List<Transaction> transactions = transactionService.getAll(
                 new FilterTransactionOptions(
-                        null, null, null, null, null, null, null
+                        filterTransactionDto.getSender(),
+                        filterTransactionDto.getRecipient(),
+                        filterTransactionDto.getStartDate(),
+                        filterTransactionDto.getEndDate(),
+                        filterTransactionDto.getSortBy(),
+                        filterTransactionDto.getSortOrder()
                 ),
                 page, size, admin
         );

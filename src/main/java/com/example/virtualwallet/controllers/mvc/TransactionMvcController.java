@@ -54,6 +54,9 @@ public class TransactionMvcController {
             user = (User) userObj;
         }
 
+        FilterTransactionDto filterDto = new FilterTransactionDto();
+
+        model.addAttribute("filterTransactionsDto", filterDto);
         model.addAttribute("balance", user.getBalance());
         model.addAttribute("message", message);
         model.addAttribute("error", error);
@@ -90,8 +93,8 @@ public class TransactionMvcController {
     }
 
 
-    @GetMapping("/transactions/")
-    public String showAllTransactions(@ModelAttribute("filterTransactionsUserDto") FilterTransactionDto filterTransactionDto,
+    @GetMapping("/transactions")
+    public String showAllTransactions(@ModelAttribute("filterTransactionsDto") FilterTransactionDto filterTransactionDto,
             HttpSession session,
             Model model,
             @RequestParam(defaultValue = "0") int page,
@@ -104,8 +107,7 @@ public class TransactionMvcController {
 
         List<Transaction> transactions = transactionService.getAll(
                 new FilterTransactionOptions(
-                        user.getUserId(),
-                        null, null, null, null, null, null
+            null,null,null,null,null,null
                 ),
                 page, size, user
         );
@@ -113,7 +115,7 @@ public class TransactionMvcController {
         model.addAttribute("transactions", transactions);
         model.addAttribute("currentUserPage", page);
         model.addAttribute("pageUserSize", size);
-        model.addAttribute("filterTransactionsUserDto", filterTransactionDto);
+        model.addAttribute("filterTransactionsDto", filterTransactionDto);
         model.addAttribute("isAuthenticated", true);
 
         return "user-wallet";

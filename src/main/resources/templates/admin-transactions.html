@@ -13,10 +13,9 @@
 <hr>
 
 <form th:action="@{/admin/transactions}" method="get" class="filter-form">
-    <p id="search">Filter by:</p>
-    <input type="number" name="userId" placeholder="User ID" th:value="${filterTransactionsDto.userId}">
-    <input type="number" name="senderId" placeholder="Sender ID" th:value="${filterTransactionsDto.senderId}">
-    <input type="number" name="recipientId" placeholder="Recipient ID" th:value="${filterTransactionsDto.recipientId}">
+    <p id="search">Search by:</p>
+    <input type="text" name="senderId" placeholder="Sender" th:value="${filterTransactionsDto != null ? filterTransactionsDto.sender : ''}">
+    <input type="text" name="recipientId" placeholder="Recipient"  th:value="${filterTransactionsDto != null ? filterTransactionsDto.recipient : ''}">
     <input type="datetime-local" name="startDate" placeholder="Start Date" th:value="${filterTransactionsDto.startDate}">
     <input type="datetime-local" name="endDate" placeholder="End Date" th:value="${filterTransactionsDto.endDate}">
 
@@ -60,11 +59,11 @@
 
 <div class="pagination">
     <a th:if="${currentPage > 0}"
-       th:href="@{/admin/transactions(page=${currentPage - 1}, size=${pageSize}, userId=${filterTransactionsDto.userId}, senderId=${filterTransactionsDto.senderId}, recipientId=${filterTransactionsDto.recipientId}, startDate=${filterTransactionsDto.startDate}, endDate=${filterTransactionsDto.endDate})}">
+       th:href="@{/admin/transactions(page=${currentPage - 1}, size=${pageSize}, senderId=${filterTransactionsDto.sender}, recipientId=${filterTransactionsDto.recipient}, startDate=${filterTransactionsDto.startDate}, endDate=${filterTransactionsDto.endDate})}">
         Previous
     </a>
     <span>Page <span th:text="${currentPage + 1}"></span></span>
-    <a th:href="@{/admin/transactions(page=${currentPage + 1}, size=${pageSize}, userId=${filterTransactionsDto.userId}, senderId=${filterTransactionsDto.senderId}, recipientId=${filterTransactionsDto.recipientId}, startDate=${filterTransactionsDto.startDate}, endDate=${filterTransactionsDto.endDate})}">
+    <a th:href="@{/admin/transactions(page=${currentPage + 1}, size=${pageSize}, senderId=${filterTransactionsDto.sender}, recipientId=${filterTransactionsDto.recipient}, startDate=${filterTransactionsDto.startDate}, endDate=${filterTransactionsDto.endDate})}">
         Next
     </a>
 </div>

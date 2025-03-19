@@ -5,9 +5,8 @@ import java.time.LocalDateTime;
 
 public class FilterTransactionDto {
 
-    private int userId;
-    private int senderId;
-    private int recipientId;
+    private String sender;
+    private String recipient;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String sortBy;
@@ -16,28 +15,20 @@ public class FilterTransactionDto {
     public FilterTransactionDto() {
     }
 
-    public int getUserId() {
-        return userId;
+    public String getRecipient() {
+        return recipient;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
     }
 
-    public int getSenderId() {
-        return senderId;
+    public String getSender() {
+        return sender;
     }
 
-    public void setSenderId(int senderId) {
-        this.senderId = senderId;
-    }
-
-    public int getRecipientId() {
-        return recipientId;
-    }
-
-    public void setRecipientId(int recipientId) {
-        this.recipientId = recipientId;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
     public LocalDateTime getStartDate() {

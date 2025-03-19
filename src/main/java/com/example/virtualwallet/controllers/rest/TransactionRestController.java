@@ -46,9 +46,9 @@ public class TransactionRestController {
     @Operation(summary = "Transaction history.", description = "See your transaction history filtered. If admin, check all users' transaction history.")
     @GetMapping
     @SecurityRequirement(name = "authHeader")
-    public List<TransactionDtoOut> getAll (@RequestParam(required = false) Integer userId,
-                                           @RequestParam(required = false) Integer senderId,
-                                           @RequestParam(required = false) Integer recipientId,
+    public List<TransactionDtoOut> getAll (@RequestParam(required = false) String userId,
+                                           @RequestParam(required = false) String senderId,
+                                           @RequestParam(required = false) String recipientId,
                                            @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yyyy HH:mm:ss") LocalDateTime startDate,
                                            @RequestParam(required = false) @DateTimeFormat(pattern = "MM-dd-yyyy HH:mm:ss") LocalDateTime endDate,
                                            @RequestParam(required = false) String sortBy,
@@ -62,11 +62,11 @@ public class TransactionRestController {
 
         if (user.isAdmin()) {
             filterTransactionOptions = new FilterTransactionOptions(
-                    userId, senderId, recipientId, startDate, endDate, sortBy, orderBy
+                    senderId, recipientId, startDate, endDate, sortBy, orderBy
             );
         } else {
             filterTransactionOptions = new FilterTransactionOptions(
-                    user.getUserId(), senderId, recipientId, startDate, endDate, sortBy, orderBy
+                    senderId, recipientId, startDate, endDate, sortBy, orderBy
             );
         }
         return transactionMapper.transactionsToDtoOut(transactionService.getAll(filterTransactionOptions, page, size, user));
