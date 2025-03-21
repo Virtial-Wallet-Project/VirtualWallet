@@ -19,6 +19,8 @@ Virtual Wallet is a web application designed to help users efficiently manage th
 - Card Number: 16 unique digits.
 - Cardholder Name: 2–30 characters.
 - Expiration Date and Check Number (3 digits).
+3. Email Verification
+- Once registered, a user needs to verify his email in order to log in to the system
 
 
 ---
@@ -45,8 +47,9 @@ They can register and log in to gain full access.
 ---
 <br>
 
-## Transaction Process:
+## Transfer Process:
 
+You can transfer money to other users of the application by searching them via username, phone number or email.
 Transfers go through a confirmation step, displaying details before finalizing.
 Users can edit or confirm transactions before processing.
 Transactions rely on a dummy REST API for fund withdrawals from bank accounts.
@@ -81,14 +84,30 @@ Transactions rely on a dummy REST API for fund withdrawals from bank accounts.
 ---
 <br />
 
+## Installation
+
+Follow these steps to set up and run the application:
+
+1. Clone the project from GitHub.
+2. Go to this link and clone this project to in order to be able to use the deposit function
+- https://github.com/Virtial-Wallet-Project/MoneyTransfer
+3. Connect to a local database server and execute the provided SQL scripts, provided in the database folder.
+4. Configure the application properties for database connection.
+5. Run both Spring Boot application.
+6. Open the browser and navigate to http://localhost:8080/.
+
+
+---
+<br>
+
 ## Pictures representing the different pages of the project
 
 Home Page
-![image](https://github.com/user-attachments/assets/f9325e6d-def3-4816-996d-a6c971dd6ee9)
+![image](https://github.com/user-attachments/assets/999d75ee-0a15-4ce0-92f8-bf1f9919c921)
 <br><br><br>
 
 About Page
-![image](https://github.com/user-attachments/assets/c66a5089-099e-4874-8293-c9bde17d256a)
+![image](https://github.com/user-attachments/assets/91de7887-e6bc-42a3-bbb3-b868b0505492)
 <br><br><br>
 
 Register page
@@ -97,6 +116,18 @@ Register page
 
 Login Page
 ![image](https://github.com/user-attachments/assets/6f9065ba-22ce-4889-bc24-10d5951cb0f4)
+<br><br><br>
+
+Verify Email Page
+![image](https://github.com/user-attachments/assets/da1cceca-9197-4d1b-a54e-2ec756d4044f)
+<br><br><br>
+
+Verify Email Warning Page
+![image](https://github.com/user-attachments/assets/7cbed313-a37d-4389-b539-d44e42cedcac)
+<br><br><br>
+
+Email Verified Page
+![image](https://github.com/user-attachments/assets/e509e17e-fb2f-4141-a6dd-ef2566d6fbf6)
 <br><br><br>
 
 Account Page
