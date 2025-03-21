@@ -136,7 +136,7 @@ Account Page
 <br><br><br>
 
 Wallet Page
-![image](https://github.com/user-attachments/assets/8f86c8a7-634a-4ccc-913c-b5d4ff8bb5a8)
+![image](https://github.com/user-attachments/assets/79ef58f3-e55d-4423-be29-781de89bd6f4)
 <br><br><br>
 
 Transfer Page
