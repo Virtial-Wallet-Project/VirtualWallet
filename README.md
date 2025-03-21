@@ -89,7 +89,7 @@ Transactions rely on a dummy REST API for fund withdrawals from bank accounts.
 Follow these steps to set up and run the application:
 
 1. Clone the project from GitHub.
-2. Go to this link and clone this project to in order to be able to use the deposit function
+2. Go to the link below and clone this project in order to be able to use the deposit function
 - https://github.com/Virtial-Wallet-Project/MoneyTransfer
 3. Connect to a local database server and execute the provided SQL scripts, provided in the database folder.
 4. Configure the application properties for database connection.
