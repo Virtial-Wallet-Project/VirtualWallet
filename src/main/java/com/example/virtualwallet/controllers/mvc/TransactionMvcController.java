@@ -94,7 +94,8 @@ public class TransactionMvcController {
 
 
     @GetMapping("/transactions")
-    public String showAllTransactions(@ModelAttribute("filterTransactionsDto") FilterTransactionDto filterTransactionDto,
+    public String showAllTransactions(
+            @ModelAttribute("filterTransactionsDto") FilterTransactionDto filterTransactionDto,
             HttpSession session,
             Model model,
             @RequestParam(defaultValue = "0") int page,
@@ -105,12 +106,17 @@ public class TransactionMvcController {
             return "redirect:/auth/login";
         }
 
-        List<Transaction> transactions = transactionService.getAll(
-                new FilterTransactionOptions(
-            null, null,null,null,null,null,null
-                ),
-                page, size, user
+        FilterTransactionOptions filterOptions = new FilterTransactionOptions(
+                String.valueOf(user.getUserId()),
+                filterTransactionDto.getSender(),
+                filterTransactionDto.getRecipient(),
+                filterTransactionDto.getStartDate(),
+                filterTransactionDto.getEndDate(),
+                filterTransactionDto.getSortBy(),
+                filterTransactionDto.getSortOrder()
         );
+
+        List<Transaction> transactions = transactionService.getAll(filterOptions, page, size, user);
 
         model.addAttribute("transactions", transactions);
         model.addAttribute("currentUserPage", page);
@@ -211,7 +217,6 @@ public class TransactionMvcController {
         transaction.setSender(sender);
         transaction.setRecipient(recipient);
         transaction.setAmount(amount);
-      //  transaction.setCardUsed(selectedCard);
         transaction.setTransactionDate(LocalDateTime.now());
 
         transactionService.createTransaction(sender, recipient.getUserId(), transaction);

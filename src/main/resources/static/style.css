@@ -930,6 +930,10 @@ footer {
     margin-top: 10px;
 }
 
+#table{
+    margin-bottom: 20px;
+}
+
 .users-btn {
     background-color: #f39c12;
 }
