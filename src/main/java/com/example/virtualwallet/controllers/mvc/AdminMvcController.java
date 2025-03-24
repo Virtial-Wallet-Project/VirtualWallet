@@ -145,8 +145,6 @@ public class AdminMvcController {
                 page, size, admin
         );
 
-
-
         model.addAttribute("transactions", transactions);
         model.addAttribute("currentPage", page);
         model.addAttribute("pageSize", size);

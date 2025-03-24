@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -94,35 +95,43 @@ public class TransactionMvcController {
 
 
     @GetMapping("/transactions")
-    public String showAllTransactions(
+    public String showUserTransactions(
             @ModelAttribute("filterTransactionsDto") FilterTransactionDto filterTransactionDto,
             HttpSession session,
             Model model,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
 
-        User user = (User) session.getAttribute("currentUser");
+        User user = (User) session.getAttribute("user");
         if (user == null) {
             return "redirect:/auth/login";
         }
 
-        FilterTransactionOptions filterOptions = new FilterTransactionOptions(
-                String.valueOf(user.getUserId()),
-                filterTransactionDto.getSender(),
-                filterTransactionDto.getRecipient(),
-                filterTransactionDto.getStartDate(),
-                filterTransactionDto.getEndDate(),
-                filterTransactionDto.getSortBy(),
-                filterTransactionDto.getSortOrder()
+        filterTransactionDto.setSender(
+                Optional.ofNullable(filterTransactionDto.getSender()).filter(s -> !s.isEmpty()).orElse(null)
         );
 
-        List<Transaction> transactions = transactionService.getAll(filterOptions, page, size, user);
+        filterTransactionDto.setRecipient(
+                Optional.ofNullable(filterTransactionDto.getRecipient()).filter(r -> !r.isEmpty()).orElse(null)
+        );
+
+        List<Transaction> transactions = transactionService.getAll(
+                new FilterTransactionOptions(
+                        filterTransactionDto.getUserId(),
+                        filterTransactionDto.getSender(),
+                        filterTransactionDto.getRecipient(),
+                        filterTransactionDto.getStartDate(),
+                        filterTransactionDto.getEndDate(),
+                        filterTransactionDto.getSortBy(),
+                        filterTransactionDto.getSortOrder()
+                ),
+                page, size, user
+        );
 
         model.addAttribute("transactions", transactions);
-        model.addAttribute("currentUserPage", page);
-        model.addAttribute("pageUserSize", size);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageSize", size);
         model.addAttribute("filterTransactionsDto", filterTransactionDto);
-        model.addAttribute("isAuthenticated", true);
 
         return "user-wallet";
     }
@@ -201,6 +210,10 @@ public class TransactionMvcController {
             return "redirect:/auth/login";
         }
 
+        if (sender.isBlocked()) {
+            return "user-blocked";
+        }
+
         CreditCard selectedCard = creditCardService.getById(cardId);
         if (selectedCard == null) {
             redirectAttributes.addFlashAttribute("error", "Invalid card selection.");
@@ -210,6 +223,11 @@ public class TransactionMvcController {
         User recipient = userService.getUserById(recipientId);
         if (recipient == null) {
             redirectAttributes.addFlashAttribute("error", "Recipient not found.");
+            return "redirect:/wallet/transfer";
+        }
+
+        if (recipient.isBlocked()) {
+            redirectAttributes.addFlashAttribute("error", "Recipient is blocked.");
             return "redirect:/wallet/transfer";
         }
 
