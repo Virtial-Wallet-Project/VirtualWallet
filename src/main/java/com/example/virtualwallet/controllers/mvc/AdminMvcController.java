@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -122,6 +123,14 @@ public class AdminMvcController {
         if (admin == null || !admin.isAdmin()) {
             return "redirect:/admin/login";
         }
+
+        filterTransactionDto.setSender(
+                Optional.ofNullable(filterTransactionDto.getSender()).filter(s -> !s.isEmpty()).orElse(null)
+        );
+
+        filterTransactionDto.setRecipient(
+                Optional.ofNullable(filterTransactionDto.getRecipient()).filter(r -> !r.isEmpty()).orElse(null)
+        );
 
         List<Transaction> transactions = transactionService.getAll(
                 new FilterTransactionOptions(

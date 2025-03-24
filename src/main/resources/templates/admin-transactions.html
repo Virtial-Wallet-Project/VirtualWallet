@@ -12,27 +12,40 @@
 <h1 class="title">Transaction Management</h1>
 <hr>
 
+<!-- Transaction Filter Form -->
 <form th:action="@{/admin/transactions}" method="get" class="filter-form">
     <p id="search">Search by:</p>
-    <input type="text" name="senderId" placeholder="Sender" th:value="${filterTransactionsDto != null ? filterTransactionsDto.sender : ''}">
-    <input type="text" name="recipientId" placeholder="Recipient"  th:value="${filterTransactionsDto != null ? filterTransactionsDto.recipient : ''}">
-    <input type="datetime-local" name="startDate" placeholder="Start Date" th:value="${filterTransactionsDto.startDate}">
-    <input type="datetime-local" name="endDate" placeholder="End Date" th:value="${filterTransactionsDto.endDate}">
 
+    <!-- Sender Input -->
+    <input type="text" name="sender" placeholder="Sender"
+           th:value="${filterTransactionsDto != null ? filterTransactionsDto.sender : ''}">
+
+    <!-- Recipient Input -->
+    <input type="text" name="recipient" placeholder="Recipient"
+           th:value="${filterTransactionsDto != null ? filterTransactionsDto.recipient : ''}">
+
+    <!-- Date Filters -->
+    <input type="datetime-local" name="startDate" placeholder="Start Date"
+           th:value="${filterTransactionsDto.startDate}">
+    <input type="datetime-local" name="endDate" placeholder="End Date"
+           th:value="${filterTransactionsDto.endDate}">
+
+    <!-- Sorting Options -->
     <select name="sortBy">
         <option value="">Sort By</option>
-        <option value="amount">Amount</option>
-        <option value="transactionDate">Date</option>
+        <option value="amount" th:selected="${filterTransactionsDto.sortBy == 'amount'}">Amount</option>
+        <option value="transactionDate" th:selected="${filterTransactionsDto.sortBy == 'transactionDate'}">Date</option>
     </select>
 
     <select name="sortOrder">
-        <option value="asc">Ascending</option>
-        <option value="desc">Descending</option>
+        <option value="asc" th:selected="${filterTransactionsDto.sortOrder == 'asc'}">Ascending</option>
+        <option value="desc" th:selected="${filterTransactionsDto.sortOrder == 'desc'}">Descending</option>
     </select>
 
     <button type="submit">Apply Filters</button>
 </form>
 
+<!-- Transaction Table -->
 <table class="transaction-table">
     <thead>
     <tr>
@@ -57,13 +70,14 @@
     </tbody>
 </table>
 
+<!-- Pagination Controls -->
 <div class="pagination">
     <a th:if="${currentPage > 0}"
-       th:href="@{/admin/transactions(page=${currentPage - 1}, size=${pageSize}, senderId=${filterTransactionsDto.sender}, recipientId=${filterTransactionsDto.recipient}, startDate=${filterTransactionsDto.startDate}, endDate=${filterTransactionsDto.endDate})}">
+       th:href="@{/admin/transactions(page=${currentPage - 1}, size=${pageSize}, sender=${filterTransactionsDto.sender}, recipient=${filterTransactionsDto.recipient}, startDate=${filterTransactionsDto.startDate}, endDate=${filterTransactionsDto.endDate})}">
         Previous
     </a>
     <span>Page <span th:text="${currentPage + 1}"></span></span>
-    <a th:href="@{/admin/transactions(page=${currentPage + 1}, size=${pageSize}, senderId=${filterTransactionsDto.sender}, recipientId=${filterTransactionsDto.recipient}, startDate=${filterTransactionsDto.startDate}, endDate=${filterTransactionsDto.endDate})}">
+    <a th:href="@{/admin/transactions(page=${currentPage + 1}, size=${pageSize}, sender=${filterTransactionsDto.sender}, recipient=${filterTransactionsDto.recipient}, startDate=${filterTransactionsDto.startDate}, endDate=${filterTransactionsDto.endDate})}">
         Next
     </a>
 </div>

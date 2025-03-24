@@ -19,10 +19,12 @@ import java.util.Map;
 public class TransactionRepositoryImpl implements TransactionRepository {
 
     private final SessionFactory sessionFactory;
+    private final UserRepository userRepository;
 
     @Autowired
-    public TransactionRepositoryImpl(SessionFactory sessionFactory) {
+    public TransactionRepositoryImpl(SessionFactory sessionFactory, UserRepository userRepository) {
         this.sessionFactory = sessionFactory;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -33,14 +35,15 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
         try (Session session = sessionFactory.openSession()) {
             StringBuilder sb = new StringBuilder("FROM Transaction t ");
-            sb.append("JOIN t.sender s ");
-            sb.append("JOIN t.recipient r ");
+
+            sb.append("LEFT JOIN FETCH t.sender s ");
+            sb.append("LEFT JOIN FETCH t.recipient r ");
 
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
             filterOptions.getUserId().ifPresent(userId -> {
-                filters.add("(t.sender.userId = :userId OR t.recipient.userId = :userId)");
+                filters.add("(s.userId = :userId OR r.userId = :userId)");
                 params.put("userId", userId);
             });
 
