@@ -14,7 +14,6 @@ document.getElementById('login-btn').addEventListener('click', function() {
     alert('Login functionality to be implemented.');
 });
 
-// Currency Chart (Using Dummy Data)
 document.addEventListener('DOMContentLoaded', function() {
     const ctx = document.getElementById('currencyChart').getContext('2d');
 
@@ -50,3 +49,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Loading profile picture..."); // Debugging
+
+    const savedImage = localStorage.getItem("profilePicture");
+    if (savedImage) {
+        document.getElementById("profile-picture").src = savedImage;
+        console.log("Profile picture loaded from localStorage");
+    } else {
+        console.log("No profile picture found in localStorage");
+    }
+
+    document.getElementById("uploadInput").addEventListener("change", uploadProfilePicture);
+});
+
+function uploadProfilePicture() {
+    const input = document.getElementById("uploadInput");
+    const file = input.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const imageUrl = e.target.result;
+
+            document.getElementById("profile-picture").src = imageUrl;
+
+            localStorage.setItem("profilePicture", imageUrl);
+            console.log("Profile picture saved to localStorage");
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        alert("Please select an image.");
+    }
+}
