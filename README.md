@@ -147,6 +147,10 @@ Confirm Transfer Page
 ![image](https://github.com/user-attachments/assets/4aa4f230-317c-4202-a92f-a10e5a0256c2)
 <br><br><br>
 
+Blocked User Page
+![image](https://github.com/user-attachments/assets/76250e81-a311-4588-b600-0f21fe56374d)
+<br><br><br>
+
 Admin Dashboard
 ![image](https://github.com/user-attachments/assets/81a086e2-5baa-4262-b353-a5acf0c641f9)
 <br><br><br>
