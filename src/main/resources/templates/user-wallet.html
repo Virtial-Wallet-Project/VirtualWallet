@@ -53,7 +53,28 @@
 <h2 class="my-wallet">Your Transactions</h2>
 <hr>
 
-<table class="transaction-table">
+<form th:action="@{/wallet/transactions}" method="get" class="filter-form">
+  <p id="search">Search by:</p>
+  <input type="text" name="senderId" placeholder="Sender" th:value="${filterTransactionsDto != null ? filterTransactionsDto.sender : ''}">
+  <input type="text" name="recipientId" placeholder="Recipient"  th:value="${filterTransactionsDto != null ? filterTransactionsDto.recipient : ''}">
+  <input type="datetime-local" name="startDate" placeholder="Start Date" th:value="${filterTransactionsDto.startDate}">
+  <input type="datetime-local" name="endDate" placeholder="End Date" th:value="${filterTransactionsDto.endDate}">
+
+  <select name="sortBy">
+    <option value="">Sort By</option>
+    <option value="amount">Amount</option>
+    <option value="transactionDate">Date</option>
+  </select>
+
+  <select name="sortOrder">
+    <option value="asc">Ascending</option>
+    <option value="desc">Descending</option>
+  </select>
+
+  <button type="submit">Apply Filters</button>
+</form>
+
+<table id="table" class="transaction-table">
   <thead>
   <tr>
     <th>Transaction ID</th>
