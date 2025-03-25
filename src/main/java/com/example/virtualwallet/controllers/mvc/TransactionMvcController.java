@@ -93,19 +93,16 @@ public class TransactionMvcController {
         return "redirect:/wallet";
     }
 
-
     @GetMapping("/transactions")
-    public String showUserTransactions(
+    public String showAllUserTransactions(
             @ModelAttribute("filterTransactionsDto") FilterTransactionDto filterTransactionDto,
             HttpSession session,
             Model model,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
 
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/auth/login";
-        }
+        User user = (User) session.getAttribute("admin");
+
 
         filterTransactionDto.setSender(
                 Optional.ofNullable(filterTransactionDto.getSender()).filter(s -> !s.isEmpty()).orElse(null)
@@ -133,7 +130,7 @@ public class TransactionMvcController {
         model.addAttribute("pageSize", size);
         model.addAttribute("filterTransactionsDto", filterTransactionDto);
 
-        return "user-wallet";
+        return "user-transactions";
     }
 
     @GetMapping("/transfer")

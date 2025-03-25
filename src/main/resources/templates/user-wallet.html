@@ -50,67 +50,13 @@
   <a th:href="@{/wallet/transfer}" class="transfer-money">Transfer Money</a>
 </div>
 
-<h2 class="my-wallet">Your Transactions</h2>
-<hr>
-
-<form th:action="@{/wallet/transactions}" method="get" class="filter-form">
-  <p id="search">Search by:</p>
-  <input type="text" name="senderId" placeholder="Sender" th:value="${filterTransactionsDto != null ? filterTransactionsDto.sender : ''}">
-  <input type="text" name="recipientId" placeholder="Recipient"  th:value="${filterTransactionsDto != null ? filterTransactionsDto.recipient : ''}">
-  <input type="datetime-local" name="startDate" placeholder="Start Date" th:value="${filterTransactionsDto.startDate}">
-  <input type="datetime-local" name="endDate" placeholder="End Date" th:value="${filterTransactionsDto.endDate}">
-
-  <select name="sortBy">
-    <option value="">Sort By</option>
-    <option value="amount">Amount</option>
-    <option value="transactionDate">Date</option>
-  </select>
-
-  <select name="sortOrder">
-    <option value="asc">Ascending</option>
-    <option value="desc">Descending</option>
-  </select>
-
-  <button type="submit">Apply Filters</button>
-</form>
-
-<table id="table" class="transaction-table">
-  <thead>
-  <tr>
-    <th>Transaction ID</th>
-    <th>Sender</th>
-    <th>Recipient</th>
-    <th>Amount</th>
-    <th>Date</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="transaction : ${transactions}">
-    <td th:text="${transaction.transactionId}"></td>
-    <td th:text="${transaction.sender != null ? transaction.sender.username : 'N/A'}"></td>
-    <td th:text="${transaction.recipient != null ? transaction.recipient.username : 'N/A'}"></td>
-    <td th:text="${transaction.amount}"></td>
-    <td th:text="${#temporals.format(transaction.transactionDate, 'yyyy-MM-dd HH:mm')}"></td>
-  </tr>
-  <tr th:if="${#lists.isEmpty(transactions)}">
-    <td colspan="5">No transactions found.</td>
-  </tr>
-  </tbody>
-</table>
-
-<!--<div class="pagination">-->
-<!--  <a th:if="${currentUserPage > 0}"-->
-<!--     th:href="@{/wallet/transactions(page=${currentUserPage - 1}, size=${pageUserSize}, senderId=${filterTransactionsDto.sender}, recipientId=${filterTransactionsDto.recipient}, startDate=${filterTransactionsDto.startDate}, endDate=${filterTransactionsDto.endDate})}">-->
-<!--    Previous-->
-<!--  </a>-->
-<!--  <span>Page <span th:text="${currentUserPage != null ? currentUserPage + 1 : 1}"></span></span>-->
-<!--  <a th:href="@{/wallet/transactions(page=${currentUserPage + 1}, size=${pageUserSize}, senderId=${filterTransactionsDto.sender}, recipientId=${filterTransactionsDto.recipient}, startDate=${filterTransactionsDto.startDate}, endDate=${filterTransactionsDto.endDate})}">-->
-<!--    Next-->
-<!--  </a>-->
-<!--</div>-->
+<div class="transfer-container">
+  <a th:href="@{/wallet/transactions}" class="transfer-money">Transaction History</a>
+</div>
 
 <footer>
   <p>&copy; 2025 Virtual Wallet. All rights reserved.</p>
 </footer>
+
 </body>
 </html>

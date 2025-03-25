@@ -1062,8 +1062,10 @@ footer {
     background: rgba(255, 255, 255, 0.1);
 }
 
+#pagination{
+    margin-bottom: 20px;
+}
 
-/* Pagination */
 .pagination {
     text-align: center;
     margin-top: 20px;
