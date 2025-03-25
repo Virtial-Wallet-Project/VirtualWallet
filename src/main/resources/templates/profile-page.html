@@ -42,14 +42,6 @@
         <p th:text="${success}"></p>
     </div>
 
-    <div class="profile-picture-container">
-        <img id="profile-picture" th:src="@{/default-profile.png}" alt="Profile Picture" class="profile-picture">
-
-        <input type="file" id="uploadInput" accept="image/*">
-        <button onclick="uploadProfilePicture()" class="btn btn-upload">Upload Picture</button>
-    </div>
-
-
     <form method="post" th:action="@{/account/update}" th:object="${user}" class="form-update">
         <div class="mb-3">
             <label class="update-label">Username:</label>
