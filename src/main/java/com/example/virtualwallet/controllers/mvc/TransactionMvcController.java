@@ -101,8 +101,10 @@ public class TransactionMvcController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
 
-        User user = (User) session.getAttribute("admin");
+        User user = (User) session.getAttribute("currentUser");
 
+
+        filterTransactionDto.setUserId(String.valueOf(user.getUserId()));
 
         filterTransactionDto.setSender(
                 Optional.ofNullable(filterTransactionDto.getSender()).filter(s -> !s.isEmpty()).orElse(null)
@@ -124,6 +126,8 @@ public class TransactionMvcController {
                 ),
                 page, size, user
         );
+
+
 
         model.addAttribute("transactions", transactions);
         model.addAttribute("currentPage", page);
